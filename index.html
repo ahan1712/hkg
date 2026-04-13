@@ -4,254 +4,476 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>HKG Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@300;400;500;600;700;800;900&family=Montserrat+Alternates:wght@700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 :root{
-  --bg:#09090b;--s1:#111115;--s2:#17171c;--s3:#1e1e26;
-  --b1:#222230;--b2:#2e2e40;
-  --red:#b91c1c;--red2:#ef4444;--red-bg:rgba(185,28,28,.12);
-  --gold:#d4a547;--gold2:#f0c060;--gold-bg:rgba(212,165,71,.1);
-  --teal:#0d9488;--green:#16a34a;--green-bg:rgba(22,163,74,.1);
-  --white:#f1efe9;--dim:#6b6b85;--dim2:#44445a;
+  --black:#000000;
+  --black2:#0a0a0a;
+  --black3:#111111;
+  --black4:#1a1a1a;
+  --red:#cc0000;
+  --red2:#e8000a;
+  --red-dim:#3d0000;
+  --silver:#a0a0a8;
+  --silver2:#c8c8d0;
+  --white:#ffffff;
+  --offwhite:#f0eeea;
+  --dim:#555560;
+  --dim2:#333338;
+  --border:#222225;
+  --border2:#2a2a2e;
 }
-html,body{height:100%;background:var(--bg);color:var(--white);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;overflow:hidden}
-.app{display:flex;flex-direction:column;height:100vh;height:100dvh;max-width:480px;margin:0 auto}
+html,body{
+  height:100%;background:var(--black);color:var(--white);
+  font-family:'Montserrat','Helvetica Neue',Helvetica,Arial,sans-serif;
+  overflow:hidden;
+}
+.app{display:flex;flex-direction:column;height:100vh;height:100dvh;max-width:430px;margin:0 auto;position:relative}
 
-/* TOPBAR */
-.topbar{display:flex;align-items:center;justify-content:space-between;padding:10px 14px 8px;background:var(--s1);border-bottom:1px solid var(--b1);flex-shrink:0}
-.brand{font-size:20px;font-weight:800;letter-spacing:4px;color:var(--gold)}
-.brand-sub{font-size:9px;color:var(--dim);letter-spacing:.5px;margin-top:-2px}
-.top-date{font-size:13px;font-weight:600;color:var(--white);text-align:right}
-.top-sub{font-size:9px;color:var(--dim);text-align:right;margin-top:1px}
-.live{display:inline-block;width:5px;height:5px;background:var(--green);border-radius:50%;margin-right:4px;animation:pulse 2s infinite;vertical-align:middle}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+/* ── TOPBAR ── */
+.topbar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:10px 16px 8px;background:var(--black);
+  border-bottom:1px solid var(--border2);flex-shrink:0;
+  position:relative;z-index:10;
+}
+.logo-wrap{display:flex;align-items:center;gap:10px}
+.logo-icon{
+  width:32px;height:32px;position:relative;flex-shrink:0;
+}
+.logo-icon svg{width:32px;height:32px}
+.logo-text{
+  font-family:'Bebas Neue','Arial Narrow',sans-serif;
+  font-size:22px;letter-spacing:3px;color:var(--white);
+  line-height:1;
+}
+.logo-sub{font-size:7.5px;color:var(--silver);letter-spacing:2px;text-transform:uppercase;margin-top:1px}
+.topbar-right{text-align:right}
+.top-date{font-size:11px;font-weight:600;color:var(--silver2);letter-spacing:.5px}
+.top-dot{display:inline-block;width:5px;height:5px;background:#00c853;border-radius:50%;margin-right:5px;animation:pulse 2s infinite;vertical-align:middle}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.2}}
+.top-updated{font-size:8px;color:var(--dim);margin-top:2px;letter-spacing:.3px}
 
-/* BODY */
+/* ── BODY ── */
 .body{display:flex;flex:1;overflow:hidden;min-height:0}
 
-/* LEFT PANEL */
-.left{flex:1;display:flex;flex-direction:column;overflow-y:auto;background:var(--s1);border-right:3px solid var(--red)}
-.left::-webkit-scrollbar{width:0}
-.left-hdr{background:var(--red);padding:10px 14px 8px;flex-shrink:0;position:sticky;top:0;z-index:5}
-.left-hdr-title{font-size:15px;font-weight:800;letter-spacing:3px;color:var(--white)}
-.left-hdr-sub{font-size:8px;color:rgba(255,255,255,.65);letter-spacing:1.5px;text-transform:uppercase;margin-top:1px}
+/* ── LEFT PANEL ── */
+.left{
+  width:62%;display:flex;flex-direction:column;
+  background:var(--black2);border-right:1px solid var(--border2);
+  overflow:hidden;flex-shrink:0;
+}
 
-.tile{padding:12px 14px;border-bottom:1px solid var(--b1);flex-shrink:0;position:relative;overflow:hidden}
-.tile::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--b2)}
-.tile.gold::before{background:var(--gold)}
-.tile.red::before{background:var(--red2)}
-.tile.teal::before{background:var(--teal)}
-.tile.green::before{background:var(--green)}
-.t-label{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--dim);margin-bottom:3px;font-weight:600}
-.t-val{font-size:30px;font-weight:800;line-height:1;letter-spacing:-1px}
-.t-val.gold{color:var(--gold2)}
-.t-val.red{color:var(--red2)}
-.t-val.teal{color:var(--teal)}
-.t-unit{font-size:9px;color:var(--dim);margin-top:3px;letter-spacing:.3px}
+/* Month hero */
+.month-hero{
+  padding:14px 16px 10px;flex-shrink:0;
+  background:var(--black);
+  border-bottom:2px solid var(--red);
+  position:relative;overflow:hidden;
+}
+.month-hero::before{
+  content:'';position:absolute;top:0;left:0;right:0;bottom:0;
+  background:linear-gradient(135deg,rgba(204,0,0,.08) 0%,transparent 60%);
+  pointer-events:none;
+}
+.month-label{
+  font-size:8px;font-weight:700;letter-spacing:3px;
+  text-transform:uppercase;color:var(--silver);margin-bottom:2px;
+}
+.month-name{
+  font-family:'Bebas Neue','Arial Narrow',sans-serif;
+  font-size:38px;letter-spacing:4px;color:var(--white);
+  line-height:1;
+}
+.month-year{
+  font-size:13px;font-weight:300;color:var(--silver);
+  letter-spacing:4px;margin-top:1px;
+}
 
-/* RIGHT NAV */
-.right{width:72px;flex-shrink:0;display:flex;flex-direction:column;background:var(--s2);border-left:1px solid var(--b1)}
-.right::-webkit-scrollbar{width:0}
-.right-hdr{padding:7px 0;background:var(--s3);font-size:7px;letter-spacing:1px;color:var(--dim);text-transform:uppercase;text-align:center;flex-shrink:0;border-bottom:1px solid var(--b1)}
-.nav{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:11px 4px;cursor:pointer;border-bottom:1px solid var(--b1);border-left:2px solid transparent;transition:all .15s;text-align:center;flex-shrink:0;min-height:58px;user-select:none}
-.nav:active{background:var(--s3);border-left-color:var(--red2)}
-.nav-icon{font-size:15px;margin-bottom:3px;line-height:1}
-.nav-name{font-size:10px;font-weight:700;letter-spacing:.3px;color:var(--white);line-height:1.1;text-transform:uppercase}
+/* Stats */
+.stats-list{flex:1;overflow:hidden;display:flex;flex-direction:column}
+.stat-row{
+  flex:1;display:flex;align-items:center;
+  padding:0 16px;border-bottom:1px solid var(--border);
+  position:relative;min-height:0;
+}
+.stat-row::before{
+  content:'';position:absolute;left:0;top:20%;bottom:20%;
+  width:2px;background:var(--border2);transition:background .2s;
+}
+.stat-row.s-red::before{background:var(--red)}
+.stat-row.s-silver::before{background:var(--silver)}
+.stat-row.s-white::before{background:rgba(255,255,255,.3)}
+.stat-inner{flex:1}
+.stat-label{
+  font-size:7.5px;font-weight:700;letter-spacing:1.5px;
+  text-transform:uppercase;color:var(--silver);margin-bottom:2px;
+}
+.stat-val{
+  font-family:'Bebas Neue','Arial Narrow',sans-serif;
+  font-size:26px;letter-spacing:.5px;line-height:1;color:var(--white);
+}
+.stat-val.red{color:var(--red2)}
+.stat-val.silver{color:var(--silver2)}
+.stat-unit{font-size:8px;color:var(--dim);margin-top:1px;letter-spacing:.3px}
 
-/* BOTTOM: TOGGLE + METRICS */
-.bottom{flex-shrink:0;background:var(--s1);border-top:2px solid var(--b2)}
-.toggle-row{display:flex;align-items:center;gap:4px;padding:7px 10px 5px;border-bottom:1px solid var(--b1)}
-.t-lbl{font-size:8px;color:var(--dim);letter-spacing:1px;text-transform:uppercase;margin-right:2px;white-space:nowrap}
+/* ── RIGHT PANEL ── */
+.right{
+  flex:1;display:flex;flex-direction:column;
+  background:var(--black);overflow:hidden;
+}
+
+.nav-header{
+  padding:8px 0 6px;text-align:center;
+  font-size:7px;font-weight:700;letter-spacing:2px;
+  text-transform:uppercase;color:var(--dim);
+  border-bottom:1px solid var(--border);flex-shrink:0;
+}
+
+.nav-list{flex:1;overflow-y:auto;display:flex;flex-direction:column}
+.nav-list::-webkit-scrollbar{width:0}
+
+.nav-item{
+  flex:1;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;cursor:pointer;
+  border-bottom:1px solid var(--border);
+  border-left:2px solid transparent;
+  transition:all .12s;user-select:none;
+  min-height:52px;padding:6px 4px;text-align:center;
+  position:relative;
+}
+.nav-item:active{background:var(--black3);border-left-color:var(--red)}
+.nav-icon{font-size:14px;line-height:1;margin-bottom:3px}
+.nav-name{
+  font-size:9px;font-weight:700;letter-spacing:.8px;
+  color:var(--silver2);text-transform:uppercase;line-height:1.1;
+}
+.nav-item:active .nav-name{color:var(--white)}
+
+/* ── BOTTOM: TOGGLE + METRICS ── */
+.bottom{flex-shrink:0;background:var(--black2);border-top:1px solid var(--border2)}
+
+.toggle-row{
+  display:flex;align-items:center;gap:4px;
+  padding:7px 12px 5px;border-bottom:1px solid var(--border);
+}
+.t-label{
+  font-size:7px;font-weight:700;letter-spacing:1.5px;
+  color:var(--dim);text-transform:uppercase;margin-right:4px;white-space:nowrap;
+}
 .tbtns{display:flex;gap:3px;flex:1}
-.tbtn{flex:1;padding:5px 2px;font-size:10px;font-weight:700;border:1px solid var(--b2);background:transparent;color:var(--dim);cursor:pointer;border-radius:3px;transition:all .12s;letter-spacing:.5px;-webkit-appearance:none;font-family:inherit}
+.tbtn{
+  flex:1;padding:5px 2px;
+  font-family:'Montserrat',sans-serif;font-size:9px;font-weight:700;
+  border:1px solid var(--border2);background:transparent;color:var(--dim);
+  cursor:pointer;border-radius:3px;transition:all .12s;
+  letter-spacing:.5px;-webkit-appearance:none;
+}
 .tbtn.on{background:var(--red);border-color:var(--red);color:var(--white)}
-.tbtn:active{transform:scale(.93)}
-.metrics-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0}
-.mg{padding:8px 10px;border-right:1px solid var(--b1);border-bottom:1px solid var(--b1)}
-.mg:nth-child(3n){border-right:none}
-.mg:nth-last-child(-n+3){border-bottom:none}
-.mg-label{font-size:7.5px;letter-spacing:.8px;text-transform:uppercase;color:var(--dim);margin-bottom:2px;font-weight:600;line-height:1.2}
-.mg-val{font-size:17px;font-weight:800;line-height:1;letter-spacing:-.5px;color:var(--white)}
-.mg-val.gold{color:var(--gold2)}
-.mg-val.red{color:var(--red2)}
-.mg-val.teal{color:var(--teal)}
+.tbtn:active{transform:scale(.92)}
 
-/* UPLOAD */
-.upload-bar{display:flex;align-items:center;gap:6px;padding:5px 10px;background:var(--bg);border-top:1px solid var(--b1);flex-shrink:0}
-.up-info{font-size:8px;color:var(--dim);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-#file-input{display:none}
-.up-btn{font-size:9px;padding:4px 10px;background:rgba(26,42,66,.8);color:var(--white);border:1px solid var(--b2);border-radius:3px;cursor:pointer;letter-spacing:.5px;white-space:nowrap;-webkit-appearance:none;font-family:inherit;font-weight:600}
-.up-status{font-size:9px;color:var(--green);min-width:14px}
+/* Metrics grid — 2 rows × 3 cols, fixed layout */
+.metrics-grid-2r{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  grid-template-rows:1fr 1fr;
+  border-bottom:1px solid var(--border);
+}
+.mc{
+  padding:10px 12px;
+  border-right:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+}
+.mc:nth-child(3n){border-right:none}
+.mc:nth-child(4),.mc:nth-child(5),.mc:nth-child(6){border-bottom:none}
+.mc-label{
+  font-size:7px;font-weight:700;letter-spacing:.8px;
+  text-transform:uppercase;color:var(--dim);margin-bottom:4px;line-height:1.2;
+}
+.mc-val{
+  font-family:'Bebas Neue','Arial Narrow',sans-serif;
+  font-size:22px;letter-spacing:.3px;line-height:1;color:var(--white);
+}
+.mc-val.red{color:var(--red2)}
+.mc-val.silver{color:var(--silver2)}
 
-/* OVERLAY */
-.overlay{display:none;position:fixed;inset:0;background:var(--bg);z-index:100;flex-direction:column;max-width:480px;margin:0 auto}
+/* ── OVERLAYS ── */
+.overlay{
+  display:none;position:fixed;inset:0;background:var(--black);
+  z-index:100;flex-direction:column;max-width:430px;margin:0 auto;
+}
 .overlay.open{display:flex}
-.ov-hdr{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:var(--red);flex-shrink:0}
-.ov-title{font-size:24px;font-weight:800;letter-spacing:2px}
-.ov-back{font-size:11px;font-weight:700;letter-spacing:1px;cursor:pointer;padding:5px 12px;border:1px solid rgba(255,255,255,.4);border-radius:3px;color:var(--white);-webkit-appearance:none;background:transparent;font-family:inherit}
+.ov-hdr{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 16px;background:var(--red);flex-shrink:0;
+}
+.ov-title{
+  font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:2px;color:var(--white);
+}
+.ov-back{
+  font-size:10px;font-weight:700;letter-spacing:1px;cursor:pointer;
+  padding:5px 12px;border:1px solid rgba(255,255,255,.4);border-radius:3px;
+  color:var(--white);-webkit-appearance:none;background:transparent;
+  font-family:'Montserrat',sans-serif;
+}
 .ov-body{flex:1;overflow-y:auto;padding-bottom:30px}
 .ov-body::-webkit-scrollbar{width:0}
-.sec{font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--dim);padding:14px 16px 6px;display:flex;align-items:center;gap:8px;font-weight:600}
-.sec::after{content:'';flex:1;height:1px;background:var(--b1)}
-.badge{display:inline-block;padding:2px 6px;border-radius:3px;font-size:8px;font-weight:700;letter-spacing:1px;background:var(--red-bg);color:var(--red2)}
+
+.sec{
+  font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+  color:var(--dim);padding:14px 16px 6px;display:flex;align-items:center;gap:8px;
+}
+.sec::after{content:'';flex:1;height:1px;background:var(--border2)}
+.bdg{
+  display:inline-block;padding:2px 7px;border-radius:2px;
+  font-size:8px;font-weight:700;letter-spacing:1px;
+  background:rgba(204,0,0,.15);color:var(--red2);
+}
+
 .kgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0 12px 4px}
-.kc{background:var(--s1);border:1px solid var(--b1);border-radius:6px;padding:11px 12px;position:relative;overflow:hidden}
-.kc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--b2)}
-.kc.cr::before{background:var(--red2)}.kc.cg::before{background:var(--gold)}.kc.ct::before{background:var(--teal)}.kc.cgr::before{background:var(--green)}
+.kc{
+  background:var(--black3);border:1px solid var(--border2);
+  border-radius:6px;padding:11px 12px;position:relative;overflow:hidden;
+}
+.kc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--border2)}
+.kc.cr::before{background:var(--red2)}
+.kc.cs::before{background:var(--silver)}
+.kc.cw::before{background:rgba(255,255,255,.4)}
 .kc-full{grid-column:1/-1}
-.kc-lbl{font-size:8px;letter-spacing:.8px;text-transform:uppercase;color:var(--dim);margin-bottom:5px;font-weight:600}
-.kc-val{font-size:26px;font-weight:800;line-height:1;letter-spacing:-.5px;color:var(--white)}
-.kc-val.gold{color:var(--gold2)}.kc-val.red{color:var(--red2)}.kc-val.green{color:var(--green)}.kc-val.teal{color:var(--teal)}
+.kc-lbl{font-size:7.5px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--silver);margin-bottom:5px}
+.kc-val{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:.3px;line-height:1;color:var(--white)}
+.kc-val.red{color:var(--red2)}.kc-val.sil{color:var(--silver2)}
 .kc-sub{font-size:8px;color:var(--dim);margin-top:3px}
-.big-kpi{margin:4px 12px 8px;background:var(--s1);border:1px solid var(--b1);border-radius:6px;padding:14px 16px;border-left:3px solid var(--gold)}
-.bk-lbl{font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:var(--dim);margin-bottom:4px;font-weight:600}
-.bk-val{font-size:38px;font-weight:800;color:var(--gold2);letter-spacing:-1px;line-height:1}
+.big-kpi{
+  margin:4px 12px 8px;background:var(--black3);border:1px solid var(--border2);
+  border-radius:6px;padding:14px 16px;border-left:3px solid var(--red);
+}
+.bk-lbl{font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--silver);margin-bottom:4px}
+.bk-val{font-family:'Bebas Neue',sans-serif;font-size:40px;letter-spacing:-1px;line-height:1}
 .bk-sub{font-size:9px;color:var(--dim);margin-top:4px}
-.prow{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-bottom:1px solid var(--b1)}
-.pname{font-size:10px;color:var(--dim);font-weight:500}
-.pval{font-size:18px;font-weight:700;color:var(--white)}
-.spb{display:inline-flex;align-items:center;gap:2px;font-size:11px;font-weight:700;padding:3px 8px;border-radius:3px}
-.spb.pos{background:var(--green-bg);color:var(--green)}.spb.neg{background:var(--red-bg);color:var(--red2)}
+.prow{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:10px 16px;border-bottom:1px solid var(--border);
+}
+.pname{font-size:10px;color:var(--silver);font-weight:500}
+.pval{font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--white)}
+.spb{
+  display:inline-flex;align-items:center;gap:3px;
+  font-size:11px;font-weight:700;padding:3px 8px;border-radius:3px;
+  font-family:'Montserrat',sans-serif;letter-spacing:.3px;
+}
+.spb.pos{background:rgba(0,200,83,.1);color:#00c853}
+.spb.neg{background:rgba(204,0,0,.12);color:var(--red2)}
 .tw{padding:0 12px 8px;overflow-x:auto}
 table{width:100%;border-collapse:collapse;font-size:11px}
-th{font-size:7.5px;letter-spacing:1px;text-transform:uppercase;color:var(--dim);padding:5px 6px;text-align:left;border-bottom:1px solid var(--b2);font-weight:600}
-td{padding:7px 6px;border-bottom:1px solid var(--b1);color:var(--white)}
+th{font-size:7.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--dim);padding:5px 6px;text-align:left;border-bottom:1px solid var(--border2)}
+td{padding:7px 6px;border-bottom:1px solid var(--border);color:var(--white)}
 tr:last-child td{border-bottom:none}
 .tn{text-align:right;font-size:11px;font-variant-numeric:tabular-nums}
-.tnm{max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.mc{margin:0 12px 8px;background:var(--s1);border:1px solid var(--b1);border-radius:6px;padding:12px}
-.mc-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
-.mc-name{font-size:18px;font-weight:800;letter-spacing:-.3px}
-.mc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.mcgi .lbl{font-size:7.5px;letter-spacing:.5px;text-transform:uppercase;color:var(--dim);margin-bottom:2px;font-weight:600}
+.tnm{max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mc-card{margin:0 12px 8px;background:var(--black3);border:1px solid var(--border2);border-radius:6px;padding:12px}
+.mc-card-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.mc-card-name{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:.5px}
+.mc-card-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.mcgi .lbl{font-size:7.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--dim);margin-bottom:2px}
 .mcgi .val{font-size:14px;font-weight:700;color:var(--white)}
-.cs{display:flex;flex-direction:column;align-items:center;justify-content:center;height:55vh;gap:10px}
-.cs-t{font-size:44px;font-weight:800;color:var(--dim2);letter-spacing:4px}
-.cs-s{font-size:11px;color:var(--dim);text-align:center;max-width:180px;line-height:1.7}
+.cs-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;height:55vh;gap:12px}
+.cs-title{font-family:'Bebas Neue',sans-serif;font-size:46px;color:var(--border2);letter-spacing:4px}
+.cs-sub{font-size:11px;color:var(--dim);text-align:center;max-width:180px;line-height:1.7}
 
 /* Loading */
-#load-overlay{position:fixed;inset:0;background:var(--bg);z-index:999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px}
-#load-overlay.hidden{display:none}
-.load-brand{font-size:32px;font-weight:800;letter-spacing:6px;color:var(--gold)}
-.load-msg{font-size:12px;color:var(--dim);letter-spacing:1px}
-.load-spinner{width:24px;height:24px;border:2px solid var(--b2);border-top-color:var(--red2);border-radius:50%;animation:spin .8s linear infinite}
+#load-screen{
+  position:fixed;inset:0;background:var(--black);z-index:999;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;
+}
+#load-screen.gone{display:none}
+.ls-logo{font-family:'Bebas Neue',sans-serif;font-size:48px;letter-spacing:8px;color:var(--white)}
+.ls-logo span{color:var(--red)}
+.ls-spin{width:24px;height:24px;border:2px solid var(--border2);border-top-color:var(--red);border-radius:50%;animation:spin .7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-#main-content{display:none;flex-direction:column;height:100%}
+.ls-msg{font-size:10px;color:var(--dim);letter-spacing:1px}
 </style>
 </head>
 <body>
-<div class="app">
 
-  <!-- LOADING SCREEN -->
-  <div id="load-overlay">
-    <div class="load-brand">HKG</div>
-    <div class="load-spinner"></div>
-    <div class="load-msg" id="load-msg">Loading dashboard data...</div>
+<!-- LOADING -->
+<div id="load-screen">
+  <div class="ls-logo">H<span>K</span>G</div>
+  <div class="ls-spin"></div>
+  <div class="ls-msg" id="ls-msg">Loading data...</div>
+</div>
+
+<div class="app" id="app" style="display:none">
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="logo-wrap">
+      <!-- HKG Logo SVG recreation -->
+      <div class="logo-icon">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <!-- Red X/star shape -->
+          <path d="M50 10 L62 38 L92 38 L68 56 L78 84 L50 67 L22 84 L32 56 L8 38 L38 38 Z" fill="#cc0000" opacity=".15"/>
+          <!-- Simplified X mark in red -->
+          <path d="M20 20 L42 50 L20 80 L30 80 L50 57 L70 80 L80 80 L58 50 L80 20 L70 20 L50 43 L30 20 Z" fill="#cc0000"/>
+        </svg>
+      </div>
+      <div>
+        <div class="logo-text">HKG</div>
+        <div class="logo-sub">Factory Operations</div>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <div class="top-date"><span class="top-dot"></span><span id="top-date">—</span></div>
+      <div class="top-updated" id="top-updated">—</div>
+    </div>
   </div>
 
-  <!-- MAIN CONTENT (shown after data loads) -->
-  <div id="main-content">
+  <!-- BODY -->
+  <div class="body">
 
-    <div class="topbar">
-      <div>
-        <div class="brand">HKG</div>
-        <div class="brand-sub">Factory Operations</div>
+    <!-- LEFT: MTD STATS -->
+    <div class="left">
+      <div class="month-hero">
+        <div class="month-label">Month to Date</div>
+        <div class="month-name" id="month-name">APRIL</div>
+        <div class="month-year" id="month-year">2026</div>
       </div>
-      <div>
-        <div class="top-date"><span class="live"></span><span id="top-date-val">—</span></div>
-        <div class="top-sub"><span id="top-gen-val">—</span></div>
-      </div>
-    </div>
-
-    <div class="body">
-      <div class="left">
-        <div class="left-hdr">
-          <div class="left-hdr-title">MONTH TO DATE</div>
-          <div class="left-hdr-sub">Absolute Essentials</div>
+      <div class="stats-list">
+        <div class="stat-row s-white">
+          <div class="stat-inner">
+            <div class="stat-label">Sales</div>
+            <div class="stat-val" id="s-sales">—</div>
+            <div class="stat-unit">MT sold</div>
+          </div>
         </div>
-        <div class="tile gold">
-          <div class="t-label">Sales</div>
-          <div class="t-val gold" id="mtd-sales">—</div>
-          <div class="t-unit">MT sold this month</div>
+        <div class="stat-row s-silver">
+          <div class="stat-inner">
+            <div class="stat-label">Production</div>
+            <div class="stat-val silver" id="s-prod">—</div>
+            <div class="stat-unit">MT rod</div>
+          </div>
         </div>
-        <div class="tile teal">
-          <div class="t-label">Production</div>
-          <div class="t-val" id="mtd-prod">—</div>
-          <div class="t-unit">MT rod produced</div>
+        <div class="stat-row s-white">
+          <div class="stat-inner">
+            <div class="stat-label">Delivery</div>
+            <div class="stat-val" id="s-deliv">—</div>
+            <div class="stat-unit" id="s-trucks">MT dispatched</div>
+          </div>
         </div>
-        <div class="tile">
-          <div class="t-label">Delivery</div>
-          <div class="t-val" id="mtd-deliv">—</div>
-          <div class="t-unit" id="mtd-trucks">MT dispatched</div>
+        <div class="stat-row s-red">
+          <div class="stat-inner">
+            <div class="stat-label">Average Price / Ton</div>
+            <div class="stat-val red" id="s-rate">—</div>
+            <div class="stat-unit">৳ per MT</div>
+          </div>
         </div>
-        <div class="tile gold">
-          <div class="t-label">HKG Average Rate</div>
-          <div class="t-val gold" id="mtd-rate">—</div>
-          <div class="t-unit" id="mtd-rate-unit">৳ per MT</div>
+        <div class="stat-row s-red">
+          <div class="stat-inner">
+            <div class="stat-label">Scrap Price / Ton</div>
+            <div class="stat-val red" id="s-scrap">—</div>
+            <div class="stat-unit">৳ exp / ton</div>
+          </div>
         </div>
-        <div class="tile red">
-          <div class="t-label">Scrap Exp / Ton</div>
-          <div class="t-val red" id="mtd-scrap">—</div>
-          <div class="t-unit">৳ wtd avg purchase price</div>
+        <div class="stat-row s-red">
+          <div class="stat-inner">
+            <div class="stat-label">Electricity Bill</div>
+            <div class="stat-val red" id="s-elec">—</div>
+            <div class="stat-unit">৳ MTD</div>
+          </div>
         </div>
-        <div class="tile red">
-          <div class="t-label">Electricity Bill</div>
-          <div class="t-val red" id="mtd-elec">—</div>
-          <div class="t-unit">৳ MTD total</div>
+        <div class="stat-row s-silver">
+          <div class="stat-inner">
+            <div class="stat-label">Scrap → Billet Ratio</div>
+            <div class="stat-val silver" id="s-ratio">—</div>
+            <div class="stat-unit">MT scrap / MT billet</div>
+          </div>
         </div>
-        <div class="tile teal">
-          <div class="t-label">Scrap → Billet Ratio</div>
-          <div class="t-val teal" id="mtd-ratio">—</div>
-          <div class="t-unit">MT scrap per MT billet</div>
-        </div>
-      </div>
-
-      <div class="right">
-        <div class="right-hdr">Views</div>
-        <div class="nav" onclick="openOv('margins')"><div class="nav-icon">📊</div><div class="nav-name">Margins</div></div>
-        <div class="nav" onclick="openOv('costing')"><div class="nav-icon">⚙️</div><div class="nav-name">Costing</div></div>
-        <div class="nav" onclick="openOv('revenue')"><div class="nav-icon">💰</div><div class="nav-name">Revenue</div></div>
-        <div class="nav" onclick="openOv('inventory')"><div class="nav-icon">📦</div><div class="nav-name">Inventory</div></div>
-        <div class="nav" onclick="openOv('finances')"><div class="nav-icon">🏦</div><div class="nav-name">Finances</div></div>
-        <div class="nav" onclick="openOv('monthly')"><div class="nav-icon">📅</div><div class="nav-name">Monthly</div></div>
       </div>
     </div>
 
-    <div class="bottom">
-      <div class="toggle-row">
-        <span class="t-lbl">Period</span>
-        <div class="tbtns">
-          <button class="tbtn" onclick="setP('today')">TODAY</button>
-          <button class="tbtn on" onclick="setP('7d')">7D</button>
-          <button class="tbtn" onclick="setP('10d')">10D</button>
-          <button class="tbtn" onclick="setP('14d')">14D</button>
-          <button class="tbtn" onclick="setP('30d')">30D</button>
+    <!-- RIGHT: NAV -->
+    <div class="right">
+      <div class="nav-header">Dashboards</div>
+      <div class="nav-list">
+        <div class="nav-item" onclick="openOv('margins')">
+          <div class="nav-icon">📊</div>
+          <div class="nav-name">Margins</div>
+        </div>
+        <div class="nav-item" onclick="openOv('costing')">
+          <div class="nav-icon">⚙️</div>
+          <div class="nav-name">Costing</div>
+        </div>
+        <div class="nav-item" onclick="openOv('revenue')">
+          <div class="nav-icon">💰</div>
+          <div class="nav-name">Revenue</div>
+        </div>
+        <div class="nav-item" onclick="openOv('inventory')">
+          <div class="nav-icon">📦</div>
+          <div class="nav-name">Inventory</div>
+        </div>
+        <div class="nav-item" onclick="openOv('finances')">
+          <div class="nav-icon">🏦</div>
+          <div class="nav-name">Finances</div>
+        </div>
+        <div class="nav-item" onclick="openOv('monthly')">
+          <div class="nav-icon">📅</div>
+          <div class="nav-name">Monthly</div>
         </div>
       </div>
-      <div class="metrics-grid">
-        <div class="mg"><div class="mg-label">Total Sales</div><div class="mg-val teal" id="tm0">—</div></div>
-        <div class="mg"><div class="mg-label">Sales Revenue</div><div class="mg-val gold" id="tm1">—</div></div>
-        <div class="mg"><div class="mg-label">Production</div><div class="mg-val" id="tm2">—</div></div>
-        <div class="mg"><div class="mg-label">Scrap Exp Total</div><div class="mg-val red" id="tm3">—</div></div>
-        <div class="mg"><div class="mg-label">HKG Avg Rate</div><div class="mg-val gold" id="tm4">—</div></div>
-        <div class="mg"><div class="mg-label">Market Avg Rate</div><div class="mg-val" id="tm5">—</div></div>
+    </div>
+
+  </div><!-- end body -->
+
+  <!-- TOGGLE + SCROLLABLE METRICS -->
+  <div class="bottom">
+    <div class="toggle-row">
+      <span class="t-label">Period</span>
+      <div class="tbtns">
+        <button class="tbtn" onclick="setP('today')">TODAY</button>
+        <button class="tbtn on" onclick="setP('7d')">7D</button>
+        <button class="tbtn" onclick="setP('10d')">10D</button>
+        <button class="tbtn" onclick="setP('14d')">14D</button>
+        <button class="tbtn" onclick="setP('30d')">30D</button>
       </div>
     </div>
-
-    <div class="upload-bar">
-      <div class="up-info" id="up-info-val">Loading...</div>
+    <div class="metrics-grid-2r">
+      <div class="mc">
+        <div class="mc-label">Total Sales</div>
+        <div class="mc-val silver" id="tm-sales">—</div>
+      </div>
+      <div class="mc">
+        <div class="mc-label">Total Production</div>
+        <div class="mc-val" id="tm-prod">—</div>
+      </div>
+      <div class="mc">
+        <div class="mc-label">Average Price</div>
+        <div class="mc-val red" id="tm-rate">—</div>
+      </div>
+      <div class="mc">
+        <div class="mc-label">Est. Revenue from Sales</div>
+        <div class="mc-val silver" id="tm-rev">—</div>
+      </div>
+      <div class="mc">
+        <div class="mc-label">Total Scrap Exp</div>
+        <div class="mc-val red" id="tm-scrap">—</div>
+      </div>
+      <div class="mc">
+        <div class="mc-label">Total Cost / Ton</div>
+        <div class="mc-val red" id="tm-costpt">—</div>
+      </div>
     </div>
-
-  </div><!-- end main-content -->
+  </div>
 
   <!-- OVERLAYS -->
   <div class="overlay" id="ov-margins">
     <div class="ov-hdr"><div class="ov-title">Margins</div><button class="ov-back" onclick="closeOv()">← Back</button></div>
     <div class="ov-body">
-      <div class="sec">Revenue <span class="badge" id="mg-bdg">—</span></div>
+      <div class="sec">Revenue <span class="bdg" id="mg-bdg">—</span></div>
       <div class="kgrid">
-        <div class="kc cg kc-full"><div class="kc-lbl">Total Revenue (Rod + Other)</div><div class="kc-val gold" id="mg-tr">—</div><div class="kc-sub">৳</div></div>
-        <div class="kc cg"><div class="kc-lbl">Sales Revenue</div><div class="kc-val gold" id="mg-sr">—</div><div class="kc-sub">৳</div></div>
+        <div class="kc cs kc-full"><div class="kc-lbl">Total Revenue (Rod + Other)</div><div class="kc-val sil" id="mg-tr">—</div><div class="kc-sub">৳</div></div>
+        <div class="kc cs"><div class="kc-lbl">Sales Revenue</div><div class="kc-val sil" id="mg-sr">—</div><div class="kc-sub">৳</div></div>
         <div class="kc"><div class="kc-lbl">Other Revenue</div><div class="kc-val" id="mg-or">—</div><div class="kc-sub">৳</div></div>
       </div>
       <div class="sec">Costs</div>
@@ -259,14 +481,14 @@ tr:last-child td{border-bottom:none}
         <div class="kc cr"><div class="kc-lbl">Scrap Consump Cost</div><div class="kc-val red" id="mg-sc">—</div><div class="kc-sub">৳</div></div>
         <div class="kc cr"><div class="kc-lbl">Other Costs</div><div class="kc-val red" id="mg-oc">—</div><div class="kc-sub">৳</div></div>
         <div class="kc cr"><div class="kc-lbl">Total Cost / Ton</div><div class="kc-val red" id="mg-tc">—</div><div class="kc-sub">৳/MT</div></div>
-        <div class="kc cg"><div class="kc-lbl">Avg Sale Price</div><div class="kc-val gold" id="mg-ap">—</div><div class="kc-sub">৳/MT</div></div>
+        <div class="kc cs"><div class="kc-lbl">Avg Sale Price</div><div class="kc-val sil" id="mg-ap">—</div><div class="kc-sub">৳/MT</div></div>
       </div>
       <div class="sec">Margin</div>
-      <div class="big-kpi"><div class="bk-lbl">Gross Margin (Total Rev − Total Cost)</div><div class="bk-val" id="mg-gm">—</div><div class="bk-sub" id="mg-gms">৳</div></div>
+      <div class="big-kpi"><div class="bk-lbl">Gross Margin — Total Revenue minus Total Cost</div><div class="bk-val" id="mg-gm">—</div><div class="bk-sub" id="mg-gms">৳</div></div>
       <div class="kgrid" style="margin-top:4px">
-        <div class="kc cgr"><div class="kc-lbl">Margin / Ton</div><div class="kc-val" id="mg-mp">—</div><div class="kc-sub">৳/MT</div></div>
+        <div class="kc cw"><div class="kc-lbl">Margin / Ton</div><div class="kc-val" id="mg-mp">—</div><div class="kc-sub">৳/MT</div></div>
         <div class="kc"><div class="kc-lbl">Price − Cost Spread</div><div class="kc-val" id="mg-sp">—</div><div class="kc-sub">৳/MT</div></div>
-        <div class="kc ct"><div class="kc-lbl">Rod Produced</div><div class="kc-val teal" id="mg-rod">—</div><div class="kc-sub">MT</div></div>
+        <div class="kc cs"><div class="kc-lbl">Rod Produced</div><div class="kc-val sil" id="mg-rod">—</div><div class="kc-sub">MT</div></div>
         <div class="kc"><div class="kc-lbl">Sales Volume</div><div class="kc-val" id="mg-sv">—</div><div class="kc-sub">MT</div></div>
       </div>
     </div>
@@ -275,22 +497,22 @@ tr:last-child td{border-bottom:none}
   <div class="overlay" id="ov-costing">
     <div class="ov-hdr"><div class="ov-title">Costing</div><button class="ov-back" onclick="closeOv()">← Back</button></div>
     <div class="ov-body">
-      <div class="sec">Scrap Expenditure <span class="badge" id="cs-bdg">—</span></div>
+      <div class="sec">Scrap Expenditure <span class="bdg" id="cs-bdg">—</span></div>
       <div class="kgrid">
-        <div class="kc cr kc-full"><div class="kc-lbl">Scrap Exp / Ton (Wtd Avg Purchase Price)</div><div class="kc-val red" id="cs-ep">—</div><div class="kc-sub">৳/MT purchased</div></div>
+        <div class="kc cr kc-full"><div class="kc-lbl">Scrap Exp / Ton — Wtd Avg Purchase Price</div><div class="kc-val red" id="cs-ep">—</div><div class="kc-sub">৳/MT purchased</div></div>
         <div class="kc cr"><div class="kc-lbl">Total Scrap Expenditure</div><div class="kc-val red" id="cs-et">—</div><div class="kc-sub">৳</div></div>
         <div class="kc cr"><div class="kc-lbl">Electricity</div><div class="kc-val red" id="cs-el">—</div><div class="kc-sub">৳</div></div>
       </div>
-      <div class="sec">Scrap Consumption</div>
+      <div class="sec">Consumption</div>
       <div class="kgrid">
         <div class="kc cr kc-full"><div class="kc-lbl">Scrap Consumption Cost / Ton</div><div class="kc-val red" id="cs-sc">—</div><div class="kc-sub">৳/MT rod produced</div></div>
       </div>
-      <div class="sec">Other &amp; Total</div>
+      <div class="sec">Total</div>
       <div class="kgrid">
         <div class="kc"><div class="kc-lbl">Other Cost / Ton</div><div class="kc-val" id="cs-oc">—</div><div class="kc-sub">৳/MT</div></div>
         <div class="kc cr"><div class="kc-lbl">Total Cost / Ton</div><div class="kc-val red" id="cs-tc">—</div><div class="kc-sub">৳/MT</div></div>
-        <div class="kc ct"><div class="kc-lbl">Rod Produced</div><div class="kc-val teal" id="cs-rod">—</div><div class="kc-sub">MT</div></div>
-        <div class="kc ct"><div class="kc-lbl">Scrap→Billet Ratio</div><div class="kc-val teal" id="cs-rat">—</div><div class="kc-sub">MT/MT</div></div>
+        <div class="kc cs"><div class="kc-lbl">Rod Produced</div><div class="kc-val sil" id="cs-rod">—</div><div class="kc-sub">MT</div></div>
+        <div class="kc cs"><div class="kc-lbl">Scrap→Billet</div><div class="kc-val sil" id="cs-rat">—</div><div class="kc-sub">ratio</div></div>
       </div>
     </div>
   </div>
@@ -298,57 +520,57 @@ tr:last-child td{border-bottom:none}
   <div class="overlay" id="ov-revenue">
     <div class="ov-hdr"><div class="ov-title">Revenue</div><button class="ov-back" onclick="closeOv()">← Back</button></div>
     <div class="ov-body">
-      <div class="sec">Price Intel (Latest Day)</div>
+      <div class="sec">Price Intel — Latest Day</div>
       <div class="prow"><span class="pname">HKG Avg Sale Price</span><span class="pval" id="rv-hkg">—</span></div>
-      <div class="prow"><span class="pname">Others Avg (Salam/RICL/JSRM/Rani/SAS)</span><span class="pval" id="rv-others">—</span></div>
+      <div class="prow"><span class="pname">Others Avg (Salam / RICL / JSRM / Rani / SAS)</span><span class="pval" id="rv-oth">—</span></div>
       <div class="prow"><span class="pname">BSRM Rate</span><span class="pval" id="rv-bsrm">—</span></div>
-      <div class="prow"><span class="pname">HKG vs Others</span><span id="rv-vs-others">—</span></div>
-      <div class="prow"><span class="pname">HKG vs BSRM</span><span id="rv-vs-bsrm">—</span></div>
-      <div class="sec">Sales <span class="badge" id="rv-bdg">—</span></div>
+      <div class="prow"><span class="pname">HKG vs Others</span><span id="rv-vo">—</span></div>
+      <div class="prow"><span class="pname">HKG vs BSRM</span><span id="rv-vb">—</span></div>
+      <div class="sec">Sales <span class="bdg" id="rv-bdg">—</span></div>
       <div class="kgrid">
-        <div class="kc cg"><div class="kc-lbl">Sales Volume</div><div class="kc-val gold" id="rv-vol">—</div><div class="kc-sub">MT</div></div>
-        <div class="kc cg"><div class="kc-lbl">Revenue</div><div class="kc-val gold" id="rv-rev">—</div><div class="kc-sub">৳</div></div>
-        <div class="kc ct"><div class="kc-lbl">Delivery</div><div class="kc-val teal" id="rv-del">—</div><div class="kc-sub">MT</div></div>
+        <div class="kc cs"><div class="kc-lbl">Sales Volume</div><div class="kc-val sil" id="rv-vol">—</div><div class="kc-sub">MT</div></div>
+        <div class="kc cs"><div class="kc-lbl">Revenue</div><div class="kc-val sil" id="rv-rev">—</div><div class="kc-sub">৳</div></div>
+        <div class="kc"><div class="kc-lbl">Delivery</div><div class="kc-val" id="rv-del">—</div><div class="kc-sub">MT</div></div>
         <div class="kc"><div class="kc-lbl">Trucks</div><div class="kc-val" id="rv-trk">—</div><div class="kc-sub">released</div></div>
       </div>
       <div class="sec">Top Customers (MTD)</div>
-      <div class="tw"><table><thead><tr><th>Customer</th><th class="tn">Vol MT</th><th class="tn">Rev ৳</th><th class="tn">৳/T</th></tr></thead><tbody id="cust-tbody"></tbody></table></div>
+      <div class="tw"><table><thead><tr><th>Customer</th><th class="tn">Vol</th><th class="tn">Rev ৳</th><th class="tn">৳/T</th></tr></thead><tbody id="tb-cust"></tbody></table></div>
       <div class="sec">By Salesman (MTD)</div>
-      <div class="tw"><table><thead><tr><th>Salesman</th><th class="tn">Vol MT</th><th class="tn">Rev ৳</th></tr></thead><tbody id="sal-tbody"></tbody></table></div>
+      <div class="tw"><table><thead><tr><th>Salesman</th><th class="tn">Vol</th><th class="tn">Rev ৳</th></tr></thead><tbody id="tb-sal"></tbody></table></div>
     </div>
   </div>
 
   <div class="overlay" id="ov-inventory">
     <div class="ov-hdr"><div class="ov-title">Inventory</div><button class="ov-back" onclick="closeOv()">← Back</button></div>
     <div class="ov-body">
-      <div class="sec">Closing Stocks (Latest Day)</div>
+      <div class="sec">Closing Stocks — Latest Day</div>
       <div class="kgrid">
-        <div class="kc cr"><div class="kc-lbl">HMS Scrap</div><div class="kc-val red" id="iv-hms">—</div></div>
-        <div class="kc"><div class="kc-lbl">Bundle Scrap</div><div class="kc-val" id="iv-bundle">—</div></div>
-        <div class="kc ct"><div class="kc-lbl">Billet</div><div class="kc-val teal" id="iv-billet">—</div></div>
-        <div class="kc cg"><div class="kc-lbl">Rod Inventory</div><div class="kc-val gold" id="iv-rod">—</div></div>
+        <div class="kc cr"><div class="kc-lbl">HMS Scrap</div><div class="kc-val red" id="iv-hms">—</div><div class="kc-sub">MT</div></div>
+        <div class="kc"><div class="kc-lbl">Bundle Scrap</div><div class="kc-val" id="iv-bun">—</div><div class="kc-sub">MT</div></div>
+        <div class="kc cs"><div class="kc-lbl">Billet</div><div class="kc-val sil" id="iv-bil">—</div><div class="kc-sub">MT</div></div>
+        <div class="kc cs"><div class="kc-lbl">Rod Inventory</div><div class="kc-val sil" id="iv-rod">—</div><div class="kc-sub">MT</div></div>
       </div>
-      <div class="sec">Period Flows <span class="badge" id="iv-bdg">—</span></div>
+      <div class="sec">Period Flows <span class="bdg" id="iv-bdg">—</span></div>
       <div class="kgrid">
         <div class="kc"><div class="kc-lbl">Scrap Consumed</div><div class="kc-val" id="iv-sc">—</div><div class="kc-sub">MT</div></div>
-        <div class="kc ct"><div class="kc-lbl">Billet Produced</div><div class="kc-val teal" id="iv-bp">—</div><div class="kc-sub">MT</div></div>
+        <div class="kc cs"><div class="kc-lbl">Billet Produced</div><div class="kc-val sil" id="iv-bp">—</div><div class="kc-sub">MT</div></div>
         <div class="kc"><div class="kc-lbl">Rod Produced</div><div class="kc-val" id="iv-rp">—</div><div class="kc-sub">MT</div></div>
-        <div class="kc cg"><div class="kc-lbl">Delivered</div><div class="kc-val gold" id="iv-del">—</div><div class="kc-sub">MT</div></div>
-        <div class="kc ct kc-full"><div class="kc-lbl">Scrap → Billet Ratio</div><div class="kc-val teal" id="iv-rat">—</div><div class="kc-sub">MT scrap per MT billet</div></div>
+        <div class="kc cs"><div class="kc-lbl">Delivered</div><div class="kc-val sil" id="iv-del">—</div><div class="kc-sub">MT</div></div>
+        <div class="kc cs kc-full"><div class="kc-lbl">Scrap → Billet Ratio</div><div class="kc-val sil" id="iv-rat">—</div><div class="kc-sub">MT scrap per MT billet</div></div>
       </div>
     </div>
   </div>
 
   <div class="overlay" id="ov-finances">
     <div class="ov-hdr"><div class="ov-title">Finances</div><button class="ov-back" onclick="closeOv()">← Back</button></div>
-    <div class="ov-body"><div class="cs"><div class="cs-t">COMING SOON</div><div class="cs-s">Finance data to be provided.</div></div></div>
+    <div class="ov-body"><div class="cs-empty"><div class="cs-title">COMING SOON</div><div class="cs-sub">Finance data to be provided.</div></div></div>
   </div>
 
   <div class="overlay" id="ov-monthly">
     <div class="ov-hdr"><div class="ov-title">Monthly</div><button class="ov-back" onclick="closeOv()">← Back</button></div>
     <div class="ov-body">
       <div class="sec">Year at a Glance</div>
-      <div class="tw"><table><thead><tr><th>Month</th><th class="tn">Prod MT</th><th class="tn">Revenue</th><th class="tn">Cost/T</th><th class="tn">Margin/T</th></tr></thead><tbody id="mo-tbody"></tbody></table></div>
+      <div class="tw"><table><thead><tr><th>Month</th><th class="tn">Prod</th><th class="tn">Revenue</th><th class="tn">Cost/T</th><th class="tn">Margin/T</th></tr></thead><tbody id="tb-mo"></tbody></table></div>
       <div class="sec">Monthly Detail</div>
       <div id="mo-cards"></div>
     </div>
@@ -357,194 +579,183 @@ tr:last-child td{border-bottom:none}
 </div><!-- end app -->
 
 <script>
-var PD = {};
-var FULL = {};
-var curP = '7d';
+var D={}, curP='7d';
 
-// ── Load data.json ──────────────────────────────────────────────────────
-function loadData() {
-  fetch('data.json?t=' + Date.now())
-    .then(function(r) {
-      if(!r.ok) throw new Error('HTTP ' + r.status);
-      return r.json();
-    })
-    .then(function(d) {
-      FULL = d;
-      buildPD(d);
-      renderAll(d);
-    })
-    .catch(function(err) {
-      document.getElementById('load-msg').textContent = 'Could not load data.json — ' + err.message;
+function fv(v){
+  if(v==null)return'—';
+  var a=Math.abs(+v);
+  if(a>=10000000)return(+v/10000000).toFixed(1)+'Cr';
+  if(a>=100000)return(+v/100000).toFixed(1)+'L';
+  if(a>=1000)return(+v/1000).toFixed(1)+'K';
+  return String(Math.round(+v));
+}
+function fm(v){return v!=null?(+v).toFixed(1):'—';}
+function fr(v){return v&&+v>0?(+v).toFixed(3):'—';}
+function cf(v){return v?Math.round(+v).toLocaleString('en-IN'):'—';}
+function n(id,val){var e=document.getElementById(id);if(e)e.textContent=val;}
+function sp(id,v){
+  var e=document.getElementById(id);if(!e)return;
+  var pos=v>=0;
+  e.innerHTML='<span class="spb '+(pos?'pos':'neg')+'">'+(pos?'▲':'▼')+' ৳'+Math.abs(v).toLocaleString('en-IN')+'</span>';
+}
+
+function loadData(){
+  fetch('data.json?t='+Date.now())
+    .then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json();})
+    .then(function(d){D=d;renderAll();})
+    .catch(function(err){
+      document.getElementById('ls-msg').textContent='Error: '+err.message;
       console.error(err);
     });
 }
 
-function buildPD(d) {
-  var comp = d.competitors;
-  ['today','7d','10d','14d','30d'].forEach(function(key) {
-    var m = d.periods[key]; if(!m) return;
-    PD[key] = {
-      sales: fm(m.sales_vol) + ' MT',
-      revenue: fv(m.revenue),
-      prod: fm(m.rod) + ' MT',
-      scrap_exp: fv(m.scrap_exp_total),
-      avg_rate: fv(m.avg_price),
-      mkt_rate: fv(comp.others_avg),
-    };
-  });
-}
+function renderAll(){
+  var m=D.periods.mtd, c=D.competitors, s=D.stocks, meta=D.meta;
 
-function renderAll(d) {
-  var m = d.periods.mtd;
-  var comp = d.competitors;
-  var stk = d.stocks;
+  // Hide loader, show app
+  document.getElementById('load-screen').classList.add('gone');
+  document.getElementById('app').style.display='flex';
 
-  n('top-date-val', d.meta.latest_date);
-  n('top-gen-val', d.meta.generated);
-  n('up-info-val', 'Updated: ' + d.meta.generated);
-  document.getElementById('load-overlay').classList.add('hidden');
-  document.getElementById('main-content').style.display = 'flex';
+  // Topbar
+  n('top-date', meta.latest_date);
+  n('top-updated', meta.generated);
 
-  // MTD tiles
-  n('mtd-sales',  fm(m.sales_vol) + ' MT');
-  n('mtd-prod',   fm(m.rod) + ' MT');
-  n('mtd-deliv',  fm(m.delivery) + ' MT');
-  n('mtd-trucks', m.trucks + ' trucks dispatched');
-  n('mtd-rate',   fv(m.avg_price));
-  n('mtd-scrap',  fv(m.scrap_exp_pt));
-  n('mtd-elec',   fv(m.electricity));
-  n('mtd-ratio',  fr(m.scrap_to_billet));
+  // Month hero
+  var dt=new Date(meta.latest_date_iso||meta.mtd_start);
+  var months=['JANUARY','FEBRUARY','MARCH','APRIL','MAY','JUNE',
+              'JULY','AUGUST','SEPTEMBER','OCTOBER','NOVEMBER','DECEMBER'];
+  var mtdDt=new Date(meta.mtd_start.replace(/ /g,'-').replace(/([A-Za-z]+)/,function(m){
+    var i={'Jan':0,'Feb':1,'Mar':2,'Apr':3,'May':4,'Jun':5,'Jul':6,'Aug':7,'Sep':8,'Oct':9,'Nov':10,'Dec':11};
+    return (i[m]+1<10?'0':'')+(i[m]+1);
+  }));
+  // Parse mtd_start like "01 Apr 2026"
+  var parts=meta.mtd_start.split(' ');
+  var mIdx={'Jan':0,'Feb':1,'Mar':2,'Apr':3,'May':4,'Jun':5,'Jul':6,'Aug':7,'Sep':8,'Oct':9,'Nov':10,'Dec':11};
+  n('month-name', months[mIdx[parts[1]]||3]);
+  n('month-year', parts[2]);
 
-  // Price intel (static latest day)
-  n('rv-hkg',    cf(comp.hkg_today));
-  n('rv-others', cf(comp.others_avg));
-  n('rv-bsrm',   cf(comp.bsrm));
-  sp('rv-vs-others', comp.hkg_vs_others);
-  sp('rv-vs-bsrm',   comp.hkg_vs_bsrm);
+  // MTD stats
+  n('s-sales',  fm(m.sales_vol)+' MT');
+  n('s-prod',   fm(m.rod)+' MT');
+  n('s-deliv',  fm(m.delivery)+' MT');
+  n('s-trucks', m.trucks+' trucks dispatched');
+  n('s-rate',   fv(m.avg_price));
+  n('s-scrap',  fv(m.scrap_exp_pt));
+  n('s-elec',   fv(m.electricity));
+  n('s-ratio',  fr(m.scrap_to_billet));
+
+  // Price intel
+  n('rv-hkg',  cf(c.hkg_today));
+  n('rv-oth',  cf(c.others_avg));
+  n('rv-bsrm', cf(c.bsrm));
+  sp('rv-vo', c.hkg_vs_others);
+  sp('rv-vb', c.hkg_vs_bsrm);
 
   // Stocks
-  n('iv-hms',    fm(stk.hms) + ' MT');
-  n('iv-bundle', fm(stk.bundle) + ' MT');
-  n('iv-billet', fm(stk.billet) + ' MT');
-  n('iv-rod',    fm(stk.rod) + ' MT');
+  n('iv-hms', fm(s.hms)+' MT');
+  n('iv-bun', fm(s.bundle)+' MT');
+  n('iv-bil', fm(s.billet)+' MT');
+  n('iv-rod', fm(s.rod)+' MT');
 
-  // Customers
-  var ctb = document.getElementById('cust-tbody');
-  if(ctb) ctb.innerHTML = d.top_customers.map(function(c) {
-    return '<tr><td class="tnm">'+c.name+'</td><td class="tn">'+fm(c.vol)+'</td><td class="tn">'+fv(c.rev)+'</td><td class="tn">'+fv(c.avg_px)+'</td></tr>';
+  // Tables
+  var ctb=document.getElementById('tb-cust');
+  if(ctb) ctb.innerHTML=D.top_customers.map(function(c){
+    return'<tr><td class="tnm">'+c.name+'</td><td class="tn">'+fm(c.vol)+'</td><td class="tn">'+fv(c.rev)+'</td><td class="tn">'+fv(c.avg_px)+'</td></tr>';
+  }).join('');
+  var stb=document.getElementById('tb-sal');
+  if(stb) stb.innerHTML=D.salesmen.map(function(s){
+    return'<tr><td class="tnm">'+s.name+'</td><td class="tn">'+fm(s.vol)+'</td><td class="tn">'+fv(s.rev)+'</td></tr>';
   }).join('');
 
-  // Salesmen
-  var stb = document.getElementById('sal-tbody');
-  if(stb) stb.innerHTML = d.salesmen.map(function(s) {
-    return '<tr><td class="tnm">'+s.name+'</td><td class="tn">'+fm(s.vol)+'</td><td class="tn">'+fv(s.rev)+'</td></tr>';
-  }).join('');
-
-  // Monthly table
-  var mtb = document.getElementById('mo-tbody');
-  if(mtb) mtb.innerHTML = d.monthly.map(function(m) {
-    var pos = m.margin_pt >= 0;
-    return '<tr><td style="font-weight:700">'+m.label+'</td>'+
+  // Monthly
+  var mtb=document.getElementById('tb-mo');
+  if(mtb) mtb.innerHTML=D.monthly.map(function(m){
+    var p=m.margin_pt>=0;
+    return'<tr><td style="font-weight:700">'+m.label+'</td>'+
       '<td class="tn">'+Math.round(m.rod)+'</td>'+
-      '<td class="tn" style="color:var(--gold2)">'+fv(m.revenue)+'</td>'+
+      '<td class="tn" style="color:var(--silver2)">'+fv(m.revenue)+'</td>'+
       '<td class="tn" style="color:var(--red2)">'+fv(m.total_cost_pt)+'</td>'+
-      '<td class="tn" style="color:'+(pos?'var(--green)':'var(--red2)')+'">'+
-      (pos?'▲':'▼')+fv(Math.abs(m.margin_pt))+'</td></tr>';
+      '<td class="tn" style="color:'+(p?'#00c853':'var(--red2)')+'">'+
+      (p?'▲':'▼')+fv(Math.abs(m.margin_pt))+'</td></tr>';
   }).join('');
-
-  // Monthly cards
-  var mcd = document.getElementById('mo-cards');
-  if(mcd) mcd.innerHTML = d.monthly.map(function(m) {
-    var pos = m.margin_pt >= 0;
-    return '<div class="mc" style="border-left:3px solid '+(pos?'var(--green)':'var(--red2)')+'">'+
-      '<div class="mc-hdr"><span class="mc-name">'+m.label+'</span>'+
-      '<span class="spb '+(pos?'pos':'neg')+'">'+(pos?'▲':'▼')+' ৳'+fv(Math.abs(m.margin_pt))+'/T</span></div>'+
-      '<div class="mc-grid">'+
-        '<div class="mcgi"><div class="lbl">Production</div><div class="val">'+Math.round(m.rod)+' MT</div></div>'+
-        '<div class="mcgi"><div class="lbl">Revenue</div><div class="val" style="color:var(--gold2)">'+fv(m.revenue)+'</div></div>'+
-        '<div class="mcgi"><div class="lbl">Cost/Ton</div><div class="val" style="color:var(--red2)">'+fv(m.total_cost_pt)+'</div></div>'+
-        '<div class="mcgi"><div class="lbl">Electricity</div><div class="val">'+fv(m.electricity)+'</div></div>'+
-        '<div class="mcgi"><div class="lbl">Scrap Used</div><div class="val">'+Math.round(m.scrap_consumed)+' MT</div></div>'+
-        '<div class="mcgi"><div class="lbl">Delivery</div><div class="val" style="color:var(--teal)">'+Math.round(m.delivery)+' MT</div></div>'+
+  var mcd=document.getElementById('mo-cards');
+  if(mcd) mcd.innerHTML=D.monthly.map(function(m){
+    var p=m.margin_pt>=0;
+    return'<div class="mc-card" style="border-left:3px solid '+(p?'#00c853':'var(--red)')+'">' +
+      '<div class="mc-card-hdr"><span class="mc-card-name">'+m.label+'</span>'+
+      '<span class="spb '+(p?'pos':'neg')+'">'+(p?'▲':'▼')+' ৳'+fv(Math.abs(m.margin_pt))+'/T</span></div>'+
+      '<div class="mc-card-grid">'+
+        '<div class="mcgi"><div class="lbl">Prod</div><div class="val">'+Math.round(m.rod)+'MT</div></div>'+
+        '<div class="mcgi"><div class="lbl">Revenue</div><div class="val" style="color:var(--silver2)">'+fv(m.revenue)+'</div></div>'+
+        '<div class="mcgi"><div class="lbl">Cost/T</div><div class="val" style="color:var(--red2)">'+fv(m.total_cost_pt)+'</div></div>'+
+        '<div class="mcgi"><div class="lbl">Elec</div><div class="val">'+fv(m.electricity)+'</div></div>'+
+        '<div class="mcgi"><div class="lbl">Scrap</div><div class="val">'+Math.round(m.scrap_consumed)+'MT</div></div>'+
+        '<div class="mcgi"><div class="lbl">Delivery</div><div class="val" style="color:var(--silver2)">'+Math.round(m.delivery)+'MT</div></div>'+
       '</div></div>';
   }).join('');
 
   setP('7d');
 }
 
-// ── Toggle ───────────────────────────────────────────────────────────────
-function setP(w) {
-  curP = w;
-  document.querySelectorAll('.tbtn').forEach(function(b) {
-    b.classList.toggle('on', b.textContent.toLowerCase().replace(/ /g,'') === w);
+function setP(w){
+  curP=w;
+  document.querySelectorAll('.tbtn').forEach(function(b){
+    b.classList.toggle('on',b.textContent.toLowerCase().replace(/ /g,'')=== w);
   });
-  var p = PD[w]; if(!p) return;
-  n('tm0', p.sales); n('tm1', p.revenue); n('tm2', p.prod);
-  n('tm3', p.scrap_exp); n('tm4', p.avg_rate); n('tm5', p.mkt_rate);
-  refreshOv();
+  var m=D.periods&&D.periods[w]; if(!m)return;
+  n('tm-sales',  fm(m.sales_vol)+' MT');
+  n('tm-prod',   fm(m.rod)+' MT');
+  n('tm-rate',   fv(m.avg_price));
+  n('tm-rev',    fv(m.revenue));
+  n('tm-scrap',  fv(m.scrap_exp_total));
+  n('tm-costpt', fv(m.total_cost_pt));
+  refreshOv(w);
 }
 
-function refreshOv() {
-  var m = FULL.periods && FULL.periods[curP]; if(!m) return;
-  var badge = curP.toUpperCase();
-  ['mg-bdg','cs-bdg','rv-bdg','iv-bdg'].forEach(function(id) { n(id, badge); });
+function refreshOv(w){
+  var m=D.periods&&D.periods[w||curP]; if(!m)return;
+  var b=(w||curP).toUpperCase();
+  ['mg-bdg','cs-bdg','rv-bdg','iv-bdg'].forEach(function(id){n(id,b);});
 
   // Margins
-  n('mg-tr', fv(m.total_rev)); n('mg-sr', fv(m.revenue)); n('mg-or', fv(m.other_rev));
-  n('mg-sc', fv(Math.round(m.scrap_consump_pt * m.rod)));
-  n('mg-oc', fv(m.oc_total)); n('mg-tc', fv(m.total_cost_pt)); n('mg-ap', fv(m.avg_price));
-  var gm = document.getElementById('mg-gm');
-  if(gm) { gm.textContent=(m.gross_margin<0?'-':'')+fv(Math.abs(m.gross_margin)); gm.style.color=m.gross_margin>=0?'var(--green)':'var(--red2)'; }
-  n('mg-gms', m.gross_margin>=0?'৳ · Profit':'৳ · Loss');
-  var mp=document.getElementById('mg-mp'); if(mp){ mp.textContent=(m.margin_pt<0?'-':'')+fv(Math.abs(m.margin_pt)); mp.style.color=m.margin_pt>=0?'var(--green)':'var(--red2)'; }
-  var spr=m.avg_price-m.total_cost_pt; var se=document.getElementById('mg-sp'); if(se){ se.textContent=(spr<0?'-':'')+fv(Math.abs(spr)); se.style.color=spr>=0?'var(--green)':'var(--red2)'; }
-  n('mg-rod', fm(m.rod)); n('mg-sv', fm(m.sales_vol));
+  n('mg-tr',fv(m.total_rev));n('mg-sr',fv(m.revenue));n('mg-or',fv(m.other_rev));
+  n('mg-sc',fv(Math.round(m.scrap_consump_pt*m.rod)));
+  n('mg-oc',fv(m.oc_total));n('mg-tc',fv(m.total_cost_pt));n('mg-ap',fv(m.avg_price));
+  var gm=document.getElementById('mg-gm');
+  if(gm){gm.textContent=(m.gross_margin<0?'-':'')+fv(Math.abs(m.gross_margin));gm.style.color=m.gross_margin>=0?'#00c853':'var(--red2)';}
+  n('mg-gms',m.gross_margin>=0?'৳  ·  Profit':'৳  ·  Loss');
+  var mp=document.getElementById('mg-mp');
+  if(mp){mp.textContent=(m.margin_pt<0?'-':'')+fv(Math.abs(m.margin_pt));mp.style.color=m.margin_pt>=0?'#00c853':'var(--red2)';}
+  var spr=m.avg_price-m.total_cost_pt;
+  var se=document.getElementById('mg-sp');
+  if(se){se.textContent=(spr<0?'-':'')+fv(Math.abs(spr));se.style.color=spr>=0?'#00c853':'var(--red2)';}
+  n('mg-rod',fm(m.rod));n('mg-sv',fm(m.sales_vol));
 
   // Costing
-  n('cs-ep', fv(m.scrap_exp_pt)); n('cs-et', fv(m.scrap_exp_total));
-  n('cs-el', fv(m.electricity)); n('cs-sc', fv(m.scrap_consump_pt));
-  n('cs-oc', fv(m.other_cost_pt)); n('cs-tc', fv(m.total_cost_pt));
-  n('cs-rod', fm(m.rod)); n('cs-rat', fr(m.scrap_to_billet));
+  n('cs-ep',fv(m.scrap_exp_pt));n('cs-et',fv(m.scrap_exp_total));
+  n('cs-el',fv(m.electricity));n('cs-sc',fv(m.scrap_consump_pt));
+  n('cs-oc',fv(m.other_cost_pt));n('cs-tc',fv(m.total_cost_pt));
+  n('cs-rod',fm(m.rod));n('cs-rat',fr(m.scrap_to_billet));
 
-  // Revenue period
-  n('rv-vol', fm(m.sales_vol)); n('rv-rev', fv(m.revenue));
-  n('rv-del', fm(m.delivery)); n('rv-trk', m.trucks);
+  // Revenue
+  n('rv-vol',fm(m.sales_vol));n('rv-rev',fv(m.revenue));
+  n('rv-del',fm(m.delivery));n('rv-trk',m.trucks);
 
-  // Inventory period
-  n('iv-sc', fm(m.sc_consumed)); n('iv-bp', fm(m.billet));
-  n('iv-rp', fm(m.rod)); n('iv-del', fm(m.delivery));
-  n('iv-rat', fr(m.scrap_to_billet));
+  // Inventory flows
+  n('iv-sc',fm(m.sc_consumed));n('iv-bp',fm(m.billet));
+  n('iv-rp',fm(m.rod));n('iv-del',fm(m.delivery));
+  n('iv-rat',fr(m.scrap_to_billet));
 }
 
-// ── Nav ──────────────────────────────────────────────────────────────────
-function openOv(name) {
-  var el = document.getElementById('ov-'+name); if(el) el.classList.add('open');
-  refreshOv();
+function openOv(name){
+  var e=document.getElementById('ov-'+name);
+  if(e)e.classList.add('open');
+  refreshOv(curP);
 }
-function closeOv() {
-  document.querySelectorAll('.overlay.open').forEach(function(e) { e.classList.remove('open'); });
-}
-
-// ── Helpers ──────────────────────────────────────────────────────────────
-function n(id,v) { var e=document.getElementById(id); if(e) e.textContent=v; }
-function fv(v) {
-  if(v==null) return '—';
-  var a=Math.abs(+v);
-  if(a>=10000000) return (+v/10000000).toFixed(1)+'Cr';
-  if(a>=100000)   return (+v/100000).toFixed(1)+'L';
-  if(a>=1000)     return (+v/1000).toFixed(1)+'K';
-  return String(Math.round(+v));
-}
-function fm(v) { return v!=null?(+v).toFixed(1):'—'; }
-function fr(v) { return v&&+v>0?(+v).toFixed(3):'—'; }
-function cf(v) { return v ? Math.round(+v).toLocaleString('en-IN') : '—'; }
-function sp(id,v) {
-  var el=document.getElementById(id); if(!el) return;
-  var pos=v>=0;
-  el.innerHTML='<span class="spb '+(pos?'pos':'neg')+'">'+(pos?'▲':'▼')+' ৳'+Math.abs(v).toLocaleString('en-IN')+'</span>';
+function closeOv(){
+  document.querySelectorAll('.overlay.open').forEach(function(e){e.classList.remove('open');});
 }
 
-// ── Start ────────────────────────────────────────────────────────────────
 loadData();
 </script>
 </body>
