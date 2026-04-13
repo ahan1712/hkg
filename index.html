@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>HKG Dashboard</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --bg:#09090b;--s1:#111115;--s2:#17171c;--s3:#1e1e26;
+  --b1:#222230;--b2:#2e2e40;
+  --red:#b91c1c;--red2:#ef4444;--red-bg:rgba(185,28,28,.12);
+  --gold:#d4a547;--gold2:#f0c060;--gold-bg:rgba(212,165,71,.1);
+  --teal:#0d9488;--green:#16a34a;--green-bg:rgba(22,163,74,.1);
+  --white:#f1efe9;--dim:#6b6b85;--dim2:#44445a;
+}
+html,body{height:100%;background:var(--bg);color:var(--white);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;overflow:hidden}
+.app{display:flex;flex-direction:column;height:100vh;height:100dvh;max-width:480px;margin:0 auto}
+
+/* TOPBAR */
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:10px 14px 8px;background:var(--s1);border-bottom:1px solid var(--b1);flex-shrink:0}
+.brand{font-size:20px;font-weight:800;letter-spacing:4px;color:var(--gold)}
+.brand-sub{font-size:9px;color:var(--dim);letter-spacing:.5px;margin-top:-2px}
+.top-date{font-size:13px;font-weight:600;color:var(--white);text-align:right}
+.top-sub{font-size:9px;color:var(--dim);text-align:right;margin-top:1px}
+.live{display:inline-block;width:5px;height:5px;background:var(--green);border-radius:50%;margin-right:4px;animation:pulse 2s infinite;vertical-align:middle}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* BODY */
+.body{display:flex;flex:1;overflow:hidden;min-height:0}
+
+/* LEFT PANEL */
+.left{flex:1;display:flex;flex-direction:column;overflow-y:auto;background:var(--s1);border-right:3px solid var(--red)}
+.left::-webkit-scrollbar{width:0}
+.left-hdr{background:var(--red);padding:10px 14px 8px;flex-shrink:0;position:sticky;top:0;z-index:5}
+.left-hdr-title{font-size:15px;font-weight:800;letter-spacing:3px;color:var(--white)}
+.left-hdr-sub{font-size:8px;color:rgba(255,255,255,.65);letter-spacing:1.5px;text-transform:uppercase;margin-top:1px}
+
+.tile{padding:12px 14px;border-bottom:1px solid var(--b1);flex-shrink:0;position:relative;overflow:hidden}
+.tile::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--b2)}
+.tile.gold::before{background:var(--gold)}
+.tile.red::before{background:var(--red2)}
+.tile.teal::before{background:var(--teal)}
+.tile.green::before{background:var(--green)}
+.t-label{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--dim);margin-bottom:3px;font-weight:600}
+.t-val{font-size:30px;font-weight:800;line-height:1;letter-spacing:-1px}
+.t-val.gold{color:var(--gold2)}
+.t-val.red{color:var(--red2)}
+.t-val.teal{color:var(--teal)}
+.t-unit{font-size:9px;color:var(--dim);margin-top:3px;letter-spacing:.3px}
+
+/* RIGHT NAV */
+.right{width:72px;flex-shrink:0;display:flex;flex-direction:column;background:var(--s2);border-left:1px solid var(--b1)}
+.right::-webkit-scrollbar{width:0}
+.right-hdr{padding:7px 0;background:var(--s3);font-size:7px;letter-spacing:1px;color:var(--dim);text-transform:uppercase;text-align:center;flex-shrink:0;border-bottom:1px solid var(--b1)}
+.nav{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:11px 4px;cursor:pointer;border-bottom:1px solid var(--b1);border-left:2px solid transparent;transition:all .15s;text-align:center;flex-shrink:0;min-height:58px;user-select:none}
+.nav:active{background:var(--s3);border-left-color:var(--red2)}
+.nav-icon{font-size:15px;margin-bottom:3px;line-height:1}
+.nav-name{font-size:10px;font-weight:700;letter-spacing:.3px;color:var(--white);line-height:1.1;text-transform:uppercase}
+
+/* BOTTOM: TOGGLE + METRICS */
+.bottom{flex-shrink:0;background:var(--s1);border-top:2px solid var(--b2)}
+.toggle-row{display:flex;align-items:center;gap:4px;padding:7px 10px 5px;border-bottom:1px solid var(--b1)}
+.t-lbl{font-size:8px;color:var(--dim);letter-spacing:1px;text-transform:uppercase;margin-right:2px;white-space:nowrap}
+.tbtns{display:flex;gap:3px;flex:1}
+.tbtn{flex:1;padding:5px 2px;font-size:10px;font-weight:700;border:1px solid var(--b2);background:transparent;color:var(--dim);cursor:pointer;border-radius:3px;transition:all .12s;letter-spacing:.5px;-webkit-appearance:none;font-family:inherit}
+.tbtn.on{background:var(--red);border-color:var(--red);color:var(--white)}
+.tbtn:active{transform:scale(.93)}
+.metrics-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0}
+.mg{padding:8px 10px;border-right:1px solid var(--b1);border-bottom:1px solid var(--b1)}
+.mg:nth-child(3n){border-right:none}
+.mg:nth-last-child(-n+3){border-bottom:none}
+.mg-label{font-size:7.5px;letter-spacing:.8px;text-transform:uppercase;color:var(--dim);margin-bottom:2px;font-weight:600;line-height:1.2}
+.mg-val{font-size:17px;font-weight:800;line-height:1;letter-spacing:-.5px;color:var(--white)}
+.mg-val.gold{color:var(--gold2)}
+.mg-val.red{color:var(--red2)}
+.mg-val.teal{color:var(--teal)}
+
+/* UPLOAD */
+.upload-bar{display:flex;align-items:center;gap:6px;padding:5px 10px;background:var(--bg);border-top:1px solid var(--b1);flex-shrink:0}
+.up-info{font-size:8px;color:var(--dim);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#file-input{display:none}
+.up-btn{font-size:9px;padding:4px 10px;background:rgba(26,42,66,.8);color:var(--white);border:1px solid var(--b2);border-radius:3px;cursor:pointer;letter-spacing:.5px;white-space:nowrap;-webkit-appearance:none;font-family:inherit;font-weight:600}
+.up-status{font-size:9px;color:var(--green);min-width:14px}
+
+/* OVERLAY */
+.overlay{display:none;position:fixed;inset:0;background:var(--bg);z-index:100;flex-direction:column;max-width:480px;margin:0 auto}
+.overlay.open{display:flex}
+.ov-hdr{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:var(--red);flex-shrink:0}
+.ov-title{font-size:24px;font-weight:800;letter-spacing:2px}
+.ov-back{font-size:11px;font-weight:700;letter-spacing:1px;cursor:pointer;padding:5px 12px;border:1px solid rgba(255,255,255,.4);border-radius:3px;color:var(--white);-webkit-appearance:none;background:transparent;font-family:inherit}
+.ov-body{flex:1;overflow-y:auto;padding-bottom:30px}
+.ov-body::-webkit-scrollbar{width:0}
+.sec{font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--dim);padding:14px 16px 6px;display:flex;align-items:center;gap:8px;font-weight:600}
+.sec::after{content:'';flex:1;height:1px;background:var(--b1)}
+.badge{display:inline-block;padding:2px 6px;border-radius:3px;font-size:8px;font-weight:700;letter-spacing:1px;background:var(--red-bg);color:var(--red2)}
+.kgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0 12px 4px}
+.kc{background:var(--s1);border:1px solid var(--b1);border-radius:6px;padding:11px 12px;position:relative;overflow:hidden}
+.kc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--b2)}
+.kc.cr::before{background:var(--red2)}.kc.cg::before{background:var(--gold)}.kc.ct::before{background:var(--teal)}.kc.cgr::before{background:var(--green)}
+.kc-full{grid-column:1/-1}
+.kc-lbl{font-size:8px;letter-spacing:.8px;text-transform:uppercase;color:var(--dim);margin-bottom:5px;font-weight:600}
+.kc-val{font-size:26px;font-weight:800;line-height:1;letter-spacing:-.5px;color:var(--white)}
+.kc-val.gold{color:var(--gold2)}.kc-val.red{color:var(--red2)}.kc-val.green{color:var(--green)}.kc-val.teal{color:var(--teal)}
+.kc-sub{font-size:8px;color:var(--dim);margin-top:3px}
+.big-kpi{margin:4px 12px 8px;background:var(--s1);border:1px solid var(--b1);border-radius:6px;padding:14px 16px;border-left:3px solid var(--gold)}
+.bk-lbl{font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:var(--dim);margin-bottom:4px;font-weight:600}
+.bk-val{font-size:38px;font-weight:800;color:var(--gold2);letter-spacing:-1px;line-height:1}
+.bk-sub{font-size:9px;color:var(--dim);margin-top:4px}
+.prow{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-bottom:1px solid var(--b1)}
+.pname{font-size:10px;color:var(--dim);font-weight:500}
+.pval{font-size:18px;font-weight:700;color:var(--white)}
+.spb{display:inline-flex;align-items:center;gap:2px;font-size:11px;font-weight:700;padding:3px 8px;border-radius:3px}
+.spb.pos{background:var(--green-bg);color:var(--green)}.spb.neg{background:var(--red-bg);color:var(--red2)}
+.tw{padding:0 12px 8px;overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:11px}
+th{font-size:7.5px;letter-spacing:1px;text-transform:uppercase;color:var(--dim);padding:5px 6px;text-align:left;border-bottom:1px solid var(--b2);font-weight:600}
+td{padding:7px 6px;border-bottom:1px solid var(--b1);color:var(--white)}
+tr:last-child td{border-bottom:none}
+.tn{text-align:right;font-size:11px;font-variant-numeric:tabular-nums}
+.tnm{max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mc{margin:0 12px 8px;background:var(--s1);border:1px solid var(--b1);border-radius:6px;padding:12px}
+.mc-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.mc-name{font-size:18px;font-weight:800;letter-spacing:-.3px}
+.mc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.mcgi .lbl{font-size:7.5px;letter-spacing:.5px;text-transform:uppercase;color:var(--dim);margin-bottom:2px;font-weight:600}
+.mcgi .val{font-size:14px;font-weight:700;color:var(--white)}
+.cs{display:flex;flex-direction:column;align-items:center;justify-content:center;height:55vh;gap:10px}
+.cs-t{font-size:44px;font-weight:800;color:var(--dim2);letter-spacing:4px}
+.cs-s{font-size:11px;color:var(--dim);text-align:center;max-width:180px;line-height:1.7}
+
+/* Loading */
+#load-overlay{position:fixed;inset:0;background:var(--bg);z-index:999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px}
+#load-overlay.hidden{display:none}
+.load-brand{font-size:32px;font-weight:800;letter-spacing:6px;color:var(--gold)}
+.load-msg{font-size:12px;color:var(--dim);letter-spacing:1px}
+.load-spinner{width:24px;height:24px;border:2px solid var(--b2);border-top-color:var(--red2);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+#main-content{display:none;flex-direction:column;height:100%}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- LOADING SCREEN -->
+  <div id="load-overlay">
+    <div class="load-brand">HKG</div>
+    <div class="load-spinner"></div>
+    <div class="load-msg" id="load-msg">Loading dashboard data...</div>
+  </div>
+
+  <!-- MAIN CONTENT (shown after data loads) -->
+  <div id="main-content">
+
+    <div class="topbar">
+      <div>
+        <div class="brand">HKG</div>
+        <div class="brand-sub">Factory Operations</div>
+      </div>
+      <div>
+        <div class="top-date"><span class="live"></span><span id="top-date-val">—</span></div>
+        <div class="top-sub"><span id="top-gen-val">—</span></div>
+      </div>
+    </div>
+
+    <div class="body">
+      <div class="left">
+        <div class="left-hdr">
+          <div class="left-hdr-title">MONTH TO DATE</div>
+          <div class="left-hdr-sub">Absolute Essentials</div>
+        </div>
+        <div class="tile gold">
+          <div class="t-label">Sales</div>
+          <div class="t-val gold" id="mtd-sales">—</div>
+          <div class="t-unit">MT sold this month</div>
+        </div>
+        <div class="tile teal">
+          <div class="t-label">Production</div>
+          <div class="t-val" id="mtd-prod">—</div>
+          <div class="t-unit">MT rod produced</div>
+        </div>
+        <div class="tile">
+          <div class="t-label">Delivery</div>
+          <div class="t-val" id="mtd-deliv">—</div>
+          <div class="t-unit" id="mtd-trucks">MT dispatched</div>
+        </div>
+        <div class="tile gold">
+          <div class="t-label">HKG Average Rate</div>
+          <div class="t-val gold" id="mtd-rate">—</div>
+          <div class="t-unit" id="mtd-rate-unit">৳ per MT</div>
+        </div>
+        <div class="tile red">
+          <div class="t-label">Scrap Exp / Ton</div>
+          <div class="t-val red" id="mtd-scrap">—</div>
+          <div class="t-unit">৳ wtd avg purchase price</div>
+        </div>
+        <div class="tile red">
+          <div class="t-label">Electricity Bill</div>
+          <div class="t-val red" id="mtd-elec">—</div>
+          <div class="t-unit">৳ MTD total</div>
+        </div>
+        <div class="tile teal">
+          <div class="t-label">Scrap → Billet Ratio</div>
+          <div class="t-val teal" id="mtd-ratio">—</div>
+          <div class="t-unit">MT scrap per MT billet</div>
+        </div>
+      </div>
+
+      <div class="right">
+        <div class="right-hdr">Views</div>
+        <div class="nav" onclick="openOv('margins')"><div class="nav-icon">📊</div><div class="nav-name">Margins</div></div>
+        <div class="nav" onclick="openOv('costing')"><div class="nav-icon">⚙️</div><div class="nav-name">Costing</div></div>
+        <div class="nav" onclick="openOv('revenue')"><div class="nav-icon">💰</div><div class="nav-name">Revenue</div></div>
+        <div class="nav" onclick="openOv('inventory')"><div class="nav-icon">📦</div><div class="nav-name">Inventory</div></div>
+        <div class="nav" onclick="openOv('finances')"><div class="nav-icon">🏦</div><div class="nav-name">Finances</div></div>
+        <div class="nav" onclick="openOv('monthly')"><div class="nav-icon">📅</div><div class="nav-name">Monthly</div></div>
+      </div>
+    </div>
+
+    <div class="bottom">
+      <div class="toggle-row">
+        <span class="t-lbl">Period</span>
+        <div class="tbtns">
+          <button class="tbtn" onclick="setP('today')">TODAY</button>
+          <button class="tbtn on" onclick="setP('7d')">7D</button>
+          <button class="tbtn" onclick="setP('10d')">10D</button>
+          <button class="tbtn" onclick="setP('14d')">14D</button>
+          <button class="tbtn" onclick="setP('30d')">30D</button>
+        </div>
+      </div>
+      <div class="metrics-grid">
+        <div class="mg"><div class="mg-label">Total Sales</div><div class="mg-val teal" id="tm0">—</div></div>
+        <div class="mg"><div class="mg-label">Sales Revenue</div><div class="mg-val gold" id="tm1">—</div></div>
+        <div class="mg"><div class="mg-label">Production</div><div class="mg-val" id="tm2">—</div></div>
+        <div class="mg"><div class="mg-label">Scrap Exp Total</div><div class="mg-val red" id="tm3">—</div></div>
+        <div class="mg"><div class="mg-label">HKG Avg Rate</div><div class="mg-val gold" id="tm4">—</div></div>
+        <div class="mg"><div class="mg-label">Market Avg Rate</div><div class="mg-val" id="tm5">—</div></div>
+      </div>
+    </div>
+
+    <div class="upload-bar">
+      <div class="up-info" id="up-info-val">Loading...</div>
+    </div>
+
+  </div><!-- end main-content -->
+
+  <!-- OVERLAYS -->
+  <div class="overlay" id="ov-margins">
+    <div class="ov-hdr"><div class="ov-title">Margins</div><button class="ov-back" onclick="closeOv()">← Back</button></div>
+    <div class="ov-body">
+      <div class="sec">Revenue <span class="badge" id="mg-bdg">—</span></div>
+      <div class="kgrid">
+        <div class="kc cg kc-full"><div class="kc-lbl">Total Revenue (Rod + Other)</div><div class="kc-val gold" id="mg-tr">—</div><div class="kc-sub">৳</div></div>
+        <div class="kc cg"><div class="kc-lbl">Sales Revenue</div><div class="kc-val gold" id="mg-sr">—</div><div class="kc-sub">৳</div></div>
+        <div class="kc"><div class="kc-lbl">Other Revenue</div><div class="kc-val" id="mg-or">—</div><div class="kc-sub">৳</div></div>
+      </div>
+      <div class="sec">Costs</div>
+      <div class="kgrid">
+        <div class="kc cr"><div class="kc-lbl">Scrap Consump Cost</div><div class="kc-val red" id="mg-sc">—</div><div class="kc-sub">৳</div></div>
+        <div class="kc cr"><div class="kc-lbl">Other Costs</div><div class="kc-val red" id="mg-oc">—</div><div class="kc-sub">৳</div></div>
+        <div class="kc cr"><div class="kc-lbl">Total Cost / Ton</div><div class="kc-val red" id="mg-tc">—</div><div class="kc-sub">৳/MT</div></div>
+        <div class="kc cg"><div class="kc-lbl">Avg Sale Price</div><div class="kc-val gold" id="mg-ap">—</div><div class="kc-sub">৳/MT</div></div>
+      </div>
+      <div class="sec">Margin</div>
+      <div class="big-kpi"><div class="bk-lbl">Gross Margin (Total Rev − Total Cost)</div><div class="bk-val" id="mg-gm">—</div><div class="bk-sub" id="mg-gms">৳</div></div>
+      <div class="kgrid" style="margin-top:4px">
+        <div class="kc cgr"><div class="kc-lbl">Margin / Ton</div><div class="kc-val" id="mg-mp">—</div><div class="kc-sub">৳/MT</div></div>
+        <div class="kc"><div class="kc-lbl">Price − Cost Spread</div><div class="kc-val" id="mg-sp">—</div><div class="kc-sub">৳/MT</div></div>
+        <div class="kc ct"><div class="kc-lbl">Rod Produced</div><div class="kc-val teal" id="mg-rod">—</div><div class="kc-sub">MT</div></div>
+        <div class="kc"><div class="kc-lbl">Sales Volume</div><div class="kc-val" id="mg-sv">—</div><div class="kc-sub">MT</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="overlay" id="ov-costing">
+    <div class="ov-hdr"><div class="ov-title">Costing</div><button class="ov-back" onclick="closeOv()">← Back</button></div>
+    <div class="ov-body">
+      <div class="sec">Scrap Expenditure <span class="badge" id="cs-bdg">—</span></div>
+      <div class="kgrid">
+        <div class="kc cr kc-full"><div class="kc-lbl">Scrap Exp / Ton (Wtd Avg Purchase Price)</div><div class="kc-val red" id="cs-ep">—</div><div class="kc-sub">৳/MT purchased</div></div>
+        <div class="kc cr"><div class="kc-lbl">Total Scrap Expenditure</div><div class="kc-val red" id="cs-et">—</div><div class="kc-sub">৳</div></div>
+        <div class="kc cr"><div class="kc-lbl">Electricity</div><div class="kc-val red" id="cs-el">—</div><div class="kc-sub">৳</div></div>
+      </div>
+      <div class="sec">Scrap Consumption</div>
+      <div class="kgrid">
+        <div class="kc cr kc-full"><div class="kc-lbl">Scrap Consumption Cost / Ton</div><div class="kc-val red" id="cs-sc">—</div><div class="kc-sub">৳/MT rod produced</div></div>
+      </div>
+      <div class="sec">Other &amp; Total</div>
+      <div class="kgrid">
+        <div class="kc"><div class="kc-lbl">Other Cost / Ton</div><div class="kc-val" id="cs-oc">—</div><div class="kc-sub">৳/MT</div></div>
+        <div class="kc cr"><div class="kc-lbl">Total Cost / Ton</div><div class="kc-val red" id="cs-tc">—</div><div class="kc-sub">৳/MT</div></div>
+        <div class="kc ct"><div class="kc-lbl">Rod Produced</div><div class="kc-val teal" id="cs-rod">—</div><div class="kc-sub">MT</div></div>
+        <div class="kc ct"><div class="kc-lbl">Scrap→Billet Ratio</div><div class="kc-val teal" id="cs-rat">—</div><div class="kc-sub">MT/MT</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="overlay" id="ov-revenue">
+    <div class="ov-hdr"><div class="ov-title">Revenue</div><button class="ov-back" onclick="closeOv()">← Back</button></div>
+    <div class="ov-body">
+      <div class="sec">Price Intel (Latest Day)</div>
+      <div class="prow"><span class="pname">HKG Avg Sale Price</span><span class="pval" id="rv-hkg">—</span></div>
+      <div class="prow"><span class="pname">Others Avg (Salam/RICL/JSRM/Rani/SAS)</span><span class="pval" id="rv-others">—</span></div>
+      <div class="prow"><span class="pname">BSRM Rate</span><span class="pval" id="rv-bsrm">—</span></div>
+      <div class="prow"><span class="pname">HKG vs Others</span><span id="rv-vs-others">—</span></div>
+      <div class="prow"><span class="pname">HKG vs BSRM</span><span id="rv-vs-bsrm">—</span></div>
+      <div class="sec">Sales <span class="badge" id="rv-bdg">—</span></div>
+      <div class="kgrid">
+        <div class="kc cg"><div class="kc-lbl">Sales Volume</div><div class="kc-val gold" id="rv-vol">—</div><div class="kc-sub">MT</div></div>
+        <div class="kc cg"><div class="kc-lbl">Revenue</div><div class="kc-val gold" id="rv-rev">—</div><div class="kc-sub">৳</div></div>
+        <div class="kc ct"><div class="kc-lbl">Delivery</div><div class="kc-val teal" id="rv-del">—</div><div class="kc-sub">MT</div></div>
+        <div class="kc"><div class="kc-lbl">Trucks</div><div class="kc-val" id="rv-trk">—</div><div class="kc-sub">released</div></div>
+      </div>
+      <div class="sec">Top Customers (MTD)</div>
+      <div class="tw"><table><thead><tr><th>Customer</th><th class="tn">Vol MT</th><th class="tn">Rev ৳</th><th class="tn">৳/T</th></tr></thead><tbody id="cust-tbody"></tbody></table></div>
+      <div class="sec">By Salesman (MTD)</div>
+      <div class="tw"><table><thead><tr><th>Salesman</th><th class="tn">Vol MT</th><th class="tn">Rev ৳</th></tr></thead><tbody id="sal-tbody"></tbody></table></div>
+    </div>
+  </div>
+
+  <div class="overlay" id="ov-inventory">
+    <div class="ov-hdr"><div class="ov-title">Inventory</div><button class="ov-back" onclick="closeOv()">← Back</button></div>
+    <div class="ov-body">
+      <div class="sec">Closing Stocks (Latest Day)</div>
+      <div class="kgrid">
+        <div class="kc cr"><div class="kc-lbl">HMS Scrap</div><div class="kc-val red" id="iv-hms">—</div></div>
+        <div class="kc"><div class="kc-lbl">Bundle Scrap</div><div class="kc-val" id="iv-bundle">—</div></div>
+        <div class="kc ct"><div class="kc-lbl">Billet</div><div class="kc-val teal" id="iv-billet">—</div></div>
+        <div class="kc cg"><div class="kc-lbl">Rod Inventory</div><div class="kc-val gold" id="iv-rod">—</div></div>
+      </div>
+      <div class="sec">Period Flows <span class="badge" id="iv-bdg">—</span></div>
+      <div class="kgrid">
+        <div class="kc"><div class="kc-lbl">Scrap Consumed</div><div class="kc-val" id="iv-sc">—</div><div class="kc-sub">MT</div></div>
+        <div class="kc ct"><div class="kc-lbl">Billet Produced</div><div class="kc-val teal" id="iv-bp">—</div><div class="kc-sub">MT</div></div>
+        <div class="kc"><div class="kc-lbl">Rod Produced</div><div class="kc-val" id="iv-rp">—</div><div class="kc-sub">MT</div></div>
+        <div class="kc cg"><div class="kc-lbl">Delivered</div><div class="kc-val gold" id="iv-del">—</div><div class="kc-sub">MT</div></div>
+        <div class="kc ct kc-full"><div class="kc-lbl">Scrap → Billet Ratio</div><div class="kc-val teal" id="iv-rat">—</div><div class="kc-sub">MT scrap per MT billet</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="overlay" id="ov-finances">
+    <div class="ov-hdr"><div class="ov-title">Finances</div><button class="ov-back" onclick="closeOv()">← Back</button></div>
+    <div class="ov-body"><div class="cs"><div class="cs-t">COMING SOON</div><div class="cs-s">Finance data to be provided.</div></div></div>
+  </div>
+
+  <div class="overlay" id="ov-monthly">
+    <div class="ov-hdr"><div class="ov-title">Monthly</div><button class="ov-back" onclick="closeOv()">← Back</button></div>
+    <div class="ov-body">
+      <div class="sec">Year at a Glance</div>
+      <div class="tw"><table><thead><tr><th>Month</th><th class="tn">Prod MT</th><th class="tn">Revenue</th><th class="tn">Cost/T</th><th class="tn">Margin/T</th></tr></thead><tbody id="mo-tbody"></tbody></table></div>
+      <div class="sec">Monthly Detail</div>
+      <div id="mo-cards"></div>
+    </div>
+  </div>
+
+</div><!-- end app -->
+
+<script>
+var PD = {};
+var FULL = {};
+var curP = '7d';
+
+// ── Load data.json ──────────────────────────────────────────────────────
+function loadData() {
+  fetch('data.json?t=' + Date.now())
+    .then(function(r) {
+      if(!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    })
+    .then(function(d) {
+      FULL = d;
+      buildPD(d);
+      renderAll(d);
+    })
+    .catch(function(err) {
+      document.getElementById('load-msg').textContent = 'Could not load data.json — ' + err.message;
+      console.error(err);
+    });
+}
+
+function buildPD(d) {
+  var comp = d.competitors;
+  ['today','7d','10d','14d','30d'].forEach(function(key) {
+    var m = d.periods[key]; if(!m) return;
+    PD[key] = {
+      sales: fm(m.sales_vol) + ' MT',
+      revenue: fv(m.revenue),
+      prod: fm(m.rod) + ' MT',
+      scrap_exp: fv(m.scrap_exp_total),
+      avg_rate: fv(m.avg_price),
+      mkt_rate: fv(comp.others_avg),
+    };
+  });
+}
+
+function renderAll(d) {
+  var m = d.periods.mtd;
+  var comp = d.competitors;
+  var stk = d.stocks;
+
+  n('top-date-val', d.meta.latest_date);
+  n('top-gen-val', d.meta.generated);
+  n('up-info-val', 'Updated: ' + d.meta.generated);
+  document.getElementById('load-overlay').classList.add('hidden');
+  document.getElementById('main-content').style.display = 'flex';
+
+  // MTD tiles
+  n('mtd-sales',  fm(m.sales_vol) + ' MT');
+  n('mtd-prod',   fm(m.rod) + ' MT');
+  n('mtd-deliv',  fm(m.delivery) + ' MT');
+  n('mtd-trucks', m.trucks + ' trucks dispatched');
+  n('mtd-rate',   fv(m.avg_price));
+  n('mtd-scrap',  fv(m.scrap_exp_pt));
+  n('mtd-elec',   fv(m.electricity));
+  n('mtd-ratio',  fr(m.scrap_to_billet));
+
+  // Price intel (static latest day)
+  n('rv-hkg',    cf(comp.hkg_today));
+  n('rv-others', cf(comp.others_avg));
+  n('rv-bsrm',   cf(comp.bsrm));
+  sp('rv-vs-others', comp.hkg_vs_others);
+  sp('rv-vs-bsrm',   comp.hkg_vs_bsrm);
+
+  // Stocks
+  n('iv-hms',    fm(stk.hms) + ' MT');
+  n('iv-bundle', fm(stk.bundle) + ' MT');
+  n('iv-billet', fm(stk.billet) + ' MT');
+  n('iv-rod',    fm(stk.rod) + ' MT');
+
+  // Customers
+  var ctb = document.getElementById('cust-tbody');
+  if(ctb) ctb.innerHTML = d.top_customers.map(function(c) {
+    return '<tr><td class="tnm">'+c.name+'</td><td class="tn">'+fm(c.vol)+'</td><td class="tn">'+fv(c.rev)+'</td><td class="tn">'+fv(c.avg_px)+'</td></tr>';
+  }).join('');
+
+  // Salesmen
+  var stb = document.getElementById('sal-tbody');
+  if(stb) stb.innerHTML = d.salesmen.map(function(s) {
+    return '<tr><td class="tnm">'+s.name+'</td><td class="tn">'+fm(s.vol)+'</td><td class="tn">'+fv(s.rev)+'</td></tr>';
+  }).join('');
+
+  // Monthly table
+  var mtb = document.getElementById('mo-tbody');
+  if(mtb) mtb.innerHTML = d.monthly.map(function(m) {
+    var pos = m.margin_pt >= 0;
+    return '<tr><td style="font-weight:700">'+m.label+'</td>'+
+      '<td class="tn">'+Math.round(m.rod)+'</td>'+
+      '<td class="tn" style="color:var(--gold2)">'+fv(m.revenue)+'</td>'+
+      '<td class="tn" style="color:var(--red2)">'+fv(m.total_cost_pt)+'</td>'+
+      '<td class="tn" style="color:'+(pos?'var(--green)':'var(--red2)')+'">'+
+      (pos?'▲':'▼')+fv(Math.abs(m.margin_pt))+'</td></tr>';
+  }).join('');
+
+  // Monthly cards
+  var mcd = document.getElementById('mo-cards');
+  if(mcd) mcd.innerHTML = d.monthly.map(function(m) {
+    var pos = m.margin_pt >= 0;
+    return '<div class="mc" style="border-left:3px solid '+(pos?'var(--green)':'var(--red2)')+'">'+
+      '<div class="mc-hdr"><span class="mc-name">'+m.label+'</span>'+
+      '<span class="spb '+(pos?'pos':'neg')+'">'+(pos?'▲':'▼')+' ৳'+fv(Math.abs(m.margin_pt))+'/T</span></div>'+
+      '<div class="mc-grid">'+
+        '<div class="mcgi"><div class="lbl">Production</div><div class="val">'+Math.round(m.rod)+' MT</div></div>'+
+        '<div class="mcgi"><div class="lbl">Revenue</div><div class="val" style="color:var(--gold2)">'+fv(m.revenue)+'</div></div>'+
+        '<div class="mcgi"><div class="lbl">Cost/Ton</div><div class="val" style="color:var(--red2)">'+fv(m.total_cost_pt)+'</div></div>'+
+        '<div class="mcgi"><div class="lbl">Electricity</div><div class="val">'+fv(m.electricity)+'</div></div>'+
+        '<div class="mcgi"><div class="lbl">Scrap Used</div><div class="val">'+Math.round(m.scrap_consumed)+' MT</div></div>'+
+        '<div class="mcgi"><div class="lbl">Delivery</div><div class="val" style="color:var(--teal)">'+Math.round(m.delivery)+' MT</div></div>'+
+      '</div></div>';
+  }).join('');
+
+  setP('7d');
+}
+
+// ── Toggle ───────────────────────────────────────────────────────────────
+function setP(w) {
+  curP = w;
+  document.querySelectorAll('.tbtn').forEach(function(b) {
+    b.classList.toggle('on', b.textContent.toLowerCase().replace(/ /g,'') === w);
+  });
+  var p = PD[w]; if(!p) return;
+  n('tm0', p.sales); n('tm1', p.revenue); n('tm2', p.prod);
+  n('tm3', p.scrap_exp); n('tm4', p.avg_rate); n('tm5', p.mkt_rate);
+  refreshOv();
+}
+
+function refreshOv() {
+  var m = FULL.periods && FULL.periods[curP]; if(!m) return;
+  var badge = curP.toUpperCase();
+  ['mg-bdg','cs-bdg','rv-bdg','iv-bdg'].forEach(function(id) { n(id, badge); });
+
+  // Margins
+  n('mg-tr', fv(m.total_rev)); n('mg-sr', fv(m.revenue)); n('mg-or', fv(m.other_rev));
+  n('mg-sc', fv(Math.round(m.scrap_consump_pt * m.rod)));
+  n('mg-oc', fv(m.oc_total)); n('mg-tc', fv(m.total_cost_pt)); n('mg-ap', fv(m.avg_price));
+  var gm = document.getElementById('mg-gm');
+  if(gm) { gm.textContent=(m.gross_margin<0?'-':'')+fv(Math.abs(m.gross_margin)); gm.style.color=m.gross_margin>=0?'var(--green)':'var(--red2)'; }
+  n('mg-gms', m.gross_margin>=0?'৳ · Profit':'৳ · Loss');
+  var mp=document.getElementById('mg-mp'); if(mp){ mp.textContent=(m.margin_pt<0?'-':'')+fv(Math.abs(m.margin_pt)); mp.style.color=m.margin_pt>=0?'var(--green)':'var(--red2)'; }
+  var spr=m.avg_price-m.total_cost_pt; var se=document.getElementById('mg-sp'); if(se){ se.textContent=(spr<0?'-':'')+fv(Math.abs(spr)); se.style.color=spr>=0?'var(--green)':'var(--red2)'; }
+  n('mg-rod', fm(m.rod)); n('mg-sv', fm(m.sales_vol));
+
+  // Costing
+  n('cs-ep', fv(m.scrap_exp_pt)); n('cs-et', fv(m.scrap_exp_total));
+  n('cs-el', fv(m.electricity)); n('cs-sc', fv(m.scrap_consump_pt));
+  n('cs-oc', fv(m.other_cost_pt)); n('cs-tc', fv(m.total_cost_pt));
+  n('cs-rod', fm(m.rod)); n('cs-rat', fr(m.scrap_to_billet));
+
+  // Revenue period
+  n('rv-vol', fm(m.sales_vol)); n('rv-rev', fv(m.revenue));
+  n('rv-del', fm(m.delivery)); n('rv-trk', m.trucks);
+
+  // Inventory period
+  n('iv-sc', fm(m.sc_consumed)); n('iv-bp', fm(m.billet));
+  n('iv-rp', fm(m.rod)); n('iv-del', fm(m.delivery));
+  n('iv-rat', fr(m.scrap_to_billet));
+}
+
+// ── Nav ──────────────────────────────────────────────────────────────────
+function openOv(name) {
+  var el = document.getElementById('ov-'+name); if(el) el.classList.add('open');
+  refreshOv();
+}
+function closeOv() {
+  document.querySelectorAll('.overlay.open').forEach(function(e) { e.classList.remove('open'); });
+}
+
+// ── Helpers ──────────────────────────────────────────────────────────────
+function n(id,v) { var e=document.getElementById(id); if(e) e.textContent=v; }
+function fv(v) {
+  if(v==null) return '—';
+  var a=Math.abs(+v);
+  if(a>=10000000) return (+v/10000000).toFixed(1)+'Cr';
+  if(a>=100000)   return (+v/100000).toFixed(1)+'L';
+  if(a>=1000)     return (+v/1000).toFixed(1)+'K';
+  return String(Math.round(+v));
+}
+function fm(v) { return v!=null?(+v).toFixed(1):'—'; }
+function fr(v) { return v&&+v>0?(+v).toFixed(3):'—'; }
+function cf(v) { return v ? Math.round(+v).toLocaleString('en-IN') : '—'; }
+function sp(id,v) {
+  var el=document.getElementById(id); if(!el) return;
+  var pos=v>=0;
+  el.innerHTML='<span class="spb '+(pos?'pos':'neg')+'">'+(pos?'▲':'▼')+' ৳'+Math.abs(v).toLocaleString('en-IN')+'</span>';
+}
+
+// ── Start ────────────────────────────────────────────────────────────────
+loadData();
+</script>
+</body>
+</html>
