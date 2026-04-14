@@ -294,6 +294,12 @@ tr:last-child td{border-bottom:none}
 .ls-spin{width:24px;height:24px;border:2px solid var(--border2);border-top-color:var(--red);border-radius:50%;animation:spin .7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 .ls-msg{font-size:10px;color:var(--dim);letter-spacing:1px}
+
+.cpbtn{flex:1;padding:10px 2px;text-align:center;font-size:9px;font-weight:700;color:#444;border-right:1px solid #1a1a1a;background:#000;text-transform:uppercase;letter-spacing:.5px;cursor:pointer}
+.cpbtn.on{background:#cc0000;color:#fff}
+.cpbtn:last-child{border-right:none}
+.cs-lbl{font-size:7px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#555;margin-bottom:2px}
+
 </style>
 </head>
 <body>
@@ -310,15 +316,7 @@ tr:last-child td{border-bottom:none}
   <!-- TOPBAR -->
   <div class="topbar">
     <div class="logo-wrap">
-      <!-- HKG Logo SVG recreation -->
-      <div class="logo-icon">
-        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-          <!-- Red X/star shape -->
-          <path d="M50 10 L62 38 L92 38 L68 56 L78 84 L50 67 L22 84 L32 56 L8 38 L38 38 Z" fill="#cc0000" opacity=".15"/>
-          <!-- Simplified X mark in red -->
-          <path d="M20 20 L42 50 L20 80 L30 80 L50 57 L70 80 L80 80 L58 50 L80 20 L70 20 L50 43 L30 20 Z" fill="#cc0000"/>
-        </svg>
-      </div>
+      <div class="logo-icon"><img src="data:image/jpeg;base64,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ABBrpAAAAADCEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/9oADAMBAAIAAwAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAM8AAAAAUQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAZpKwAAAAgAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIsAADAI/AAAQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADsAcAADEIAAMAMAAAQwgwwwwwywwwwwwwwwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAUsAMwMAAAAngABcAAABSgAAAADeAAsAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACIAAAsMAAvsAASgAAABSgBSwAD8ASAATwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEQAAOgQtEAAfgAAAABCABTwAAAAAgBTgwwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEoAAIAAMAAAAAAAAAAABTwAAACCgBTjDCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgMABkQIEAAMEAAAAAQABTwAAgASgBS0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWEAA6GNGQoAAEAAAABSgBTwAAEACgBTwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFAABBMAAAHIABOwAAABSgBTwAAEAB8ABQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAIgAAAABMkABQAAABSgBTwAAAgDSgAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGEsAAAMIMAAAYTIACABAAACAACCAABCCDABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABIAACgAIwABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACYSEAABBEQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA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" style="width:32px;height:32px;object-fit:contain;"></div>
       <div>
         <div class="logo-text">HKG</div>
         <div class="logo-sub">Factory Operations</div>
@@ -576,6 +574,151 @@ tr:last-child td{border-bottom:none}
     </div>
   </div>
 
+
+  <!-- COSTING OVERLAY -->
+  <div class="overlay" id="ov-costing">
+    <div class="ov-hdr" style="background:#000;border-bottom:2px solid #cc0000;padding:10px 14px 8px">
+      <div style="display:flex;align-items:center;gap:8px">
+        <div style="font-size:17px;font-weight:900;letter-spacing:3px;color:#fff;line-height:1">HKG</div>
+        <div style="font-size:7px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#555;margin-top:1px">Costing</div>
+      </div>
+      <button class="ov-back" onclick="closeOv()">← Back</button>
+    </div>
+    <!-- Period toggle -->
+    <div style="display:flex;border-bottom:2px solid #cc0000;flex-shrink:0">
+      <div class="cpbtn" onclick="setCostP('today')">TODAY</div>
+      <div class="cpbtn on" id="cpbtn-7d" onclick="setCostP('7d')">7D</div>
+      <div class="cpbtn" onclick="setCostP('10d')">10D</div>
+      <div class="cpbtn" onclick="setCostP('14d')">14D</div>
+      <div class="cpbtn" onclick="setCostP('30d')">30D</div>
+    </div>
+    <!-- Hero -->
+    <div style="display:flex;align-items:stretch;padding:15px 14px;background:#0a0a0a;border-bottom:1px solid #1a1a1a;flex-shrink:0">
+      <div style="flex:1.2;padding-right:13px;border-right:1px solid #222;display:flex;flex-direction:column;justify-content:center">
+        <div class="cs-lbl">Total Cost / Ton</div>
+        <div style="font-size:42px;font-weight:900;letter-spacing:-2px;color:#e8000a;line-height:1" id="cs-tc-pt">—</div>
+        <div style="font-size:8px;color:#444;margin-top:4px">৳ per MT rod produced</div>
+      </div>
+      <div style="flex:1;padding-left:13px;display:flex;flex-direction:column;justify-content:center;gap:10px">
+        <div>
+          <div class="cs-lbl">Scrap Consumption / Ton</div>
+          <div style="font-size:19px;font-weight:900;line-height:1;color:#e8000a" id="cs-sc-pt">—</div>
+        </div>
+        <div style="height:1px;background:#1a1a1a"></div>
+        <div>
+          <div class="cs-lbl">Other Cost / Ton</div>
+          <div style="font-size:19px;font-weight:900;line-height:1;color:#c8c8d0" id="cs-oc-pt">—</div>
+        </div>
+      </div>
+    </div>
+    <div class="ov-body">
+      <!-- Scrap section -->
+      <div style="padding:7px 14px 5px;background:#000;border-bottom:1px solid #1a1a1a;display:flex;align-items:center;justify-content:space-between;flex-shrink:0">
+        <div style="font-size:7px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#555">Scrap</div>
+        <div style="font-size:11px;font-weight:900;letter-spacing:1px;color:#fff;text-transform:uppercase" id="cs-month-badge">— —</div>
+      </div>
+      <!-- Split bar -->
+      <div style="padding:13px 14px;background:#0a0a0a;border-bottom:1px solid #222">
+        <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:10px">
+          <div>
+            <div style="font-size:7px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#555;margin-bottom:3px">Expenditure / Ton</div>
+            <div style="font-size:21px;font-weight:900;line-height:1;color:#c8c8d0" id="cs-exp-pt">—</div>
+            <div style="font-size:7px;color:#444;margin-top:2px">৳ purchase price</div>
+          </div>
+          <div style="text-align:right">
+            <div style="font-size:7px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#555;margin-bottom:3px">Consumption / Ton</div>
+            <div style="font-size:21px;font-weight:900;line-height:1;color:#e8000a" id="cs-consump-pt">—</div>
+            <div style="font-size:7px;color:#444;margin-top:2px">৳ consumption cost</div>
+          </div>
+        </div>
+        <div style="position:relative;height:10px;background:#1a1a1a;border-radius:5px;margin:4px 0 8px">
+          <div id="cs-bar-exp" style="position:absolute;left:0;top:0;height:10px;border-radius:5px 0 0 5px;background:#555"></div>
+          <div id="cs-bar-gap" style="position:absolute;top:0;height:10px;background:rgba(232,0,10,.2);border-left:2px dashed rgba(232,0,10,.5);border-right:2px solid #e8000a"></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px">
+          <div style="flex:1;height:1px;background:#1a1a1a"></div>
+          <div style="font-size:8px;font-weight:700;color:#e8000a;letter-spacing:.5px;white-space:nowrap" id="cs-gap-label">— gap</div>
+          <div style="flex:1;height:1px;background:#1a1a1a"></div>
+        </div>
+      </div>
+      <!-- Production stats strip -->
+      <div style="display:flex;align-items:stretch;background:#0a0a0a;border-bottom:1px solid #1a1a1a">
+        <div style="flex:1;padding:9px 0;display:flex;flex-direction:column;align-items:center;justify-content:center;border-right:1px solid #1a1a1a">
+          <div style="font-size:6px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#444;margin-bottom:3px;text-align:center;line-height:1.3">Scrap Used</div>
+          <div style="font-size:13px;font-weight:900;color:#fff;line-height:1" id="cs-scrap-used">—</div>
+          <div style="font-size:6px;color:#333;margin-top:1px">MT</div>
+        </div>
+        <div style="flex:1;padding:9px 0;display:flex;flex-direction:column;align-items:center;justify-content:center;border-right:1px solid #1a1a1a">
+          <div style="font-size:6px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#444;margin-bottom:3px;text-align:center;line-height:1.3">Billet Produced</div>
+          <div style="font-size:13px;font-weight:900;color:#c8c8d0;line-height:1" id="cs-billet">—</div>
+          <div style="font-size:6px;color:#333;margin-top:1px">MT</div>
+        </div>
+        <div style="flex:1;padding:9px 0;display:flex;flex-direction:column;align-items:center;justify-content:center;border-right:1px solid #1a1a1a">
+          <div style="font-size:6px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#444;margin-bottom:3px;text-align:center;line-height:1.3">Rod Produced</div>
+          <div style="font-size:13px;font-weight:900;color:#c8c8d0;line-height:1" id="cs-rod">—</div>
+          <div style="font-size:6px;color:#333;margin-top:1px">MT</div>
+        </div>
+        <div style="flex:1;padding:9px 0;display:flex;flex-direction:column;align-items:center;justify-content:center">
+          <div style="font-size:6px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#444;margin-bottom:3px;text-align:center;line-height:1.3">Scrap to Rod</div>
+          <div style="font-size:13px;font-weight:900;color:#e8000a;line-height:1" id="cs-ratio">—</div>
+          <div style="font-size:6px;color:#333;margin-top:1px">ratio</div>
+        </div>
+      </div>
+      <!-- Electricity -->
+      <div style="padding:7px 14px 5px;background:#000;border-bottom:1px solid #1a1a1a">
+        <div style="font-size:7px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#555">Electricity Bill to Date</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid #1a1a1a">
+        <div style="padding:13px 12px;background:#0a0a0a;border-right:1px solid #1a1a1a">
+          <div style="font-size:7px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#555;margin-bottom:3px">Total Bill So Far</div>
+          <div style="font-size:21px;font-weight:900;line-height:1;color:#e8000a" id="cs-elec-total">—</div>
+          <div style="font-size:7px;color:#444;margin-top:2px" id="cs-elec-month">৳ — 2026</div>
+        </div>
+        <div style="padding:13px 12px;background:#0a0a0a">
+          <div style="font-size:7px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#555;margin-bottom:3px">Per Ton Produced</div>
+          <div style="font-size:21px;font-weight:900;line-height:1;color:#c8c8d0" id="cs-elec-pt">—</div>
+          <div style="font-size:7px;color:#444;margin-top:2px">৳ / MT rod</div>
+        </div>
+      </div>
+      <!-- Salary -->
+      <div style="padding:7px 14px 5px;background:#000;border-bottom:1px solid #1a1a1a">
+        <div style="font-size:7px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#555">Salary</div>
+      </div>
+      <div style="padding:11px 14px;background:#0a0a0a;border-bottom:1px solid #1a1a1a;display:flex;align-items:center;gap:10px">
+        <div style="width:30px;height:30px;border-radius:50%;border:1px dashed #1e1e1e;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#252525" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        </div>
+        <div>
+          <div style="font-size:9px;font-weight:700;color:#2a2a2a;letter-spacing:.5px;margin-bottom:2px">Salary Breakdown Coming Soon</div>
+          <div style="font-size:7px;color:#222;letter-spacing:.3px">This section will be available shortly</div>
+        </div>
+      </div>
+      <!-- Chemicals -->
+      <div style="padding:7px 14px 5px;background:#000;border-bottom:1px solid #1a1a1a">
+        <div style="font-size:7px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#555">Chemicals</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;background:#0a0a0a">
+        <div style="padding:13px 12px;border-right:1px solid #1a1a1a;display:flex;flex-direction:column;gap:6px">
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <div style="font-size:7px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:2px 7px;border-radius:2px;background:rgba(29,158,117,.15);color:#1d9e75">SiMn</div>
+            <div style="font-size:7px;color:#333;letter-spacing:.3px" id="cs-simn-total">— total</div>
+          </div>
+          <div style="font-size:24px;font-weight:900;line-height:1;color:#1d9e75" id="cs-simn-pt">—</div>
+          <div style="font-size:7px;color:#1d9e75;margin-top:1px">৳ / ton produced</div>
+          <div style="height:3px;background:#1a1a1a;border-radius:2px;margin-top:4px"><div id="cs-simn-bar" style="height:3px;border-radius:2px;background:#1d9e75;width:100%"></div></div>
+        </div>
+        <div style="padding:13px 12px;display:flex;flex-direction:column;gap:6px">
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <div style="font-size:7px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:2px 7px;border-radius:2px;background:rgba(186,117,23,.15);color:#ba7517">FeSi</div>
+            <div style="font-size:7px;color:#333;letter-spacing:.3px" id="cs-fesi-total">— total</div>
+          </div>
+          <div style="font-size:24px;font-weight:900;line-height:1;color:#ba7517" id="cs-fesi-pt">—</div>
+          <div style="font-size:7px;color:#ba7517;margin-top:1px">৳ / ton produced</div>
+          <div style="height:3px;background:#1a1a1a;border-radius:2px;margin-top:4px"><div id="cs-fesi-bar" style="height:3px;border-radius:2px;background:#ba7517;width:3%"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div><!-- end app -->
 
 <script>
@@ -599,14 +742,12 @@ function sp(id,v){
   e.innerHTML='<span class="spb '+(pos?'pos':'neg')+'">'+(pos?'▲':'▼')+' ৳'+Math.abs(v).toLocaleString('en-IN')+'</span>';
 }
 
+var EMBEDDED={"meta":{"latest_date":"09 Apr 2026","latest_date_iso":"2026-04-09","mtd_start":"01 Apr 2026","generated":"14 Apr 2026 19:18"},"periods":{"today":{"sales_vol":98.9,"rod":253.92,"avg_price":86939,"scrap_exp_pt":54607,"scrap_exp_total":13216599,"electricity":2296581,"elec_pt":9045,"scrap_to_billet":1.108,"scrap_to_rod":1.134,"est_rev_sales":8598300,"total_cost_pt":74887,"revenue":8598300,"other_rev":0,"total_rev":8598300,"other_cost_total":4550759,"scrap_consump_total":14464582,"other_cost_pt":17922,"scrap_consump_pt":56965,"gross_margin":-10417041,"margin_pt":-41025,"delivery":172.96,"trucks":10,"billet":259.82,"sc_consumed":287.95,"hms_consumed":219.0,"bun_consumed":60.0,"internal_bundle":8.95,"oc_total":4550759,"pct_delivered":174.9,"simn":682380,"fesi":23730,"simn_pt":2687,"fesi_pt":93,"billet_prod":259.82,"total_scrap_consumed":287.95},"mtd":{"sales_vol":1061.46,"rod":1916.24,"avg_price":84539,"scrap_exp_pt":53611,"scrap_exp_total":119792900,"electricity":20039601,"elec_pt":10458,"scrap_to_billet":1.098,"scrap_to_rod":1.299,"est_rev_sales":89734300,"total_cost_pt":86375,"revenue":89734300,"other_rev":1493040,"total_rev":91227340,"other_cost_total":39359457,"scrap_consump_total":126156321,"other_cost_pt":20540,"scrap_consump_pt":65835,"gross_margin":-74288438,"margin_pt":-38768,"delivery":1786.83,"trucks":109,"billet":2267.71,"sc_consumed":2489.24,"hms_consumed":1965.0,"bun_consumed":462.0,"internal_bundle":62.24,"oc_total":39359457,"pct_delivered":168.3,"simn":5993010,"fesi":204120,"simn_pt":3127,"fesi_pt":107,"billet_prod":2267.71,"total_scrap_consumed":2489.24},"7d":{"sales_vol":769.5,"rod":1480.92,"avg_price":85956,"scrap_exp_pt":53940,"scrap_exp_total":87825070,"electricity":14907088,"elec_pt":10066,"scrap_to_billet":1.101,"scrap_to_rod":1.239,"est_rev_sales":66142800,"total_cost_pt":82906,"revenue":66142800,"other_rev":46800,"total_rev":66189600,"other_cost_total":29956182,"scrap_consump_total":92821701,"other_cost_pt":20228,"scrap_consump_pt":62678,"gross_margin":-56588283,"margin_pt":-38212,"delivery":1323.53,"trucks":81,"billet":1666.48,"sc_consumed":1835.19,"hms_consumed":1411.0,"bun_consumed":376.0,"internal_bundle":48.19,"oc_total":29956182,"pct_delivered":172.0,"simn":4511970,"fesi":153300,"simn_pt":3047,"fesi_pt":104,"billet_prod":1666.48,"total_scrap_consumed":1835.19},"10d":{"sales_vol":1561.46,"rod":2102.03,"avg_price":85167,"scrap_exp_pt":53538,"scrap_exp_total":135761510,"electricity":22640049,"elec_pt":10771,"scrap_to_billet":1.096,"scrap_to_rod":1.34,"est_rev_sales":132984300,"total_cost_pt":88964,"revenue":132984300,"other_rev":5131325,"total_rev":138115625,"other_cost_total":44112021,"scrap_consump_total":142894317,"other_cost_pt":20985,"scrap_consump_pt":67979,"gross_margin":-48890713,"margin_pt":-23259,"delivery":1998.43,"trucks":120,"billet":2569.12,"sc_consumed":2816.52,"hms_consumed":2225.0,"bun_consumed":525.0,"internal_bundle":66.52,"oc_total":44112021,"pct_delivered":128.0,"simn":6738120,"fesi":229740,"simn_pt":3206,"fesi_pt":109,"billet_prod":2569.12,"total_scrap_consumed":2816.52},"14d":{"sales_vol":2597.46,"rod":2437.82,"avg_price":85227,"scrap_exp_pt":53153,"scrap_exp_total":161876689,"electricity":27158116,"elec_pt":11140,"scrap_to_billet":1.097,"scrap_to_rod":1.377,"est_rev_sales":221373300,"total_cost_pt":91898,"revenue":221373300,"other_rev":10318200,"total_rev":231691500,"other_cost_total":54149987,"scrap_consump_total":169883052,"other_cost_pt":22212,"scrap_consump_pt":69686,"gross_margin":7658461,"margin_pt":3142,"delivery":2464.28,"trucks":149,"billet":3059.8,"sc_consumed":3356.53,"hms_consumed":2641.0,"bun_consumed":638.0,"internal_bundle":77.53,"oc_total":54149987,"pct_delivered":94.9,"simn":7946820,"fesi":262815,"simn_pt":3260,"fesi_pt":108,"billet_prod":3059.8,"total_scrap_consumed":3356.53},"30d":{"sales_vol":3227.46,"rod":4382.83,"avg_price":85137,"scrap_exp_pt":52553,"scrap_exp_total":257496938,"electricity":44135318,"elec_pt":10070,"scrap_to_billet":1.094,"scrap_to_rod":1.223,"est_rev_sales":274775900,"total_cost_pt":82670,"revenue":274775900,"other_rev":15217910,"total_rev":289993810,"other_cost_total":94409430,"scrap_consump_total":267916414,"other_cost_pt":21541,"scrap_consump_pt":61129,"gross_margin":-72332034,"margin_pt":-16503,"delivery":4193.68,"trucks":250,"billet":4899.63,"sc_consumed":5358.74,"hms_consumed":4326.0,"bun_consumed":893.0,"internal_bundle":139.74,"oc_total":94409430,"pct_delivered":129.9,"simn":12718890,"fesi":467670,"simn_pt":2902,"fesi_pt":107,"billet_prod":4899.63,"total_scrap_consumed":5358.74}},"competitors":{"hkg_today":86939,"others_avg":88500,"bsrm":96000,"hkg_vs_others":-1561,"hkg_vs_bsrm":-9061},"stocks":{"hms":20.692,"bundle":801.185,"billet":510.485,"rod":262.592},"monthly":[{"month":"2026-01","label":"Jan 2026","rod":7013.35,"sales_vol":7709.4,"revenue":575389009,"avg_price":72722,"total_cost_pt":73143,"other_cost_pt":19349,"scrap_consump_pt":53794,"margin_pt":8899,"gross_margin":62414021,"electricity":71130937,"scrap_consumed":8457.69,"billet_produced":7744.18,"scrap_to_billet":1.092,"scrap_to_rod":1.206,"scrap_exp_total":389913056,"scrap_exp_pt":47007,"delivery":7047.12},{"month":"2026-02","label":"Feb 2026","rod":5929.22,"sales_vol":5113.66,"revenue":415114486,"avg_price":77885,"total_cost_pt":79075,"other_cost_pt":20616,"scrap_consump_pt":58459,"margin_pt":-9063,"gross_margin":-53739052,"electricity":61794635,"scrap_consumed":7344.39,"billet_produced":6730.53,"scrap_to_billet":1.091,"scrap_to_rod":1.239,"scrap_exp_total":353906460,"scrap_exp_pt":49778,"delivery":5928.34},{"month":"2026-03","label":"Mar 2026","rod":5104.33,"sales_vol":5850.0,"revenue":498792070,"avg_price":82917,"total_cost_pt":80456,"other_cost_pt":21246,"scrap_consump_pt":59210,"margin_pt":17263,"gross_margin":88116474,"electricity":52061605,"scrap_consumed":6144.94,"billet_produced":5644.33,"scrap_to_billet":1.089,"scrap_to_rod":1.204,"scrap_exp_total":295938786,"scrap_exp_pt":51487,"delivery":5076.45},{"month":"2026-04","label":"Apr 2026","rod":1916.24,"sales_vol":1061.46,"revenue":91227340,"avg_price":84539,"total_cost_pt":86375,"other_cost_pt":20540,"scrap_consump_pt":65835,"margin_pt":-38768,"gross_margin":-74288438,"electricity":20039601,"scrap_consumed":2489.24,"billet_produced":2267.71,"scrap_to_billet":1.098,"scrap_to_rod":1.299,"scrap_exp_total":835206875,"scrap_exp_pt":47768,"delivery":1956.33}],"top_customers":[{"name":"Halima Steel Corp","vol":742.0,"rev":63754000,"avg_px":85922},{"name":"Mazidsons Construction Ltd","vol":100.0,"rev":8745000,"avg_px":87450},{"name":"Naofa Trading","vol":43.0,"rev":3748500,"avg_px":87174},{"name":"Mokka Traders","vol":42.0,"rev":3668000,"avg_px":87333},{"name":"Shahin Traders","vol":28.0,"rev":2408000,"avg_px":86000},{"name":"Roja Traders","vol":18.0,"rev":1575000,"avg_px":87500},{"name":"R.I Enterprise","vol":15.0,"rev":1308000,"avg_px":87200},{"name":"Mamun & Brothers","vol":14.0,"rev":1218000,"avg_px":87000}],"salesmen":[{"name":"Mahfuz Sir","vol":862.9,"rev":74319300},{"name":"Meraj","vol":86.0,"rev":7464500},{"name":"Nadim","vol":81.0,"rev":7073500},{"name":"Atik Sir","vol":10.0,"rev":877000}]};
 function loadData(){
   fetch('data.json?t='+Date.now())
     .then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json();})
     .then(function(d){D=d;renderAll();})
-    .catch(function(err){
-      document.getElementById('ls-msg').textContent='Error: '+err.message;
-      console.error(err);
-    });
+    .catch(function(){D=EMBEDDED;renderAll();});
 }
 
 function renderAll(){
@@ -750,10 +891,60 @@ function refreshOv(w){
 function openOv(name){
   var e=document.getElementById('ov-'+name);
   if(e)e.classList.add('open');
-  refreshOv(curP);
+  if(name==='costing'){renderCosting(costP);}else{refreshOv(curP);}
 }
 function closeOv(){
   document.querySelectorAll('.overlay.open').forEach(function(e){e.classList.remove('open');});
+}
+
+
+var costP = 'mtd';
+function setCostP(w) {
+  costP = w;
+  document.querySelectorAll('.cpbtn').forEach(function(b){
+    b.classList.toggle('on', b.textContent.toLowerCase().replace(/ /g,'') === w);
+  });
+  renderCosting(w);
+}
+function renderCosting(w) {
+  var m = D.periods[w]; if(!m) return;
+  var meta = D.meta;
+  var parts = meta.mtd_start.split(' ');
+  var monthName = parts[1].toUpperCase() + ' ' + parts[2];
+  n('cs-month-badge', monthName);
+  n('cs-elec-month', '৳ ' + monthName);
+  n('cs-tc-pt',       fv(m.total_cost_pt));
+  n('cs-sc-pt',       fv(m.scrap_consump_pt));
+  n('cs-oc-pt',       fv(m.other_cost_pt));
+  n('cs-exp-pt',      fv(m.scrap_exp_pt));
+  n('cs-consump-pt',  fv(m.scrap_consump_pt));
+  // Split bar
+  var expPct = m.scrap_consump_pt > 0 ? Math.round(m.scrap_exp_pt / m.scrap_consump_pt * 100) : 77;
+  var expBar = document.getElementById('cs-bar-exp');
+  var gapBar = document.getElementById('cs-bar-gap');
+  if(expBar) expBar.style.width = expPct + '%';
+  if(gapBar) { gapBar.style.left = expPct + '%'; gapBar.style.right = '0'; }
+  var gap = m.scrap_consump_pt - m.scrap_exp_pt;
+  n('cs-gap-label', gap > 0 ? '▲ GAP ' + fv(gap) + ' / TON' : '▼ GAP ' + fv(Math.abs(gap)) + ' / TON');
+  // Production strip - use MTD always for these
+  var pm = D.periods.mtd;
+  n('cs-scrap-used', Math.round(pm.total_scrap_consumed || pm.sc_consumed).toLocaleString('en-IN'));
+  n('cs-billet',     Math.round(pm.billet_prod || pm.billet).toLocaleString('en-IN'));
+  n('cs-rod',        Math.round(pm.rod).toLocaleString('en-IN'));
+  n('cs-ratio',      pm.scrap_to_rod ? pm.scrap_to_rod.toFixed(3) : '—');
+  // Electricity
+  n('cs-elec-total', fv(m.electricity));
+  n('cs-elec-pt',    fv(m.elec_pt));
+  // Chemicals - always MTD
+  n('cs-simn-pt',    fv(pm.simn_pt));
+  n('cs-fesi-pt',    fv(pm.fesi_pt));
+  n('cs-simn-total', fv(pm.simn) + ' total');
+  n('cs-fesi-total', fv(pm.fesi) + ' total');
+  var maxChem = Math.max(pm.simn_pt || 1, pm.fesi_pt || 1);
+  var simnBar = document.getElementById('cs-simn-bar');
+  var fesiBar = document.getElementById('cs-fesi-bar');
+  if(simnBar) simnBar.style.width = Math.round((pm.simn_pt||0)/maxChem*100) + '%';
+  if(fesiBar) fesiBar.style.width = Math.round((pm.fesi_pt||0)/maxChem*100) + '%';
 }
 
 loadData();
