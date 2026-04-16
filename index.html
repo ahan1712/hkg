@@ -117,9 +117,27 @@ tr:last-child td{border-bottom:none}
 #load-screen.gone{display:none}
 .ls-spin{width:24px;height:24px;border:2px solid #222;border-top-color:#cc0000;border-radius:50%;animation:spin .7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
+
+#pw-screen{position:fixed;inset:0;background:#000;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px}
+#pw-screen.gone{display:none}
+.pw-logo{font-size:48px;font-weight:900;letter-spacing:8px;color:#fff}
+.pw-logo span{color:#cc0000}
+.pw-input{background:#111;border:1px solid #333;color:#fff;font-size:16px;padding:12px 20px;border-radius:6px;width:200px;text-align:center;font-family:inherit;letter-spacing:2px;outline:none}
+.pw-input:focus{border-color:#cc0000}
+.pw-btn{background:#cc0000;color:#fff;border:none;font-size:13px;font-weight:700;letter-spacing:2px;padding:11px 32px;border-radius:6px;cursor:pointer;font-family:inherit;text-transform:uppercase}
+.pw-btn:active{opacity:.8}
+.pw-err{font-size:11px;color:#cc0000;letter-spacing:1px;text-transform:uppercase;height:16px}
 </style>
 </head>
 <body class="dark">
+
+<div id="pw-screen">
+  <div class="pw-logo">H<span>K</span>G</div>
+  <div style="font-size:9px;letter-spacing:3px;color:#444;text-transform:uppercase;margin-top:-10px">Factory Operations</div>
+  <input class="pw-input" type="password" id="pw-input" placeholder="••••••••" onkeydown="if(event.key==='Enter')checkPw()">
+  <button class="pw-btn" onclick="checkPw()">Enter</button>
+  <div class="pw-err" id="pw-err"></div>
+</div>
 
 <div id="load-screen">
   <div style="font-size:32px;font-weight:900;letter-spacing:6px;color:#fff">H<span style="color:#cc0000">K</span>G</div>
@@ -865,7 +883,25 @@ function renderMargins() {
   renderMgCost(mgCostP); renderMgRev(mgRevP);
 }
 
-loadData();
+
+function checkPw(){
+  var v=document.getElementById('pw-input').value;
+  if(v==='hkg2026'){
+    document.getElementById('pw-screen').classList.add('gone');
+    loadData();
+  } else {
+    var e=document.getElementById('pw-err');
+    e.textContent='Incorrect password';
+    document.getElementById('pw-input').value='';
+    setTimeout(function(){e.textContent='';},2000);
+  }
+}
+// Auto-focus password input
+document.addEventListener('DOMContentLoaded',function(){
+  var i=document.getElementById('pw-input'); if(i)i.focus();
+});
+// loadData() called by checkPw()
+
 
 </script>
 </body>
