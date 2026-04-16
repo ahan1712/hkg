@@ -2,431 +2,172 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
 <title>HKG Dashboard</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@300;400;500;600;700;800;900&family=Montserrat+Alternates:wght@700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<!-- HKG Dashboard v2.1 -->
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-:root{
-  --black:#000000;
-  --black2:#0a0a0a;
-  --black3:#111111;
-  --black4:#1a1a1a;
-  --red:#cc0000;
-  --red2:#e8000a;
-  --red-dim:#3d0000;
-  --silver:#a0a0a8;
-  --silver2:#c8c8d0;
-  --white:#ffffff;
-  --offwhite:#f0eeea;
-  --dim:#555560;
-  --dim2:#333338;
-  --border:#222225;
-  --border2:#2a2a2e;
-}
-html,body{
-  height:100%;background:var(--black);color:var(--white);
-  font-family:'Montserrat','Helvetica Neue',Helvetica,Arial,sans-serif;
-  overflow:hidden;
-}
-.app{display:flex;flex-direction:column;height:100vh;height:100dvh;max-width:430px;margin:0 auto;position:relative}
+html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Helvetica Neue',sans-serif}
+body.dark{background:#000;color:#fff}
+body.light{background:#f2f2f7;color:#000}
 
-/* ── TOPBAR ── */
-.topbar{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:10px 16px 8px;background:var(--black);
-  border-bottom:1px solid var(--border2);flex-shrink:0;
-  position:relative;z-index:10;
-}
-.logo-wrap{display:flex;align-items:center;gap:10px}
-.logo-icon{
-  width:32px;height:32px;position:relative;flex-shrink:0;
-}
-.logo-icon svg{width:32px;height:32px}
-.logo-text{
-  font-family:'Bebas Neue','Arial Narrow',sans-serif;
-  font-size:22px;letter-spacing:3px;color:var(--white);
-  line-height:1;
-}
-.logo-sub{font-size:7.5px;color:var(--silver);letter-spacing:2px;text-transform:uppercase;margin-top:1px}
-.topbar-right{text-align:right}
-.top-date{font-size:11px;font-weight:600;color:var(--silver2);letter-spacing:.5px}
-.top-dot{display:inline-block;width:5px;height:5px;background:#00c853;border-radius:50%;margin-right:5px;animation:pulse 2s infinite;vertical-align:middle}
+/* CSS variables per theme */
+body.dark{--bg:#000;--s1:#0a0a0a;--s2:#0f0f0f;--s3:#111;--b1:#1a1a1a;--b2:#222;--b3:#333;
+  --red:#cc0000;--red2:#e8000a;--silver:#c8c8d0;--dim:#555;--dim2:#444;--dim3:#333;
+  --txt:#fff;--txt2:#c8c8d0;--txt3:#888;--sub:#444;--sub2:#333;--green:#00c853;
+  --card:#0a0a0a;--card2:#0f0f0f;--bdr:#1a1a1a;--ls:#fff}
+body.light{--bg:#f2f2f7;--s1:#fff;--s2:#f8f8fc;--s3:#ececf2;--b1:#e0e0e8;--b2:#d0d0da;--b3:#c0c0cc;
+  --red:#cc0000;--red2:#cc0000;--silver:#333;--dim:#666;--dim2:#555;--dim3:#888;
+  --txt:#000;--txt2:#111;--txt3:#555;--sub:#333;--sub2:#555;--green:#00843d;
+  --card:#fff;--card2:#f8f8fc;--bdr:#e0e0e8;--ls:#000}
+
+.app{display:flex;flex-direction:column;height:100vh;height:100dvh;max-width:430px;margin:0 auto;background:var(--bg)}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:10px 14px 8px;background:var(--bg);border-bottom:1px solid var(--b1);flex-shrink:0}
+.brand{font-size:18px;font-weight:700;letter-spacing:2px;color:var(--txt);line-height:1}
+.brand-sub{font-size:7px;color:var(--dim);letter-spacing:2px;text-transform:uppercase;margin-top:1px}
+.top-date{font-size:11px;font-weight:600;color:var(--txt2);text-align:right}
+.top-gen{font-size:8px;color:var(--dim2);text-align:right;margin-top:1px}
+.dot{display:inline-block;width:5px;height:5px;background:var(--green);border-radius:50%;margin-right:4px;vertical-align:middle;animation:pulse 2s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.2}}
-.top-updated{font-size:8px;color:var(--dim);margin-top:2px;letter-spacing:.3px}
-
-/* ── BODY ── */
 .body{display:flex;flex:1;overflow:hidden;min-height:0}
-
-/* ── LEFT PANEL ── */
-.left{
-  width:62%;display:flex;flex-direction:column;
-  background:var(--black2);border-right:1px solid var(--border2);
-  overflow:hidden;flex-shrink:0;
-}
-
-/* Month hero */
-.month-hero{
-  padding:14px 16px 10px;flex-shrink:0;
-  background:var(--black);
-  border-bottom:2px solid var(--red);
-  position:relative;overflow:hidden;
-}
-.month-hero::before{
-  content:'';position:absolute;top:0;left:0;right:0;bottom:0;
-  background:linear-gradient(135deg,rgba(204,0,0,.08) 0%,transparent 60%);
-  pointer-events:none;
-}
-.month-label{
-  font-size:8px;font-weight:700;letter-spacing:3px;
-  text-transform:uppercase;color:var(--silver);margin-bottom:2px;
-}
-.month-name{
-  font-family:'Bebas Neue','Arial Narrow',sans-serif;
-  font-size:38px;letter-spacing:4px;color:var(--white);
-  line-height:1;
-}
-.month-year{
-  font-size:13px;font-weight:300;color:var(--silver);
-  letter-spacing:4px;margin-top:1px;
-}
-
-/* Stats */
-.stats-list{flex:1;overflow:hidden;display:flex;flex-direction:column}
-.stat-row{
-  flex:1;display:flex;align-items:center;
-  padding:0 16px;border-bottom:1px solid var(--border);
-  position:relative;min-height:0;
-}
-.stat-row::before{
-  content:'';position:absolute;left:0;top:20%;bottom:20%;
-  width:2px;background:var(--border2);transition:background .2s;
-}
-.stat-row.s-red::before{background:var(--red)}
-.stat-row.s-silver::before{background:var(--silver)}
-.stat-row.s-white::before{background:rgba(255,255,255,.3)}
-.stat-inner{flex:1}
-.stat-label{
-  font-size:7.5px;font-weight:700;letter-spacing:1.5px;
-  text-transform:uppercase;color:var(--silver);margin-bottom:2px;
-}
-.stat-val{
-  font-family:'Bebas Neue','Arial Narrow',sans-serif;
-  font-size:26px;letter-spacing:.5px;line-height:1;color:var(--white);
-}
-.stat-val.red{color:var(--red2)}
-.stat-val.silver{color:var(--silver2)}
-.stat-unit{font-size:8px;color:var(--dim);margin-top:1px;letter-spacing:.3px}
-
-/* ── RIGHT PANEL ── */
-.right{
-  flex:1;display:flex;flex-direction:column;
-  background:var(--black);overflow:hidden;
-}
-
-.nav-header{
-  padding:8px 0 6px;text-align:center;
-  font-size:7px;font-weight:700;letter-spacing:2px;
-  text-transform:uppercase;color:var(--dim);
-  border-bottom:1px solid var(--border);flex-shrink:0;
-}
-
-.nav-list{flex:1;overflow-y:auto;display:flex;flex-direction:column}
-.nav-list::-webkit-scrollbar{width:0}
-
-.nav-item{
-  flex:1;display:flex;flex-direction:column;align-items:center;
-  justify-content:center;cursor:pointer;
-  border-bottom:1px solid var(--border);
-  border-left:2px solid transparent;
-  transition:all .12s;user-select:none;
-  min-height:52px;padding:6px 4px;text-align:center;
-  position:relative;
-}
-.nav-item:active{background:var(--black3);border-left-color:var(--red)}
-.nav-icon{font-size:14px;line-height:1;margin-bottom:3px}
-.nav-name{
-  font-size:9px;font-weight:700;letter-spacing:.8px;
-  color:var(--silver2);text-transform:uppercase;line-height:1.1;
-}
-.nav-item:active .nav-name{color:var(--white)}
-
-/* ── BOTTOM: TOGGLE + METRICS ── */
-.bottom{flex-shrink:0;background:var(--black2);border-top:1px solid var(--border2)}
-
-.toggle-row{
-  display:flex;align-items:center;gap:4px;
-  padding:7px 12px 5px;border-bottom:1px solid var(--border);
-}
-.t-label{
-  font-size:7px;font-weight:700;letter-spacing:1.5px;
-  color:var(--dim);text-transform:uppercase;margin-right:4px;white-space:nowrap;
-}
+.left{flex:1;display:flex;flex-direction:column;background:var(--s1);border-right:3px solid var(--red);min-width:0}
+.left-hdr{background:var(--red);padding:10px 14px 8px;flex-shrink:0}
+.left-hdr-title{font-size:14px;font-weight:700;letter-spacing:2px;color:#fff}
+.left-hdr-sub{font-size:8px;color:rgba(255,255,255,.6);letter-spacing:1.5px;text-transform:uppercase;margin-top:1px}
+.stats{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.tile{flex:1;display:flex;align-items:center;padding:0 14px;border-bottom:1px solid var(--b1);position:relative;min-height:0}
+.tile:last-child{border-bottom:none}
+.tile::before{content:'';position:absolute;left:0;top:20%;bottom:20%;width:3px}
+.tile.tw::before{background:rgba(128,128,128,.3)}.tile.ts::before{background:var(--silver)}.tile.tr::before{background:var(--red2)}
+.t-lbl{font-size:8px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:var(--dim);margin-bottom:3px}
+.t-val{font-size:24px;font-weight:700;letter-spacing:-.5px;line-height:1;color:var(--txt)}
+.t-val.r{color:var(--red2)}.t-val.s{color:var(--silver)}
+.t-unit{font-size:8px;color:var(--dim2);margin-top:2px}
+.right{width:76px;flex-shrink:0;display:flex;flex-direction:column;background:var(--bg)}
+.nav-hdr{padding:7px 0;text-align:center;font-size:6.5px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--dim3);border-bottom:1px solid var(--b1);flex-shrink:0}
+.nav-list{flex:1;display:flex;flex-direction:column}
+.ni{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border-bottom:1px solid var(--b1);border-left:2px solid transparent;cursor:pointer;min-height:0;padding:4px}
+.ni:last-child{border-bottom:none}
+.ni:active{background:var(--s1);border-left-color:var(--red2)}
+.ni-ico{font-size:13px;line-height:1;margin-bottom:2px}
+.ni-name{font-size:8.5px;font-weight:600;color:var(--txt2);text-transform:uppercase;letter-spacing:.3px;text-align:center}
+.bottom{flex-shrink:0;background:var(--s1);border-top:1px solid var(--b2)}
+.tog-row{display:flex;align-items:center;gap:4px;padding:7px 10px 5px;border-bottom:1px solid var(--b1)}
+.t-label{font-size:7px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--dim3);margin-right:3px;white-space:nowrap}
 .tbtns{display:flex;gap:3px;flex:1}
-.tbtn{
-  flex:1;padding:5px 2px;
-  font-family:'Montserrat',sans-serif;font-size:9px;font-weight:700;
-  border:1px solid var(--border2);background:transparent;color:var(--dim);
-  cursor:pointer;border-radius:3px;transition:all .12s;
-  letter-spacing:.5px;-webkit-appearance:none;
-}
-.tbtn.on{background:var(--red);border-color:var(--red);color:var(--white)}
-.tbtn:active{transform:scale(.92)}
-
-/* Metrics grid — 2 rows × 3 cols, fixed layout */
-.metrics-grid-2r{
-  display:grid;
-  grid-template-columns:1fr 1fr 1fr;
-  grid-template-rows:1fr 1fr;
-  border-bottom:1px solid var(--border);
-}
-.mc{
-  padding:10px 12px;
-  border-right:1px solid var(--border);
-  border-bottom:1px solid var(--border);
-}
-.mc:nth-child(3n){border-right:none}
-.mc:nth-child(4),.mc:nth-child(5),.mc:nth-child(6){border-bottom:none}
-.mc-label{
-  font-size:7px;font-weight:700;letter-spacing:.8px;
-  text-transform:uppercase;color:var(--dim);margin-bottom:4px;line-height:1.2;
-}
-.mc-val{
-  font-family:'Bebas Neue','Arial Narrow',sans-serif;
-  font-size:22px;letter-spacing:.3px;line-height:1;color:var(--white);
-}
-.mc-val.red{color:var(--red2)}
-.mc-val.silver{color:var(--silver2)}
-
-/* ── OVERLAYS ── */
-.overlay{
-  display:none;position:fixed;inset:0;background:var(--black);
-  z-index:100;flex-direction:column;max-width:430px;margin:0 auto;
-}
+.tbtn{flex:1;padding:5px 2px;font-size:9px;font-weight:600;border:1px solid var(--b2);background:transparent;color:var(--dim);cursor:pointer;border-radius:3px;transition:all .12s;letter-spacing:.5px;font-family:inherit}
+.tbtn.on{background:var(--red);border-color:var(--red);color:#fff}
+.mgrid{display:grid;grid-template-columns:1fr 1fr 1fr;grid-template-rows:1fr 1fr}
+.mc{padding:8px 10px;border-right:1px solid var(--b1);border-bottom:1px solid var(--b1)}
+.mc:nth-child(3n){border-right:none}.mc:nth-child(4),.mc:nth-child(5),.mc:nth-child(6){border-bottom:none}
+.mc-lbl{font-size:7px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--dim3);margin-bottom:2px;line-height:1.2}
+.mc-val{font-size:16px;font-weight:700;line-height:1;color:var(--txt)}
+.mc-val.r{color:var(--red2)}.mc-val.s{color:var(--silver)}
+.upload-bar{display:flex;align-items:center;gap:6px;padding:5px 10px;background:var(--bg);border-top:1px solid var(--b1);flex-shrink:0}
+.up-info{font-size:8px;color:var(--dim);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#file-input{display:none}
+.up-btn{font-size:9px;padding:4px 10px;background:var(--s3);color:var(--txt);border:1px solid var(--b2);border-radius:3px;cursor:pointer;letter-spacing:.5px;white-space:nowrap;font-family:inherit;font-weight:600}
+.theme-btn{font-size:9px;padding:4px 8px;background:var(--s3);color:var(--txt);border:1px solid var(--b2);border-radius:3px;cursor:pointer;letter-spacing:.5px;font-family:inherit;font-weight:600;flex-shrink:0}
+.overlay{display:none;position:fixed;inset:0;background:var(--bg);z-index:100;flex-direction:column;max-width:430px;margin:0 auto;height:100vh;height:100dvh}
 .overlay.open{display:flex}
-.ov-hdr{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:12px 16px;background:var(--red);flex-shrink:0;
-}
-.ov-title{
-  font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:2px;color:var(--white);
-}
-.ov-back{
-  font-size:10px;font-weight:700;letter-spacing:1px;cursor:pointer;
-  padding:5px 12px;border:1px solid rgba(255,255,255,.4);border-radius:3px;
-  color:var(--white);-webkit-appearance:none;background:transparent;
-  font-family:'Montserrat',sans-serif;
-}
-.ov-body{flex:1;overflow-y:auto;padding-bottom:30px}
+.ov-hdr{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--bg);border-bottom:2px solid var(--red);flex-shrink:0}
+.ov-back{font-size:10px;font-weight:600;letter-spacing:1px;cursor:pointer;padding:5px 12px;border:1px solid var(--b2);border-radius:3px;color:var(--txt);background:transparent;font-family:inherit}
+.ov-body{flex:1;overflow-y:auto;padding-bottom:24px}
 .ov-body::-webkit-scrollbar{width:0}
-
-.sec{
-  font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
-  color:var(--dim);padding:14px 16px 6px;display:flex;align-items:center;gap:8px;
-}
-.sec::after{content:'';flex:1;height:1px;background:var(--border2)}
-.bdg{
-  display:inline-block;padding:2px 7px;border-radius:2px;
-  font-size:8px;font-weight:700;letter-spacing:1px;
-  background:rgba(204,0,0,.15);color:var(--red2);
-}
-
-.kgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0 12px 4px}
-.kc{
-  background:var(--black3);border:1px solid var(--border2);
-  border-radius:6px;padding:11px 12px;position:relative;overflow:hidden;
-}
-.kc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--border2)}
-.kc.cr::before{background:var(--red2)}
-.kc.cs::before{background:var(--silver)}
-.kc.cw::before{background:rgba(255,255,255,.4)}
-.kc-full{grid-column:1/-1}
-.kc-lbl{font-size:7.5px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--silver);margin-bottom:5px}
-.kc-val{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:.3px;line-height:1;color:var(--white)}
-.kc-val.red{color:var(--red2)}.kc-val.sil{color:var(--silver2)}
-.kc-sub{font-size:8px;color:var(--dim);margin-top:3px}
-.big-kpi{
-  margin:4px 12px 8px;background:var(--black3);border:1px solid var(--border2);
-  border-radius:6px;padding:14px 16px;border-left:3px solid var(--red);
-}
-.bk-lbl{font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--silver);margin-bottom:4px}
-.bk-val{font-family:'Bebas Neue',sans-serif;font-size:40px;letter-spacing:-1px;line-height:1}
-.bk-sub{font-size:9px;color:var(--dim);margin-top:4px}
-.prow{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:10px 16px;border-bottom:1px solid var(--border);
-}
-.pname{font-size:10px;color:var(--silver);font-weight:500}
-.pval{font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--white)}
-.spb{
-  display:inline-flex;align-items:center;gap:3px;
-  font-size:11px;font-weight:700;padding:3px 8px;border-radius:3px;
-  font-family:'Montserrat',sans-serif;letter-spacing:.3px;
-}
-.spb.pos{background:rgba(0,200,83,.1);color:#00c853}
-.spb.neg{background:rgba(204,0,0,.12);color:var(--red2)}
-.tw{padding:0 12px 8px;overflow-x:auto}
-table{width:100%;border-collapse:collapse;font-size:11px}
-th{font-size:7.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--dim);padding:5px 6px;text-align:left;border-bottom:1px solid var(--border2)}
-td{padding:7px 6px;border-bottom:1px solid var(--border);color:var(--white)}
-tr:last-child td{border-bottom:none}
-.tn{text-align:right;font-size:11px;font-variant-numeric:tabular-nums}
-.tnm{max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.mc-card{margin:0 12px 8px;background:var(--black3);border:1px solid var(--border2);border-radius:6px;padding:12px}
-.mc-card-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
-.mc-card-name{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:.5px}
-.mc-card-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.mcgi .lbl{font-size:7.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--dim);margin-bottom:2px}
-.mcgi .val{font-size:14px;font-weight:700;color:var(--white)}
-.cs-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;height:55vh;gap:12px}
-.cs-title{font-family:'Bebas Neue',sans-serif;font-size:46px;color:var(--border2);letter-spacing:4px}
-.cs-sub{font-size:11px;color:var(--dim);text-align:center;max-width:180px;line-height:1.7}
-
-/* Loading */
-#load-screen{
-  position:fixed;inset:0;background:var(--black);z-index:999;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;
-}
-#load-screen.gone{display:none}
-.ls-logo{font-family:'Bebas Neue',sans-serif;font-size:48px;letter-spacing:8px;color:var(--white)}
-.ls-logo span{color:var(--red)}
-.ls-spin{width:24px;height:24px;border:2px solid var(--border2);border-top-color:var(--red);border-radius:50%;animation:spin .7s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-.ls-msg{font-size:10px;color:var(--dim);letter-spacing:1px}
-
-.cpbtn{flex:1;padding:10px 2px;text-align:center;font-size:9px;font-weight:700;color:#444;border-right:1px solid #1a1a1a;background:#000;text-transform:uppercase;letter-spacing:.5px;cursor:pointer}
-.cpbtn.on{background:#cc0000;color:#fff}
+.cpbtn{flex:1;padding:13px 2px;text-align:center;font-size:9px;font-weight:700;color:var(--dim);border-right:1px solid var(--b1);background:var(--bg);text-transform:uppercase;letter-spacing:.5px;cursor:pointer}
+.cpbtn.on{background:var(--red);color:#fff}
 .cpbtn:last-child{border-right:none}
-.cs-lbl{font-size:7px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#555;margin-bottom:2px}
-
+.spb{display:inline-flex;align-items:center;gap:2px;font-size:11px;font-weight:700;padding:3px 8px;border-radius:3px}
+.spb.pos{background:rgba(0,200,83,.1);color:var(--green)}.spb.neg{background:rgba(204,0,0,.12);color:var(--red2)}
+.kgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:8px 12px}
+.kc{background:var(--card);border:1px solid var(--b1);border-radius:6px;padding:11px 12px;position:relative}
+.kc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--b2)}
+.kc.cr::before{background:var(--red2)}.kc.cs::before{background:var(--silver)}.kc.cg::before{background:var(--green)}
+.kc-full{grid-column:1/-1}
+.kc-lbl{font-size:8px;letter-spacing:.8px;text-transform:uppercase;color:var(--dim);margin-bottom:5px;font-weight:600}
+.kc-val{font-size:24px;font-weight:700;line-height:1;color:var(--txt)}
+.kc-val.r{color:var(--red2)}.kc-val.s{color:var(--silver)}.kc-val.g{color:var(--green)}
+.kc-sub{font-size:8px;color:var(--dim2);margin-top:3px}
+.big-kpi{margin:4px 12px 8px;background:var(--card);border:1px solid var(--b1);border-radius:6px;padding:14px 16px;border-left:3px solid var(--red)}
+.bk-lbl{font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--dim);margin-bottom:4px}
+.bk-val{font-size:38px;font-weight:700;letter-spacing:-1px;line-height:1}
+.bk-sub{font-size:9px;color:var(--dim2);margin-top:4px}
+.prow{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-bottom:1px solid var(--b1)}
+.pname{font-size:10px;color:var(--dim);font-weight:500}
+.pval{font-size:18px;font-weight:700;color:var(--txt)}
+table{width:100%;border-collapse:collapse;font-size:11px}
+th{font-size:7.5px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--dim);padding:5px 7px;text-align:left;border-bottom:1px solid var(--b2)}
+td{padding:7px 7px;border-bottom:1px solid var(--b1);color:var(--txt)}
+tr:last-child td{border-bottom:none}
+.tn{text-align:right;font-variant-numeric:tabular-nums}
+.tnm{max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tw{padding:0 12px 8px;overflow-x:auto}
+.mc-card{margin:0 12px 8px;background:var(--card);border:1px solid var(--b1);border-radius:6px;padding:12px}
+.mc-card-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.mc-card-name{font-size:18px;font-weight:700;letter-spacing:.5px;color:var(--txt)}
+.mc-card-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.mcgi .lbl{font-size:7.5px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--dim);margin-bottom:2px}
+.mcgi .val{font-size:14px;font-weight:700;color:var(--txt)}
+.sec{padding:8px 12px;border-bottom:1px solid var(--b1);display:flex;align-items:center;justify-content:space-between}
+.sec-title{font-size:7px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--dim)}
+#load-screen{position:fixed;inset:0;background:var(--bg,#000);z-index:999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px}
+#load-screen.gone{display:none}
+.ls-spin{width:24px;height:24px;border:2px solid #222;border-top-color:#cc0000;border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
 </style>
 </head>
-<body>
+<body class="dark">
 
-<!-- LOADING -->
 <div id="load-screen">
-  <div class="ls-logo">H<span>K</span>G</div>
+  <div style="font-size:32px;font-weight:900;letter-spacing:6px;color:#fff">H<span style="color:#cc0000">K</span>G</div>
   <div class="ls-spin"></div>
-  <div class="ls-msg" id="ls-msg">Loading data...</div>
+  <div style="font-size:10px;color:#555;letter-spacing:1px" id="ls-msg">Loading...</div>
 </div>
 
 <div class="app" id="app" style="display:none">
-
-  <!-- TOPBAR -->
   <div class="topbar">
-    <div class="logo-wrap">
-      <div class="logo-icon"><img src="data:image/jpeg;base64,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ABBrpAAAAADCEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/9oADAMBAAIAAwAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAM8AAAAAUQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAZpKwAAAAgAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIsAADAI/AAAQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADsAcAADEIAAMAMAAAQwgwwwwwywwwwwwwwwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAUsAMwMAAAAngABcAAABSgAAAADeAAsAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACIAAAsMAAvsAASgAAABSgBSwAD8ASAATwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEQAAOgQtEAAfgAAAABCABTwAAAAAgBTgwwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEoAAIAAMAAAAAAAAAAABTwAAACCgBTjDCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgMABkQIEAAMEAAAAAQABTwAAgASgBS0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWEAA6GNGQoAAEAAAABSgBTwAAEACgBTwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFAABBMAAAHIABOwAAABSgBTwAAEAB8ABQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAIgAAAABMkABQAAABSgBTwAAAgDSgAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGEsAAAMIMAAAYTIACABAAACAACCAABCCDABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABIAACgAIwABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACYSEAABBEQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA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" style="width:32px;height:32px;object-fit:contain;"></div>
-      <div>
-        <div class="logo-text">HKG</div>
-        <div class="logo-sub">Factory Operations</div>
-      </div>
+    <div style="display:flex;align-items:center">
+      <div class="brand">HKG</div>
     </div>
-    <div class="topbar-right">
-      <div class="top-date"><span class="top-dot"></span><span id="top-date">—</span></div>
-      <div class="top-updated" id="top-updated">—</div>
+    <div>
+      <div class="top-date"><span class="dot"></span><span id="top-date">—</span></div>
+      <div class="top-gen" id="top-gen">—</div>
     </div>
   </div>
 
-  <!-- BODY -->
   <div class="body">
-
-    <!-- LEFT: MTD STATS -->
     <div class="left">
-      <div class="month-hero">
-        <div class="month-label">Month to Date</div>
-        <div class="month-name" id="month-name">APRIL</div>
-        <div class="month-year" id="month-year">2026</div>
+      <div class="left-hdr" id="main-month-hdr">
+        <div style="font-size:18px;font-weight:900;letter-spacing:3px;color:#fff" id="main-month-label">APRIL</div>
       </div>
-      <div class="stats-list">
-        <div class="stat-row s-white">
-          <div class="stat-inner">
-            <div class="stat-label">Sales</div>
-            <div class="stat-val" id="s-sales">—</div>
-            <div class="stat-unit">MT sold</div>
-          </div>
-        </div>
-        <div class="stat-row s-silver">
-          <div class="stat-inner">
-            <div class="stat-label">Production</div>
-            <div class="stat-val silver" id="s-prod">—</div>
-            <div class="stat-unit">MT rod</div>
-          </div>
-        </div>
-        <div class="stat-row s-white">
-          <div class="stat-inner">
-            <div class="stat-label">Delivery</div>
-            <div class="stat-val" id="s-deliv">—</div>
-            <div class="stat-unit" id="s-trucks">MT dispatched</div>
-          </div>
-        </div>
-        <div class="stat-row s-red">
-          <div class="stat-inner">
-            <div class="stat-label">Average Price / Ton</div>
-            <div class="stat-val red" id="s-rate">—</div>
-            <div class="stat-unit">৳ per MT</div>
-          </div>
-        </div>
-        <div class="stat-row s-red">
-          <div class="stat-inner">
-            <div class="stat-label">Scrap Price / Ton</div>
-            <div class="stat-val red" id="s-scrap">—</div>
-            <div class="stat-unit">৳ exp / ton</div>
-          </div>
-        </div>
-        <div class="stat-row s-red">
-          <div class="stat-inner">
-            <div class="stat-label">Electricity Bill</div>
-            <div class="stat-val red" id="s-elec">—</div>
-            <div class="stat-unit">৳ MTD</div>
-          </div>
-        </div>
-        <div class="stat-row s-silver">
-          <div class="stat-inner">
-            <div class="stat-label">Scrap → Billet Ratio</div>
-            <div class="stat-val silver" id="s-ratio">—</div>
-            <div class="stat-unit">MT scrap / MT billet</div>
-          </div>
-        </div>
+      <div class="stats">
+        <div class="tile tw"><div><div class="t-lbl">Sales</div><div class="t-val" id="s-sales">—</div><div class="t-unit">MT sold</div></div></div>
+        <div class="tile ts"><div><div class="t-lbl">Production</div><div class="t-val s" id="s-prod">—</div><div class="t-unit">MT rod</div></div></div>
+        <div class="tile tw"><div><div class="t-lbl">Delivery</div><div class="t-val" id="s-deliv">—</div><div class="t-unit" id="s-trucks">MT dispatched</div></div></div>
+        <div class="tile tr"><div><div class="t-lbl">Average Price / Ton</div><div class="t-val r" id="s-rate">—</div><div class="t-unit">৳ per MT</div></div></div>
+        <div class="tile tr"><div><div class="t-lbl">Scrap Price / Ton</div><div class="t-val r" id="s-scrap">—</div><div class="t-unit">৳ exp / ton</div></div></div>
+        <div class="tile tr"><div><div class="t-lbl">Electricity Bill</div><div class="t-val r" id="s-elec">—</div><div class="t-unit">৳ MTD</div></div></div>
+        <div class="tile ts"><div><div class="t-lbl">Scrap → Billet Ratio</div><div class="t-val s" id="s-ratio">—</div><div class="t-unit">MT scrap / MT billet</div></div></div>
       </div>
     </div>
-
-    <!-- RIGHT: NAV -->
     <div class="right">
-      <div class="nav-header">Dashboards</div>
+      <div class="nav-hdr">Views</div>
       <div class="nav-list">
-        <div class="nav-item" onclick="openOv('margins')">
-          <div class="nav-icon">📊</div>
-          <div class="nav-name">Margins</div>
-        </div>
-        <div class="nav-item" onclick="openOv('costing')">
-          <div class="nav-icon">⚙️</div>
-          <div class="nav-name">Costing</div>
-        </div>
-        <div class="nav-item" onclick="openOv('revenue')">
-          <div class="nav-icon">💰</div>
-          <div class="nav-name">Revenue</div>
-        </div>
-        <div class="nav-item" onclick="openOv('inventory')">
-          <div class="nav-icon">📦</div>
-          <div class="nav-name">Inventory</div>
-        </div>
-        <div class="nav-item" onclick="openOv('finances')">
-          <div class="nav-icon">🏦</div>
-          <div class="nav-name">Finances</div>
-        </div>
-        <div class="nav-item" onclick="openOv('monthly')">
-          <div class="nav-icon">📅</div>
-          <div class="nav-name">Monthly</div>
-        </div>
+        <div class="ni" onclick="openOv('margins')"><div class="ni-ico">📊</div><div class="ni-name">Margins</div></div>
+        <div class="ni" onclick="openOv('costing')"><div class="ni-ico">⚙️</div><div class="ni-name">Costing</div></div>
+        <div class="ni" onclick="openOv('revenue')"><div class="ni-ico">💰</div><div class="ni-name">Revenue</div></div>
+        <div class="ni" onclick="openOv('inventory')"><div class="ni-ico">📦</div><div class="ni-name">Inventory</div></div>
+        <div class="ni" onclick="openOv('finances')"><div class="ni-ico">🏦</div><div class="ni-name">Finances</div></div>
+        <div class="ni" onclick="openOv('monthly')"><div class="ni-ico">📅</div><div class="ni-name">Monthly</div></div>
       </div>
     </div>
+  </div>
 
-  </div><!-- end body -->
-
-  <!-- TOGGLE + SCROLLABLE METRICS -->
   <div class="bottom">
-    <div class="toggle-row">
+    <div class="tog-row">
       <span class="t-label">Period</span>
       <div class="tbtns">
         <button class="tbtn" onclick="setP('today')">TODAY</button>
@@ -436,496 +177,696 @@ tr:last-child td{border-bottom:none}
         <button class="tbtn" onclick="setP('30d')">30D</button>
       </div>
     </div>
-    <div class="metrics-grid-2r">
-      <div class="mc">
-        <div class="mc-label">Total Sales</div>
-        <div class="mc-val silver" id="tm-sales">—</div>
-      </div>
-      <div class="mc">
-        <div class="mc-label">Total Production</div>
-        <div class="mc-val" id="tm-prod">—</div>
-      </div>
-      <div class="mc">
-        <div class="mc-label">Average Price</div>
-        <div class="mc-val red" id="tm-rate">—</div>
-      </div>
-      <div class="mc">
-        <div class="mc-label">Est. Revenue from Sales</div>
-        <div class="mc-val silver" id="tm-rev">—</div>
-      </div>
-      <div class="mc">
-        <div class="mc-label">Total Scrap Exp</div>
-        <div class="mc-val red" id="tm-scrap">—</div>
-      </div>
-      <div class="mc">
-        <div class="mc-label">Total Cost / Ton</div>
-        <div class="mc-val red" id="tm-costpt">—</div>
-      </div>
+    <div class="mgrid">
+      <div class="mc"><div class="mc-lbl">Total Sales</div><div class="mc-val s" id="tm0">—</div></div>
+      <div class="mc"><div class="mc-lbl">Total Prod</div><div class="mc-val" id="tm1">—</div></div>
+      <div class="mc"><div class="mc-lbl">Avg Rate</div><div class="mc-val r" id="tm2">—</div></div>
+      <div class="mc"><div class="mc-lbl">Est Revenue</div><div class="mc-val s" id="tm3">—</div></div>
+      <div class="mc"><div class="mc-lbl">Scrap Exp</div><div class="mc-val r" id="tm4">—</div></div>
+      <div class="mc"><div class="mc-lbl">Cost / Ton</div><div class="mc-val r" id="tm5">—</div></div>
     </div>
   </div>
 
-  <!-- OVERLAYS -->
-  <div class="overlay" id="ov-margins">
-    <div class="ov-hdr"><div class="ov-title">Margins</div><button class="ov-back" onclick="closeOv()">← Back</button></div>
-    <div class="ov-body">
-      <div class="sec">Revenue <span class="bdg" id="mg-bdg">—</span></div>
-      <div class="kgrid">
-        <div class="kc cs kc-full"><div class="kc-lbl">Total Revenue (Rod + Other)</div><div class="kc-val sil" id="mg-tr">—</div><div class="kc-sub">৳</div></div>
-        <div class="kc cs"><div class="kc-lbl">Sales Revenue</div><div class="kc-val sil" id="mg-sr">—</div><div class="kc-sub">৳</div></div>
-        <div class="kc"><div class="kc-lbl">Other Revenue</div><div class="kc-val" id="mg-or">—</div><div class="kc-sub">৳</div></div>
-      </div>
-      <div class="sec">Costs</div>
-      <div class="kgrid">
-        <div class="kc cr"><div class="kc-lbl">Scrap Consump Cost</div><div class="kc-val red" id="mg-sc">—</div><div class="kc-sub">৳</div></div>
-        <div class="kc cr"><div class="kc-lbl">Other Costs</div><div class="kc-val red" id="mg-oc">—</div><div class="kc-sub">৳</div></div>
-        <div class="kc cr"><div class="kc-lbl">Total Cost / Ton</div><div class="kc-val red" id="mg-tc">—</div><div class="kc-sub">৳/MT</div></div>
-        <div class="kc cs"><div class="kc-lbl">Avg Sale Price</div><div class="kc-val sil" id="mg-ap">—</div><div class="kc-sub">৳/MT</div></div>
-      </div>
-      <div class="sec">Margin</div>
-      <div class="big-kpi"><div class="bk-lbl">Gross Margin — Total Revenue minus Total Cost</div><div class="bk-val" id="mg-gm">—</div><div class="bk-sub" id="mg-gms">৳</div></div>
-      <div class="kgrid" style="margin-top:4px">
-        <div class="kc cw"><div class="kc-lbl">Margin / Ton</div><div class="kc-val" id="mg-mp">—</div><div class="kc-sub">৳/MT</div></div>
-        <div class="kc"><div class="kc-lbl">Price − Cost Spread</div><div class="kc-val" id="mg-sp">—</div><div class="kc-sub">৳/MT</div></div>
-        <div class="kc cs"><div class="kc-lbl">Rod Produced</div><div class="kc-val sil" id="mg-rod">—</div><div class="kc-sub">MT</div></div>
-        <div class="kc"><div class="kc-lbl">Sales Volume</div><div class="kc-val" id="mg-sv">—</div><div class="kc-sub">MT</div></div>
-      </div>
-    </div>
-  </div>
-
-
-  <div class="overlay" id="ov-revenue">
-    <div class="ov-hdr"><div class="ov-title">Revenue</div><button class="ov-back" onclick="closeOv()">← Back</button></div>
-    <div class="ov-body">
-      <div class="sec">Price Intel — Latest Day</div>
-      <div class="prow"><span class="pname">HKG Avg Sale Price</span><span class="pval" id="rv-hkg">—</span></div>
-      <div class="prow"><span class="pname">Others Avg (Salam / RICL / JSRM / Rani / SAS)</span><span class="pval" id="rv-oth">—</span></div>
-      <div class="prow"><span class="pname">BSRM Rate</span><span class="pval" id="rv-bsrm">—</span></div>
-      <div class="prow"><span class="pname">HKG vs Others</span><span id="rv-vo">—</span></div>
-      <div class="prow"><span class="pname">HKG vs BSRM</span><span id="rv-vb">—</span></div>
-      <div class="sec">Sales <span class="bdg" id="rv-bdg">—</span></div>
-      <div class="kgrid">
-        <div class="kc cs"><div class="kc-lbl">Sales Volume</div><div class="kc-val sil" id="rv-vol">—</div><div class="kc-sub">MT</div></div>
-        <div class="kc cs"><div class="kc-lbl">Revenue</div><div class="kc-val sil" id="rv-rev">—</div><div class="kc-sub">৳</div></div>
-        <div class="kc"><div class="kc-lbl">Delivery</div><div class="kc-val" id="rv-del">—</div><div class="kc-sub">MT</div></div>
-        <div class="kc"><div class="kc-lbl">Trucks</div><div class="kc-val" id="rv-trk">—</div><div class="kc-sub">released</div></div>
-      </div>
-      <div class="sec">Top Customers (MTD)</div>
-      <div class="tw"><table><thead><tr><th>Customer</th><th class="tn">Vol</th><th class="tn">Rev ৳</th><th class="tn">৳/T</th></tr></thead><tbody id="tb-cust"></tbody></table></div>
-      <div class="sec">By Salesman (MTD)</div>
-      <div class="tw"><table><thead><tr><th>Salesman</th><th class="tn">Vol</th><th class="tn">Rev ৳</th></tr></thead><tbody id="tb-sal"></tbody></table></div>
-    </div>
-  </div>
-
-  <div class="overlay" id="ov-inventory">
-    <div class="ov-hdr"><div class="ov-title">Inventory</div><button class="ov-back" onclick="closeOv()">← Back</button></div>
-    <div class="ov-body">
-      <div class="sec">Closing Stocks — Latest Day</div>
-      <div class="kgrid">
-        <div class="kc cr"><div class="kc-lbl">HMS Scrap</div><div class="kc-val red" id="iv-hms">—</div><div class="kc-sub">MT</div></div>
-        <div class="kc"><div class="kc-lbl">Bundle Scrap</div><div class="kc-val" id="iv-bun">—</div><div class="kc-sub">MT</div></div>
-        <div class="kc cs"><div class="kc-lbl">Billet</div><div class="kc-val sil" id="iv-bil">—</div><div class="kc-sub">MT</div></div>
-        <div class="kc cs"><div class="kc-lbl">Rod Inventory</div><div class="kc-val sil" id="iv-rod">—</div><div class="kc-sub">MT</div></div>
-      </div>
-      <div class="sec">Period Flows <span class="bdg" id="iv-bdg">—</span></div>
-      <div class="kgrid">
-        <div class="kc"><div class="kc-lbl">Scrap Consumed</div><div class="kc-val" id="iv-sc">—</div><div class="kc-sub">MT</div></div>
-        <div class="kc cs"><div class="kc-lbl">Billet Produced</div><div class="kc-val sil" id="iv-bp">—</div><div class="kc-sub">MT</div></div>
-        <div class="kc"><div class="kc-lbl">Rod Produced</div><div class="kc-val" id="iv-rp">—</div><div class="kc-sub">MT</div></div>
-        <div class="kc cs"><div class="kc-lbl">Delivered</div><div class="kc-val sil" id="iv-del">—</div><div class="kc-sub">MT</div></div>
-        <div class="kc cs kc-full"><div class="kc-lbl">Scrap → Billet Ratio</div><div class="kc-val sil" id="iv-rat">—</div><div class="kc-sub">MT scrap per MT billet</div></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="overlay" id="ov-finances">
-    <div class="ov-hdr"><div class="ov-title">Finances</div><button class="ov-back" onclick="closeOv()">← Back</button></div>
-    <div class="ov-body"><div class="cs-empty"><div class="cs-title">COMING SOON</div><div class="cs-sub">Finance data to be provided.</div></div></div>
-  </div>
-
-  <div class="overlay" id="ov-monthly">
-    <div class="ov-hdr"><div class="ov-title">Monthly</div><button class="ov-back" onclick="closeOv()">← Back</button></div>
-    <div class="ov-body">
-      <div class="sec">Year at a Glance</div>
-      <div class="tw"><table><thead><tr><th>Month</th><th class="tn">Prod</th><th class="tn">Revenue</th><th class="tn">Cost/T</th><th class="tn">Margin/T</th></tr></thead><tbody id="tb-mo"></tbody></table></div>
-      <div class="sec">Monthly Detail</div>
-      <div id="mo-cards"></div>
-    </div>
+  <div class="upload-bar">
+    <div class="up-info" id="up-info">—</div>
+    <input type="file" id="file-input" accept=".xlsx,.xls" onchange="handleUpload(this)">
+    <button class="theme-btn" onclick="toggleTheme()" id="theme-btn">☀️ Light</button>
+    <button class="up-btn" onclick="document.getElementById('file-input').click()">↑ UPDATE</button>
+    <span style="font-size:9px;color:var(--green);min-width:14px" id="up-st"></span>
   </div>
 
 
   <!-- COSTING OVERLAY -->
-  <div class="overlay" id="ov-costing">
-    <div class="ov-hdr" style="background:#000;border-bottom:2px solid #cc0000;padding:10px 14px 8px">
-      <div style="display:flex;align-items:center;gap:8px">
-        <div style="font-size:17px;font-weight:900;letter-spacing:3px;color:#fff;line-height:1">HKG</div>
-        <div style="font-size:7px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#555;margin-top:1px">Costing</div>
+  <div class="overlay" id="ov-costing" style="overflow:hidden">
+    <div class="ov-hdr">
+      <div style="font-size:17px;font-weight:700;letter-spacing:.5px;color:var(--txt)">Costing</div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <button class="theme-btn" onclick="toggleTheme()" style="font-size:8px;padding:3px 7px" id="cs-theme-btn">☀️</button>
+        <button class="ov-back" onclick="closeOv()">← Back</button>
       </div>
-      <button class="ov-back" onclick="closeOv()">← Back</button>
     </div>
-    <!-- Period toggle -->
-    <div style="display:flex;border-bottom:2px solid #cc0000;flex-shrink:0">
+    <div style="display:flex;align-items:stretch;background:var(--s2);border-bottom:2px solid var(--red);flex-shrink:0">
+      <div style="width:3px;background:var(--red);flex-shrink:0"></div>
+      <div style="flex:1;padding:13px 14px;display:flex;align-items:center;justify-content:space-between">
+        <div style="font-size:16px;font-weight:600;color:var(--txt);letter-spacing:.3px;line-height:1.2" id="cs-heading">—'s Costing Breakdown</div>
+        <div style="text-align:right;flex-shrink:0;margin-left:12px">
+          <div style="font-size:7px;font-weight:500;letter-spacing:1.2px;text-transform:uppercase;color:var(--dim);margin-bottom:3px">Total Cost / Ton</div>
+          <div style="font-size:22px;font-weight:700;color:var(--red);line-height:1;letter-spacing:-.5px" id="cs-tc-pt-mtd">—</div>
+        </div>
+      </div>
+    </div>
+    <div style="padding:5px 16px 4px;background:var(--card);border-bottom:1px solid var(--b1);border-left:3px solid var(--red);flex-shrink:0">
+      <div style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--txt)">Scrap</div>
+    </div>
+    <div style="flex:.7;display:flex;flex-direction:column;justify-content:center;padding:6px 16px;background:var(--card);border-bottom:1px solid var(--b1);min-height:0">
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:5px">
+        <div>
+          <div style="font-size:7px;font-weight:500;text-transform:uppercase;color:var(--dim);letter-spacing:1px;margin-bottom:2px">Expenditure / Ton</div>
+          <div style="font-size:17px;font-weight:600;color:var(--txt3);line-height:1;letter-spacing:-.3px" id="cs-exp-pt">—</div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:7px;font-weight:500;text-transform:uppercase;color:var(--dim);letter-spacing:1px;margin-bottom:2px">Consumption / Ton</div>
+          <div style="font-size:17px;font-weight:600;color:var(--red);line-height:1;letter-spacing:-.3px" id="cs-consump-pt">—</div>
+        </div>
+      </div>
+      <div style="position:relative;height:4px;background:var(--b1);border-radius:3px;margin-bottom:4px">
+        <div id="cs-bar-exp" style="position:absolute;left:0;top:0;height:4px;border-radius:3px 0 0 3px;background:var(--b3)"></div>
+        <div id="cs-bar-gap" style="position:absolute;top:0;height:4px;background:rgba(204,0,0,.15);border-left:2px dashed rgba(204,0,0,.4);border-right:2px solid var(--red)"></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:5px">
+        <div style="flex:1;height:1px;background:var(--b1)"></div>
+        <div style="font-size:7px;font-weight:600;color:var(--red);letter-spacing:.5px" id="cs-gap-label">—</div>
+        <div style="flex:1;height:1px;background:var(--b1)"></div>
+      </div>
+    </div>
+    <div style="flex:.5;display:flex;align-items:stretch;background:var(--s1);border-bottom:1px solid var(--b1);min-height:0">
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border-right:1px solid var(--b1)">
+        <div style="font-size:6px;font-weight:500;text-transform:uppercase;color:var(--dim);margin-bottom:2px;letter-spacing:.8px">Scrap Used</div>
+        <div style="font-size:14px;font-weight:700;color:var(--txt);line-height:1;letter-spacing:-.3px" id="cs-scrap-used">—</div>
+        <div style="font-size:6px;color:var(--dim3);margin-top:1px">MT</div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border-right:1px solid var(--b1)">
+        <div style="font-size:6px;font-weight:500;text-transform:uppercase;color:var(--dim);margin-bottom:2px;letter-spacing:.8px">Billet</div>
+        <div style="font-size:14px;font-weight:700;color:var(--txt3);line-height:1;letter-spacing:-.3px" id="cs-billet">—</div>
+        <div style="font-size:6px;color:var(--dim3);margin-top:1px">MT</div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border-right:1px solid var(--b1)">
+        <div style="font-size:6px;font-weight:500;text-transform:uppercase;color:var(--dim);margin-bottom:2px;letter-spacing:.8px">Rod</div>
+        <div style="font-size:14px;font-weight:700;color:var(--txt3);line-height:1;letter-spacing:-.3px" id="cs-rod">—</div>
+        <div style="font-size:6px;color:var(--dim3);margin-top:1px">MT</div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center">
+        <div style="font-size:6px;font-weight:500;text-transform:uppercase;color:var(--dim);margin-bottom:2px;letter-spacing:.8px">Scrap:Rod</div>
+        <div style="font-size:14px;font-weight:700;color:var(--red);line-height:1;letter-spacing:-.3px" id="cs-ratio">—</div>
+        <div style="font-size:6px;color:var(--dim3);margin-top:1px">ratio</div>
+      </div>
+    </div>
+    <div style="padding:5px 16px 4px;background:var(--card);border-bottom:1px solid var(--b1);border-left:3px solid var(--red);flex-shrink:0">
+      <div style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--txt)">Other Costs</div>
+    </div>
+    <div style="flex:.55;display:flex;align-items:stretch;background:var(--card);border-bottom:1px solid var(--b1);min-height:0">
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:0 12px;border-right:1px solid var(--b1)">
+        <div style="font-size:7px;font-weight:500;text-transform:uppercase;color:var(--dim);letter-spacing:1px;margin-bottom:2px">Other Cost / Ton</div>
+        <div style="font-size:18px;font-weight:700;color:var(--red);line-height:1;letter-spacing:-.3px" id="cs-oc-pt-mtd">—</div>
+        <div style="font-size:6px;color:var(--dim3);margin-top:1px">৳ / MT rod</div>
+      </div>
+      <div style="flex:1.6;display:flex;flex-direction:column;justify-content:center;padding:0 12px">
+        <div style="font-size:7px;font-weight:500;letter-spacing:1px;text-transform:uppercase;color:var(--dim);margin-bottom:4px">Electricity</div>
+        <div style="display:flex;justify-content:space-around;align-items:flex-end">
+          <div style="text-align:center">
+            <div style="font-size:6px;font-weight:500;text-transform:uppercase;color:var(--dim3);margin-bottom:1px;letter-spacing:.5px">Total Bill</div>
+            <div style="font-size:16px;font-weight:600;color:var(--txt);line-height:1;letter-spacing:-.3px" id="cs-elec-total">—</div>
+          </div>
+          <div style="width:1px;background:var(--b1);align-self:stretch;margin:0 3px"></div>
+          <div style="text-align:center">
+            <div style="font-size:6px;font-weight:500;text-transform:uppercase;color:var(--dim3);margin-bottom:1px;letter-spacing:.5px">Per Ton</div>
+            <div style="font-size:16px;font-weight:600;color:var(--txt3);line-height:1;letter-spacing:-.3px" id="cs-elec-pt">—</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="flex:.3;display:flex;align-items:center;justify-content:center;background:var(--s1);border-bottom:1px solid var(--b1);min-height:0">
+      <div style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--dim)">Salary: Coming Soon</div>
+    </div>
+    <div style="flex:.8;display:flex;flex-direction:column;background:var(--card);border-bottom:1px solid var(--b1);min-height:0">
+      <div style="padding:3px 12px;border-bottom:1px solid var(--b1);flex-shrink:0">
+        <div style="font-size:6.5px;font-weight:500;letter-spacing:1px;text-transform:uppercase;color:var(--dim)">Chemicals</div>
+      </div>
+      <div style="flex:1;display:flex;align-items:stretch;min-height:0">
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;border-right:1px solid var(--b1)">
+          <div style="font-size:6px;font-weight:600;padding:1px 5px;border-radius:3px;margin-bottom:3px;background:rgba(29,158,117,.12);color:#1d9e75;text-transform:uppercase;letter-spacing:.5px">SiMn</div>
+          <div style="font-size:16px;font-weight:700;color:#1d9e75;line-height:1;letter-spacing:-.3px" id="cs-simn-pt">—</div>
+          <div style="font-size:6px;color:#1d9e75;margin-top:1px;opacity:.7">৳/t</div>
+        </div>
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;border-right:1px solid var(--b1)">
+          <div style="font-size:6px;font-weight:600;padding:1px 5px;border-radius:3px;margin-bottom:3px;background:rgba(186,117,23,.12);color:#ba7517;text-transform:uppercase;letter-spacing:.5px">FeSi</div>
+          <div style="font-size:16px;font-weight:700;color:#ba7517;line-height:1;letter-spacing:-.3px" id="cs-fesi-pt">—</div>
+          <div style="font-size:6px;color:#ba7517;margin-top:1px;opacity:.7">৳/t</div>
+        </div>
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;border-right:1px solid var(--b1)">
+          <div style="font-size:6px;font-weight:600;padding:1px 5px;border-radius:3px;margin-bottom:3px;background:rgba(99,153,34,.12);color:#639922;text-transform:uppercase;letter-spacing:.5px">Boric</div>
+          <div style="font-size:16px;font-weight:700;color:#639922;line-height:1;letter-spacing:-.3px" id="cs-boric-pt">—</div>
+          <div style="font-size:6px;color:#639922;margin-top:1px;opacity:.7">৳/t</div>
+        </div>
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center">
+          <div style="font-size:6px;font-weight:600;padding:1px 5px;border-radius:3px;margin-bottom:3px;background:rgba(83,74,183,.12);color:#534ab7;text-transform:uppercase;letter-spacing:.5px">Qrtz</div>
+          <div style="font-size:16px;font-weight:700;color:#534ab7;line-height:1;letter-spacing:-.3px" id="cs-quartz-pt">—</div>
+          <div style="font-size:6px;color:#534ab7;margin-top:1px;opacity:.7">৳/t</div>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;flex-shrink:0;border-top:2px solid var(--red)">
       <div class="cpbtn" onclick="setCostP('today')">TODAY</div>
-      <div class="cpbtn on" id="cpbtn-7d" onclick="setCostP('7d')">7D</div>
+      <div class="cpbtn on" onclick="setCostP('7d')">7D</div>
       <div class="cpbtn" onclick="setCostP('10d')">10D</div>
       <div class="cpbtn" onclick="setCostP('14d')">14D</div>
       <div class="cpbtn" onclick="setCostP('30d')">30D</div>
     </div>
-    <!-- Hero -->
-    <div style="display:flex;align-items:stretch;padding:15px 14px;background:#0a0a0a;border-bottom:1px solid #1a1a1a;flex-shrink:0">
-      <div style="flex:1.2;padding-right:13px;border-right:1px solid #222;display:flex;flex-direction:column;justify-content:center">
-        <div class="cs-lbl">Total Cost / Ton</div>
-        <div style="font-size:42px;font-weight:900;letter-spacing:-2px;color:#e8000a;line-height:1" id="cs-tc-pt">—</div>
-        <div style="font-size:8px;color:#444;margin-top:4px">৳ per MT rod produced</div>
-      </div>
-      <div style="flex:1;padding-left:13px;display:flex;flex-direction:column;justify-content:center;gap:10px">
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:12px 16px;background:var(--s2);min-height:0">
+      <div style="font-size:7.5px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:var(--dim);margin-bottom:4px">Total Cost / Ton</div>
+      <div style="font-size:46px;font-weight:700;letter-spacing:-2px;color:var(--red);line-height:1;margin-bottom:10px" id="cs-tc-pt">—</div>
+      <div style="height:1px;background:var(--b1);margin-bottom:10px"></div>
+      <div style="display:flex;gap:28px">
         <div>
-          <div class="cs-lbl">Scrap Consumption / Ton</div>
-          <div style="font-size:19px;font-weight:900;line-height:1;color:#e8000a" id="cs-sc-pt">—</div>
+          <div style="font-size:7.5px;font-weight:500;letter-spacing:1px;text-transform:uppercase;color:var(--dim);margin-bottom:3px">Scrap / Ton</div>
+          <div style="font-size:24px;font-weight:700;color:var(--red);line-height:1;letter-spacing:-.5px" id="cs-sc-pt">—</div>
         </div>
-        <div style="height:1px;background:#1a1a1a"></div>
         <div>
-          <div class="cs-lbl">Other Cost / Ton</div>
-          <div style="font-size:19px;font-weight:900;line-height:1;color:#c8c8d0" id="cs-oc-pt">—</div>
+          <div style="font-size:7.5px;font-weight:500;letter-spacing:1px;text-transform:uppercase;color:var(--dim);margin-bottom:3px">Other / Ton</div>
+          <div style="font-size:24px;font-weight:700;color:var(--dim);line-height:1;letter-spacing:-.5px" id="cs-oc-pt">—</div>
+        </div>
+      </div>
+      <div style="font-size:7px;color:var(--dim3);margin-top:8px;letter-spacing:.3px">৳ per MT rod produced</div>
+    </div>
+  </div>
+
+  <!-- REVENUE -->
+  <div class="overlay" id="ov-revenue" style="overflow:hidden">
+    <!-- TOPBAR -->
+    <div class="ov-hdr" style="flex-shrink:0">
+      <div style="font-size:17px;font-weight:700;letter-spacing:.5px;color:var(--txt)">Revenue</div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <button class="theme-btn" onclick="toggleTheme()" style="font-size:8px;padding:3px 7px" id="rv-theme-btn">☀️</button>
+        <button class="ov-back" onclick="closeOv()">← Back</button>
+      </div>
+    </div>
+
+    <!-- SECTION 1: April heading + MTD metrics — fills ~40% -->
+    <div style="flex:2;display:flex;flex-direction:column;background:var(--s2);border-bottom:2px solid var(--red);min-height:0;flex-shrink:0">
+      <div style="display:flex;align-items:stretch;flex:1;min-height:0">
+        <div style="width:3px;background:var(--red);flex-shrink:0"></div>
+        <div style="flex:1;display:flex;flex-direction:column;padding:7px 14px;justify-content:space-between">
+          <div style="font-size:16px;font-weight:700;color:var(--txt);letter-spacing:.3px;line-height:1.2" id="rv-heading">—'s Revenue Breakdown</div>
+          <!-- Row 1 -->
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;border-bottom:1px solid var(--b1);padding-bottom:6px">
+            <div style="padding-right:8px;border-right:1px solid var(--b1)">
+              <div style="font-size:6.5px;font-weight:500;text-transform:uppercase;color:var(--dim);letter-spacing:1px;margin-bottom:2px">Avg Price</div>
+              <div style="font-size:22px;font-weight:700;color:var(--red);line-height:1;letter-spacing:-.5px" id="rv-mtd-ap">—</div>
+              <div style="font-size:6px;color:var(--dim3);margin-top:1px">৳/MT</div>
+            </div>
+            <div style="padding:0 8px;border-right:1px solid var(--b1)">
+              <div style="font-size:6.5px;font-weight:500;text-transform:uppercase;color:var(--dim);letter-spacing:1px;margin-bottom:2px">Total Sales</div>
+              <div style="font-size:22px;font-weight:700;color:var(--txt2);line-height:1;letter-spacing:-.5px" id="rv-mtd-vol">—</div>
+              <div style="font-size:6px;color:var(--dim3);margin-top:1px">MT</div>
+            </div>
+            <div style="padding:0 8px;border-right:1px solid var(--b1)">
+              <div style="font-size:6.5px;font-weight:500;text-transform:uppercase;color:var(--dim);letter-spacing:1px;margin-bottom:2px">Rod Revenue</div>
+              <div style="font-size:22px;font-weight:700;color:var(--txt2);line-height:1;letter-spacing:-.5px" id="rv-mtd-rev">—</div>
+              <div style="font-size:6px;color:var(--dim3);margin-top:1px">৳</div>
+            </div>
+            <div style="padding-left:8px">
+              <div style="font-size:6.5px;font-weight:500;text-transform:uppercase;color:var(--dim);letter-spacing:1px;margin-bottom:2px">Delivery</div>
+              <div style="font-size:22px;font-weight:700;color:var(--txt2);line-height:1;letter-spacing:-.5px" id="rv-mtd-del">—</div>
+              <div style="font-size:6px;color:var(--dim3);margin-top:1px">MT</div>
+            </div>
+          </div>
+          <!-- Row 2 -->
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;padding-top:6px">
+            <div style="padding-right:8px;border-right:1px solid var(--b1)">
+              <div style="font-size:6.5px;font-weight:500;text-transform:uppercase;color:var(--dim);letter-spacing:1px;margin-bottom:2px">Avg Market</div>
+              <div style="font-size:20px;font-weight:700;color:var(--txt3);line-height:1;letter-spacing:-.5px" id="rv-others-rate">—</div>
+              <div style="font-size:6px;color:var(--dim3);margin-top:1px">৳/MT</div>
+            </div>
+            <div style="padding:0 8px;border-right:1px solid var(--b1)">
+              <div style="font-size:6.5px;font-weight:500;text-transform:uppercase;color:var(--dim);letter-spacing:1px;margin-bottom:2px">vs Market</div>
+              <div style="font-size:20px;font-weight:700;line-height:1;letter-spacing:-.5px" id="rv-mtd-vs">—</div>
+              <div style="font-size:6px;color:var(--dim3);margin-top:1px">diff</div>
+            </div>
+            <div style="padding:0 8px;border-right:1px solid var(--b1)">
+              <div style="font-size:6.5px;font-weight:500;text-transform:uppercase;color:var(--dim);letter-spacing:1px;margin-bottom:2px">Other Rev</div>
+              <div style="font-size:20px;font-weight:700;color:var(--txt2);line-height:1;letter-spacing:-.5px" id="rv-other-rev-mtd">—</div>
+              <div style="font-size:6px;color:var(--dim3);margin-top:1px">৳ MTD</div>
+            </div>
+            <div style="padding-left:8px">
+              <div style="font-size:6.5px;font-weight:500;text-transform:uppercase;color:var(--dim);letter-spacing:1px;margin-bottom:2px">Rod Stock</div>
+              <div style="font-size:20px;font-weight:700;color:var(--txt2);line-height:1;letter-spacing:-.5px" id="rv-rod-inv">—</div>
+              <div style="font-size:6px;color:var(--dim3);margin-top:1px">MT</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    <div class="ov-body">
-      <!-- Scrap section -->
-      <div style="padding:7px 14px 5px;background:#000;border-bottom:1px solid #1a1a1a;display:flex;align-items:center;justify-content:space-between;flex-shrink:0">
-        <div style="font-size:7px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#555">Scrap</div>
-        <div style="font-size:11px;font-weight:900;letter-spacing:1px;color:#fff;text-transform:uppercase" id="cs-month-badge">— —</div>
+
+    <!-- SECTION 2: 2026 Overview — fills ~35% -->
+    <div style="flex:2;display:flex;flex-direction:column;min-height:0">
+      <div style="padding:5px 14px;background:var(--bg);border-bottom:1px solid var(--b1);border-left:3px solid var(--red);flex-shrink:0">
+        <div style="font-size:13px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--txt)">2026 Overview</div>
       </div>
-      <!-- Split bar -->
-      <div style="padding:13px 14px;background:#0a0a0a;border-bottom:1px solid #222">
-        <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:10px">
+      <!-- Salesman rates row -->
+      <div style="flex:1;display:flex;align-items:stretch;background:var(--card);border-bottom:1px solid var(--b1);min-height:0">
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:0 10px;border-right:1px solid var(--b1)">
+          <div style="font-size:6px;font-weight:500;text-transform:uppercase;color:var(--dim);letter-spacing:1px;margin-bottom:2px">Mahfuz Sir</div>
+          <div style="font-size:16px;font-weight:700;color:var(--txt);line-height:1;letter-spacing:-.3px" id="rv-mahfuz-avg">—</div>
+          <div style="font-size:6px;color:var(--dim3);margin-top:1px">avg ৳/MT</div>
+        </div>
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:0 10px;border-right:1px solid var(--b1)">
+          <div style="font-size:6px;font-weight:500;text-transform:uppercase;color:var(--dim);letter-spacing:1px;margin-bottom:2px">Meraj</div>
+          <div style="font-size:16px;font-weight:700;color:var(--txt);line-height:1;letter-spacing:-.3px" id="rv-meraj-avg">—</div>
+          <div style="font-size:6px;color:var(--dim3);margin-top:1px">avg ৳/MT</div>
+        </div>
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:0 10px;border-right:1px solid var(--b1)">
+          <div style="font-size:6px;font-weight:500;text-transform:uppercase;color:var(--dim);letter-spacing:1px;margin-bottom:2px">Nadim</div>
+          <div style="font-size:16px;font-weight:700;color:var(--txt);line-height:1;letter-spacing:-.3px" id="rv-nadim-avg">—</div>
+          <div style="font-size:6px;color:var(--dim3);margin-top:1px">avg ৳/MT</div>
+        </div>
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:0 10px">
+          <div style="font-size:6px;font-weight:500;text-transform:uppercase;color:var(--dim);letter-spacing:1px;margin-bottom:2px">Halima</div>
+          <div style="font-size:16px;font-weight:700;color:var(--red);line-height:1;letter-spacing:-.3px" id="rv-halima-avg">—</div>
+          <div style="font-size:6px;color:var(--dim3);margin-top:1px">avg ৳/MT</div>
+        </div>
+      </div>
+      <!-- Halima vs Others bar row -->
+      <div style="flex:1;display:flex;align-items:stretch;background:var(--s1);border-bottom:1px solid var(--b1);min-height:0">
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:0 12px;border-right:1px solid var(--b1)">
+          <div style="font-size:6px;font-weight:500;text-transform:uppercase;color:var(--dim);margin-bottom:4px;letter-spacing:.8px">Halima Steel Corp</div>
+          <div style="height:5px;background:var(--b1);border-radius:3px;margin-bottom:3px"><div id="rv-halima-bar" style="height:5px;border-radius:3px;background:var(--red);width:100%"></div></div>
+          <div style="font-size:10px;font-weight:700;color:var(--red);letter-spacing:-.2px" id="rv-halima-vol">—</div>
+          <div style="font-size:6px;color:var(--dim3)">MT sold YTD</div>
+        </div>
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:0 12px">
+          <div style="font-size:6px;font-weight:500;text-transform:uppercase;color:var(--dim);margin-bottom:4px;letter-spacing:.8px">All Other Customers</div>
+          <div style="height:5px;background:var(--b1);border-radius:3px;margin-bottom:3px"><div id="rv-others-bar" style="height:5px;border-radius:3px;background:var(--silver);width:100%"></div></div>
+          <div style="font-size:10px;font-weight:700;color:var(--txt2);letter-spacing:-.2px" id="rv-others-vol">—</div>
+          <div style="font-size:6px;color:var(--dim3)">MT sold YTD</div>
+        </div>
+      </div>
+      <!-- Top regions -->
+      <div style="flex:1;display:flex;align-items:stretch;background:var(--card);border-bottom:1px solid var(--b1);min-height:0">
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:0 10px;border-right:1px solid var(--b1)">
+          <div style="font-size:6px;font-weight:500;text-transform:uppercase;color:var(--dim);letter-spacing:.8px;margin-bottom:2px">Top Region</div>
+          <div style="font-size:12px;font-weight:700;color:var(--red);line-height:1" id="rv-reg1-name">—</div>
+          <div style="font-size:9px;font-weight:600;color:var(--txt2)" id="rv-reg1-qty">—</div>
+        </div>
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:0 10px;border-right:1px solid var(--b1)">
+          <div style="font-size:6px;font-weight:500;text-transform:uppercase;color:var(--dim);letter-spacing:.8px;margin-bottom:2px">2nd Region</div>
+          <div style="font-size:12px;font-weight:700;color:var(--txt2);line-height:1" id="rv-reg2-name">—</div>
+          <div style="font-size:9px;font-weight:600;color:var(--txt3)" id="rv-reg2-qty">—</div>
+        </div>
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:0 10px;border-right:1px solid var(--b1)">
+          <div style="font-size:6px;font-weight:500;text-transform:uppercase;color:var(--dim);letter-spacing:.8px;margin-bottom:2px">3rd Region</div>
+          <div style="font-size:12px;font-weight:700;color:var(--txt2);line-height:1" id="rv-reg3-name">—</div>
+          <div style="font-size:9px;font-weight:600;color:var(--txt3)" id="rv-reg3-qty">—</div>
+        </div>
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:0 10px">
+          <div style="font-size:6px;font-weight:500;text-transform:uppercase;color:var(--dim);letter-spacing:.8px;margin-bottom:2px">Other Rev 2026</div>
+          <div style="font-size:14px;font-weight:700;color:var(--red);line-height:1;letter-spacing:-.2px" id="rv-other-rev-total">—</div>
+          <div style="font-size:6px;color:var(--dim3)">৳ non-rod</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 3: TOGGLE + DRIVEN DATA — fills ~25% -->
+    <div style="flex:1.5;display:flex;flex-direction:column;min-height:0">
+      <div style="display:flex;flex-shrink:0;border-top:2px solid var(--red)">
+        <div id="rv-tbtn-today" onclick="setRvP('today')" style="flex:1;padding:10px 2px;text-align:center;font-size:9px;font-weight:700;color:var(--dim);border-right:1px solid var(--b1);background:var(--bg);text-transform:uppercase;cursor:pointer;letter-spacing:.5px">TODAY</div>
+        <div id="rv-tbtn-7d"   onclick="setRvP('7d')"   style="flex:1;padding:10px 2px;text-align:center;font-size:9px;font-weight:700;background:var(--red);color:#fff;border-right:1px solid var(--b1);text-transform:uppercase;cursor:pointer;letter-spacing:.5px">7D</div>
+        <div id="rv-tbtn-10d" onclick="setRvP('10d')"  style="flex:1;padding:10px 2px;text-align:center;font-size:9px;font-weight:700;color:var(--dim);border-right:1px solid var(--b1);background:var(--bg);text-transform:uppercase;cursor:pointer;letter-spacing:.5px">10D</div>
+        <div id="rv-tbtn-14d" onclick="setRvP('14d')"  style="flex:1;padding:10px 2px;text-align:center;font-size:9px;font-weight:700;color:var(--dim);border-right:1px solid var(--b1);background:var(--bg);text-transform:uppercase;cursor:pointer;letter-spacing:.5px">14D</div>
+        <div id="rv-tbtn-30d" onclick="setRvP('30d')"  style="flex:1;padding:10px 2px;text-align:center;font-size:9px;font-weight:700;color:var(--dim);background:var(--bg);text-transform:uppercase;cursor:pointer;letter-spacing:.5px">30D</div>
+      </div>
+      <!-- Toggle-driven data -->
+      <div style="flex:1;display:flex;align-items:stretch;background:var(--s2);min-height:0">
+        <div style="flex:1.4;display:flex;flex-direction:column;justify-content:center;padding:0 14px;border-right:1px solid var(--b1)">
+          <div style="font-size:7px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:var(--dim);margin-bottom:3px">Total Sales Volume</div>
+          <div style="font-size:36px;font-weight:700;letter-spacing:-2px;color:var(--txt);line-height:1" id="rv-vol-big">—</div>
+          <div style="font-size:6.5px;color:var(--dim3);margin-top:2px">MT sold</div>
+        </div>
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:0 12px;border-right:1px solid var(--b1)">
+          <div style="font-size:7px;font-weight:500;letter-spacing:1px;text-transform:uppercase;color:var(--dim);margin-bottom:3px">HKG Avg Rate</div>
+          <div style="font-size:22px;font-weight:700;color:var(--red);line-height:1;letter-spacing:-.5px" id="rv-hkg-rate">—</div>
+          <div style="font-size:6px;color:var(--dim3);margin-top:2px">৳/ton wtd avg</div>
+        </div>
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:0 12px">
+          <div style="font-size:7px;font-weight:500;letter-spacing:1px;text-transform:uppercase;color:var(--dim);margin-bottom:3px">Total Sales Rev</div>
+          <div style="font-size:22px;font-weight:700;color:var(--txt2);line-height:1;letter-spacing:-.5px" id="rv-rev-big">—</div>
+          <div style="font-size:6px;color:var(--dim3);margin-top:2px">৳</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <!-- MARGINS -->
+  <div class="overlay" id="ov-margins" style="overflow:hidden">
+    <div class="ov-hdr">
+      <div style="font-size:17px;font-weight:700;letter-spacing:.5px;color:var(--txt)">Margins</div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <button class="theme-btn" onclick="toggleTheme()" style="font-size:8px;padding:3px 7px" id="mg-theme-btn">☀️</button>
+        <button class="ov-back" onclick="closeOv()">← Back</button>
+      </div>
+    </div>
+
+    <!-- TOP HALF: COMING SOON -->
+    <div style="flex:1;display:flex;align-items:center;justify-content:center;background:var(--s1);border-bottom:2px solid var(--red);min-height:0;flex-direction:column;gap:8px">
+      <div style="font-size:28px;font-weight:700;letter-spacing:4px;color:var(--b2);text-transform:uppercase">Coming Soon</div>
+      <div style="font-size:10px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:var(--b2)">Margin analysis in development</div>
+    </div>
+
+    <!-- BOTTOM HALF: BOTH toggles + driven data -->
+    <div style="flex:1;display:flex;flex-direction:column;min-height:0">
+
+      <!-- COSTING toggle -->
+      <div style="padding:4px 14px;background:var(--bg);border-bottom:1px solid var(--b1);flex-shrink:0;display:flex;align-items:center;justify-content:space-between">
+        <div style="font-size:7px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--dim)">Costing Period</div>
+        <div style="display:flex;gap:0">
+          <div class="mg-tbtn" id="mg-cs-today" onclick="setMgCostP('today')" style="padding:5px 8px;font-size:8px;font-weight:700;color:var(--dim);background:var(--bg);cursor:pointer;letter-spacing:.5px;border:1px solid var(--b1);border-radius:3px 0 0 3px">TODAY</div>
+          <div class="mg-tbtn on" id="mg-cs-7d" onclick="setMgCostP('7d')" style="padding:5px 8px;font-size:8px;font-weight:700;background:var(--red);color:#fff;cursor:pointer;letter-spacing:.5px;border:1px solid var(--red)">7D</div>
+          <div class="mg-tbtn" id="mg-cs-10d" onclick="setMgCostP('10d')" style="padding:5px 8px;font-size:8px;font-weight:700;color:var(--dim);background:var(--bg);cursor:pointer;letter-spacing:.5px;border:1px solid var(--b1)">10D</div>
+          <div class="mg-tbtn" id="mg-cs-14d" onclick="setMgCostP('14d')" style="padding:5px 8px;font-size:8px;font-weight:700;color:var(--dim);background:var(--bg);cursor:pointer;letter-spacing:.5px;border:1px solid var(--b1)">14D</div>
+          <div class="mg-tbtn" id="mg-cs-30d" onclick="setMgCostP('30d')" style="padding:5px 8px;font-size:8px;font-weight:700;color:var(--dim);background:var(--bg);cursor:pointer;letter-spacing:.5px;border:1px solid var(--b1);border-radius:0 3px 3px 0">30D</div>
+        </div>
+      </div>
+      <!-- Costing data row -->
+      <div style="flex:1;display:flex;align-items:stretch;background:var(--s2);border-bottom:1px solid var(--b1);min-height:0">
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:0 14px;border-right:1px solid var(--b1)">
+          <div style="font-size:7px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:var(--dim);margin-bottom:3px">Total Cost / Ton</div>
+          <div style="font-size:30px;font-weight:700;letter-spacing:-1.5px;color:var(--red);line-height:1" id="mg-cs-tc">—</div>
+          <div style="font-size:6.5px;color:var(--dim3);margin-top:2px">৳/MT rod</div>
+        </div>
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:0 12px;gap:6px">
           <div>
-            <div style="font-size:7px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#555;margin-bottom:3px">Expenditure / Ton</div>
-            <div style="font-size:21px;font-weight:900;line-height:1;color:#c8c8d0" id="cs-exp-pt">—</div>
-            <div style="font-size:7px;color:#444;margin-top:2px">৳ purchase price</div>
+            <div style="font-size:6.5px;font-weight:500;text-transform:uppercase;color:var(--dim);margin-bottom:1px">Scrap/Ton</div>
+            <div style="font-size:16px;font-weight:700;color:var(--red);line-height:1;letter-spacing:-.3px" id="mg-cs-sc">—</div>
           </div>
-          <div style="text-align:right">
-            <div style="font-size:7px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#555;margin-bottom:3px">Consumption / Ton</div>
-            <div style="font-size:21px;font-weight:900;line-height:1;color:#e8000a" id="cs-consump-pt">—</div>
-            <div style="font-size:7px;color:#444;margin-top:2px">৳ consumption cost</div>
+          <div style="height:1px;background:var(--b1)"></div>
+          <div>
+            <div style="font-size:6.5px;font-weight:500;text-transform:uppercase;color:var(--dim);margin-bottom:1px">Other/Ton</div>
+            <div style="font-size:16px;font-weight:700;color:var(--dim);line-height:1;letter-spacing:-.3px" id="mg-cs-oc">—</div>
           </div>
         </div>
-        <div style="position:relative;height:10px;background:#1a1a1a;border-radius:5px;margin:4px 0 8px">
-          <div id="cs-bar-exp" style="position:absolute;left:0;top:0;height:10px;border-radius:5px 0 0 5px;background:#555"></div>
-          <div id="cs-bar-gap" style="position:absolute;top:0;height:10px;background:rgba(232,0,10,.2);border-left:2px dashed rgba(232,0,10,.5);border-right:2px solid #e8000a"></div>
-        </div>
-        <div style="display:flex;align-items:center;gap:6px">
-          <div style="flex:1;height:1px;background:#1a1a1a"></div>
-          <div style="font-size:8px;font-weight:700;color:#e8000a;letter-spacing:.5px;white-space:nowrap" id="cs-gap-label">— gap</div>
-          <div style="flex:1;height:1px;background:#1a1a1a"></div>
+      </div>
+
+      <!-- REVENUE toggle -->
+      <div style="padding:4px 14px;background:var(--bg);border-bottom:1px solid var(--b1);flex-shrink:0;display:flex;align-items:center;justify-content:space-between">
+        <div style="font-size:7px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--dim)">Revenue Period</div>
+        <div style="display:flex;gap:0">
+          <div class="mg-tbtn" id="mg-rv-today" onclick="setMgRevP('today')" style="padding:5px 8px;font-size:8px;font-weight:700;color:var(--dim);background:var(--bg);cursor:pointer;letter-spacing:.5px;border:1px solid var(--b1);border-radius:3px 0 0 3px">TODAY</div>
+          <div class="mg-tbtn on" id="mg-rv-7d" onclick="setMgRevP('7d')" style="padding:5px 8px;font-size:8px;font-weight:700;background:var(--red);color:#fff;cursor:pointer;letter-spacing:.5px;border:1px solid var(--red)">7D</div>
+          <div class="mg-tbtn" id="mg-rv-10d" onclick="setMgRevP('10d')" style="padding:5px 8px;font-size:8px;font-weight:700;color:var(--dim);background:var(--bg);cursor:pointer;letter-spacing:.5px;border:1px solid var(--b1)">10D</div>
+          <div class="mg-tbtn" id="mg-rv-14d" onclick="setMgRevP('14d')" style="padding:5px 8px;font-size:8px;font-weight:700;color:var(--dim);background:var(--bg);cursor:pointer;letter-spacing:.5px;border:1px solid var(--b1)">14D</div>
+          <div class="mg-tbtn" id="mg-rv-30d" onclick="setMgRevP('30d')" style="padding:5px 8px;font-size:8px;font-weight:700;color:var(--dim);background:var(--bg);cursor:pointer;letter-spacing:.5px;border:1px solid var(--b1);border-radius:0 3px 3px 0">30D</div>
         </div>
       </div>
-      <!-- Production stats strip -->
-      <div style="display:flex;align-items:stretch;background:#0a0a0a;border-bottom:1px solid #1a1a1a">
-        <div style="flex:1;padding:9px 0;display:flex;flex-direction:column;align-items:center;justify-content:center;border-right:1px solid #1a1a1a">
-          <div style="font-size:6px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#444;margin-bottom:3px;text-align:center;line-height:1.3">Scrap Used</div>
-          <div style="font-size:13px;font-weight:900;color:#fff;line-height:1" id="cs-scrap-used">—</div>
-          <div style="font-size:6px;color:#333;margin-top:1px">MT</div>
+      <!-- Revenue data row -->
+      <div style="flex:1;display:flex;align-items:stretch;background:var(--card);min-height:0">
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:0 14px;border-right:1px solid var(--b1)">
+          <div style="font-size:7px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:var(--dim);margin-bottom:3px">HKG Avg Rate</div>
+          <div style="font-size:30px;font-weight:700;letter-spacing:-1.5px;color:var(--green);line-height:1" id="mg-rv-ap">—</div>
+          <div style="font-size:6.5px;color:var(--dim3);margin-top:2px">৳/MT wtd avg</div>
         </div>
-        <div style="flex:1;padding:9px 0;display:flex;flex-direction:column;align-items:center;justify-content:center;border-right:1px solid #1a1a1a">
-          <div style="font-size:6px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#444;margin-bottom:3px;text-align:center;line-height:1.3">Billet Produced</div>
-          <div style="font-size:13px;font-weight:900;color:#c8c8d0;line-height:1" id="cs-billet">—</div>
-          <div style="font-size:6px;color:#333;margin-top:1px">MT</div>
-        </div>
-        <div style="flex:1;padding:9px 0;display:flex;flex-direction:column;align-items:center;justify-content:center;border-right:1px solid #1a1a1a">
-          <div style="font-size:6px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#444;margin-bottom:3px;text-align:center;line-height:1.3">Rod Produced</div>
-          <div style="font-size:13px;font-weight:900;color:#c8c8d0;line-height:1" id="cs-rod">—</div>
-          <div style="font-size:6px;color:#333;margin-top:1px">MT</div>
-        </div>
-        <div style="flex:1;padding:9px 0;display:flex;flex-direction:column;align-items:center;justify-content:center">
-          <div style="font-size:6px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#444;margin-bottom:3px;text-align:center;line-height:1.3">Scrap to Rod</div>
-          <div style="font-size:13px;font-weight:900;color:#e8000a;line-height:1" id="cs-ratio">—</div>
-          <div style="font-size:6px;color:#333;margin-top:1px">ratio</div>
-        </div>
-      </div>
-      <!-- Electricity -->
-      <div style="padding:7px 14px 5px;background:#000;border-bottom:1px solid #1a1a1a">
-        <div style="font-size:7px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#555">Electricity Bill to Date</div>
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid #1a1a1a">
-        <div style="padding:13px 12px;background:#0a0a0a;border-right:1px solid #1a1a1a">
-          <div style="font-size:7px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#555;margin-bottom:3px">Total Bill So Far</div>
-          <div style="font-size:21px;font-weight:900;line-height:1;color:#e8000a" id="cs-elec-total">—</div>
-          <div style="font-size:7px;color:#444;margin-top:2px" id="cs-elec-month">৳ — 2026</div>
-        </div>
-        <div style="padding:13px 12px;background:#0a0a0a">
-          <div style="font-size:7px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#555;margin-bottom:3px">Per Ton Produced</div>
-          <div style="font-size:21px;font-weight:900;line-height:1;color:#c8c8d0" id="cs-elec-pt">—</div>
-          <div style="font-size:7px;color:#444;margin-top:2px">৳ / MT rod</div>
-        </div>
-      </div>
-      <!-- Salary -->
-      <div style="padding:7px 14px 5px;background:#000;border-bottom:1px solid #1a1a1a">
-        <div style="font-size:7px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#555">Salary</div>
-      </div>
-      <div style="padding:11px 14px;background:#0a0a0a;border-bottom:1px solid #1a1a1a;display:flex;align-items:center;gap:10px">
-        <div style="width:30px;height:30px;border-radius:50%;border:1px dashed #1e1e1e;display:flex;align-items:center;justify-content:center;flex-shrink:0">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#252525" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-        </div>
-        <div>
-          <div style="font-size:9px;font-weight:700;color:#2a2a2a;letter-spacing:.5px;margin-bottom:2px">Salary Breakdown Coming Soon</div>
-          <div style="font-size:7px;color:#222;letter-spacing:.3px">This section will be available shortly</div>
-        </div>
-      </div>
-      <!-- Chemicals -->
-      <div style="padding:7px 14px 5px;background:#000;border-bottom:1px solid #1a1a1a">
-        <div style="font-size:7px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#555">Chemicals</div>
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;background:#0a0a0a">
-        <div style="padding:13px 12px;border-right:1px solid #1a1a1a;display:flex;flex-direction:column;gap:6px">
-          <div style="display:flex;align-items:center;justify-content:space-between">
-            <div style="font-size:7px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:2px 7px;border-radius:2px;background:rgba(29,158,117,.15);color:#1d9e75">SiMn</div>
-            <div style="font-size:7px;color:#333;letter-spacing:.3px" id="cs-simn-total">— total</div>
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:0 12px;gap:6px">
+          <div>
+            <div style="font-size:6.5px;font-weight:500;text-transform:uppercase;color:var(--dim);margin-bottom:1px">Total Sales Rev</div>
+            <div style="font-size:16px;font-weight:700;color:var(--green);line-height:1;letter-spacing:-.3px" id="mg-rv-rev">—</div>
           </div>
-          <div style="font-size:24px;font-weight:900;line-height:1;color:#1d9e75" id="cs-simn-pt">—</div>
-          <div style="font-size:7px;color:#1d9e75;margin-top:1px">৳ / ton produced</div>
-          <div style="height:3px;background:#1a1a1a;border-radius:2px;margin-top:4px"><div id="cs-simn-bar" style="height:3px;border-radius:2px;background:#1d9e75;width:100%"></div></div>
-        </div>
-        <div style="padding:13px 12px;display:flex;flex-direction:column;gap:6px">
-          <div style="display:flex;align-items:center;justify-content:space-between">
-            <div style="font-size:7px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:2px 7px;border-radius:2px;background:rgba(186,117,23,.15);color:#ba7517">FeSi</div>
-            <div style="font-size:7px;color:#333;letter-spacing:.3px" id="cs-fesi-total">— total</div>
+          <div style="height:1px;background:var(--b1)"></div>
+          <div>
+            <div style="font-size:6.5px;font-weight:500;text-transform:uppercase;color:var(--dim);margin-bottom:1px">Sales Volume</div>
+            <div style="font-size:16px;font-weight:700;color:var(--txt2);line-height:1;letter-spacing:-.3px" id="mg-rv-vol">—</div>
           </div>
-          <div style="font-size:24px;font-weight:900;line-height:1;color:#ba7517" id="cs-fesi-pt">—</div>
-          <div style="font-size:7px;color:#ba7517;margin-top:1px">৳ / ton produced</div>
-          <div style="height:3px;background:#1a1a1a;border-radius:2px;margin-top:4px"><div id="cs-fesi-bar" style="height:3px;border-radius:2px;background:#ba7517;width:3%"></div></div>
         </div>
+      </div>
+    </div>
+
+  </div>
+  <!-- INVENTORY -->
+  <div class="overlay" id="ov-inventory">
+    <div class="ov-hdr"><div style="font-size:17px;font-weight:700;color:var(--txt)">Inventory</div><button class="ov-back" onclick="closeOv()">← Back</button></div>
+    <div class="ov-body">
+      <div class="sec"><span class="sec-title">Closing Stocks</span></div>
+      <div class="kgrid">
+        <div class="kc cr"><div class="kc-lbl">HMS Scrap</div><div class="kc-val r" id="iv-hms">—</div><div class="kc-sub">MT</div></div>
+        <div class="kc"><div class="kc-lbl">Bundle Scrap</div><div class="kc-val" id="iv-bun">—</div><div class="kc-sub">MT</div></div>
+        <div class="kc cs"><div class="kc-lbl">Billet</div><div class="kc-val s" id="iv-bil">—</div><div class="kc-sub">MT</div></div>
+        <div class="kc cs"><div class="kc-lbl">Rod Inventory</div><div class="kc-val s" id="iv-rod">—</div><div class="kc-sub">MT</div></div>
+      </div>
+      <div class="sec"><span class="sec-title">Period Flows</span><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:2px;background:rgba(204,0,0,.15);color:var(--red)" id="iv-bdg">—</span></div>
+      <div class="kgrid">
+        <div class="kc"><div class="kc-lbl">Scrap Consumed</div><div class="kc-val" id="iv-sc">—</div><div class="kc-sub">MT</div></div>
+        <div class="kc cs"><div class="kc-lbl">Billet Produced</div><div class="kc-val s" id="iv-bp">—</div><div class="kc-sub">MT</div></div>
+        <div class="kc"><div class="kc-lbl">Rod Produced</div><div class="kc-val" id="iv-rp">—</div><div class="kc-sub">MT</div></div>
+        <div class="kc cs"><div class="kc-lbl">Delivered</div><div class="kc-val s" id="iv-del">—</div><div class="kc-sub">MT</div></div>
+        <div class="kc cs kc-full"><div class="kc-lbl">Scrap → Billet Ratio</div><div class="kc-val s" id="iv-rat">—</div><div class="kc-sub">MT scrap / MT billet</div></div>
       </div>
     </div>
   </div>
+  <!-- FINANCES -->
+  <div class="overlay" id="ov-finances">
+    <div class="ov-hdr"><div style="font-size:17px;font-weight:700;color:var(--txt)">Finances</div><button class="ov-back" onclick="closeOv()">← Back</button></div>
+    <div class="ov-body">
+      <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:60vh;gap:12px">
+        <div style="font-size:36px;font-weight:700;color:var(--b2);letter-spacing:4px">COMING SOON</div>
+        <div style="font-size:11px;color:var(--dim);text-align:center;max-width:200px;line-height:1.7">Finance data to be provided.</div>
+      </div>
+    </div>
+  </div>
+  <!-- MONTHLY -->
+  <div class="overlay" id="ov-monthly">
+    <div class="ov-hdr"><div style="font-size:17px;font-weight:700;color:var(--txt)">Monthly</div><button class="ov-back" onclick="closeOv()">← Back</button></div>
+    <div class="ov-body">
+      <div class="sec"><span class="sec-title">Year at a Glance</span></div>
+      <div class="tw"><table><thead><tr><th>Month</th><th class="tn">Prod</th><th class="tn">Revenue</th><th class="tn">Cost/T</th><th class="tn">Margin/T</th></tr></thead><tbody id="tb-mo"></tbody></table></div>
+      <div class="sec"><span class="sec-title">Monthly Detail</span></div>
+      <div id="mo-cards"></div>
+    </div>
+  </div>
 </div><!-- end app -->
-
 <script>
-var D={}, curP='7d';
 
-function fv(v){
-  if(v==null)return'—';
-  var a=Math.abs(+v);
-  if(a>=10000000)return(+v/10000000).toFixed(1)+'Cr';
-  if(a>=100000)return(+v/100000).toFixed(1)+'L';
-  if(a>=1000)return(+v/1000).toFixed(1)+'K';
-  return String(Math.round(+v));
-}
+var D={},curP='7d',costP='7d',rvP='7d';
+var EMBEDDED={"meta":{"latest_date":"09 Apr 2026","latest_date_iso":"2026-04-09","mtd_start":"01 Apr 2026","generated":"16 Apr 2026 06:18"},"periods":{"today":{"sales_vol":98.9,"rod":253.92,"avg_price":86939,"scrap_exp_pt":54607,"scrap_exp_total":13216599,"electricity":2296581,"elec_pt":9045,"scrap_to_billet":1.108,"scrap_to_rod":1.134,"total_cost_pt":74887,"revenue":8598300,"other_rev":0,"total_rev":8598300,"other_cost_total":4550759,"scrap_consump_total":14464582,"other_cost_pt":17922,"scrap_consump_pt":56965,"gross_margin":-10417041,"margin_pt":-41025,"delivery":172.96,"trucks":10,"billet":259.82,"sc_consumed":287.95,"hms_consumed":219.0,"bun_consumed":60.0,"internal_bundle":8.95,"oc_total":4550759,"pct_delivered":174.9,"simn":682380,"fesi":23730,"simn_pt":2687,"fesi_pt":93,"boric":24375,"quartz":128750,"boric_pt":96,"quartz_pt":507,"billet_prod":259.82,"total_scrap_consumed":287.95,"est_rev_sales":8598300},"mtd":{"sales_vol":1061.46,"rod":1916.24,"avg_price":84539,"scrap_exp_pt":53611,"scrap_exp_total":119792900,"electricity":20039601,"elec_pt":10458,"scrap_to_billet":1.098,"scrap_to_rod":1.299,"total_cost_pt":86375,"revenue":89734300,"other_rev":1493040,"total_rev":91227340,"other_cost_total":39359457,"scrap_consump_total":126156321,"other_cost_pt":20540,"scrap_consump_pt":65835,"gross_margin":-74288438,"margin_pt":-38768,"delivery":1786.83,"trucks":109,"billet":2267.71,"sc_consumed":2489.24,"hms_consumed":1965.0,"bun_consumed":462.0,"internal_bundle":62.24,"oc_total":39359457,"pct_delivered":168.3,"simn":5993010,"fesi":204120,"simn_pt":3127,"fesi_pt":107,"boric":160875,"quartz":837500,"boric_pt":84,"quartz_pt":437,"billet_prod":2267.71,"total_scrap_consumed":2489.24,"est_rev_sales":89734300},"7d":{"sales_vol":769.5,"rod":1480.92,"avg_price":85956,"scrap_exp_pt":53940,"scrap_exp_total":87825070,"electricity":14907088,"elec_pt":10066,"scrap_to_billet":1.101,"scrap_to_rod":1.239,"total_cost_pt":82906,"revenue":66142800,"other_rev":46800,"total_rev":66189600,"other_cost_total":29956182,"scrap_consump_total":92821701,"other_cost_pt":20228,"scrap_consump_pt":62678,"gross_margin":-56588283,"margin_pt":-38212,"delivery":1323.53,"trucks":81,"billet":1666.48,"sc_consumed":1835.19,"hms_consumed":1411.0,"bun_consumed":376.0,"internal_bundle":48.19,"oc_total":29956182,"pct_delivered":172.0,"simn":4511970,"fesi":153300,"simn_pt":3047,"fesi_pt":104,"boric":126750,"quartz":687500,"boric_pt":86,"quartz_pt":464,"billet_prod":1666.48,"total_scrap_consumed":1835.19,"est_rev_sales":66142800},"10d":{"sales_vol":1561.46,"rod":2102.03,"avg_price":85167,"scrap_exp_pt":53538,"scrap_exp_total":135761510,"electricity":22640049,"elec_pt":10771,"scrap_to_billet":1.096,"scrap_to_rod":1.34,"total_cost_pt":88964,"revenue":132984300,"other_rev":5131325,"total_rev":138115625,"other_cost_total":44112021,"scrap_consump_total":142894317,"other_cost_pt":20985,"scrap_consump_pt":67979,"gross_margin":-48890713,"margin_pt":-23259,"delivery":1998.43,"trucks":120,"billet":2569.12,"sc_consumed":2816.52,"hms_consumed":2225.0,"bun_consumed":525.0,"internal_bundle":66.52,"oc_total":44112021,"pct_delivered":128.0,"simn":6738120,"fesi":229740,"simn_pt":3206,"fesi_pt":109,"boric":180375,"quartz":918750,"boric_pt":86,"quartz_pt":437,"billet_prod":2569.12,"total_scrap_consumed":2816.52,"est_rev_sales":132984300},"14d":{"sales_vol":2597.46,"rod":2437.82,"avg_price":85227,"scrap_exp_pt":53153,"scrap_exp_total":161876689,"electricity":27158116,"elec_pt":11140,"scrap_to_billet":1.097,"scrap_to_rod":1.377,"total_cost_pt":91898,"revenue":221373300,"other_rev":10318200,"total_rev":231691500,"other_cost_total":54149987,"scrap_consump_total":169883052,"other_cost_pt":22212,"scrap_consump_pt":69686,"gross_margin":7658461,"margin_pt":3142,"delivery":2464.28,"trucks":149,"billet":3059.8,"sc_consumed":3356.53,"hms_consumed":2641.0,"bun_consumed":638.0,"internal_bundle":77.53,"oc_total":54149987,"pct_delivered":94.9,"simn":7946820,"fesi":262815,"simn_pt":3260,"fesi_pt":108,"boric":214013,"quartz":1173125,"boric_pt":88,"quartz_pt":481,"billet_prod":3059.8,"total_scrap_consumed":3356.53,"est_rev_sales":221373300},"30d":{"sales_vol":3227.46,"rod":4382.83,"avg_price":85137,"scrap_exp_pt":52553,"scrap_exp_total":257496938,"electricity":44135318,"elec_pt":10070,"scrap_to_billet":1.094,"scrap_to_rod":1.223,"total_cost_pt":82670,"revenue":274775900,"other_rev":15217910,"total_rev":289993810,"other_cost_total":94409430,"scrap_consump_total":267916414,"other_cost_pt":21541,"scrap_consump_pt":61129,"gross_margin":-72332034,"margin_pt":-16503,"delivery":4193.68,"trucks":250,"billet":4899.63,"sc_consumed":5358.74,"hms_consumed":4326.0,"bun_consumed":893.0,"internal_bundle":139.74,"oc_total":94409430,"pct_delivered":129.9,"simn":12718890,"fesi":467670,"simn_pt":2902,"fesi_pt":107,"boric":390000,"quartz":2114375,"boric_pt":89,"quartz_pt":482,"billet_prod":4899.63,"total_scrap_consumed":5358.74,"est_rev_sales":274775900}},"competitors":{"hkg_today":86939,"others_avg":88500,"bsrm":96000,"hkg_vs_others":-1561,"hkg_vs_bsrm":-9061},"stocks":{"hms":20.692,"bundle":801.185,"billet":510.485,"rod":262.592},"monthly":[{"month":"2026-01","label":"Jan 2026","rod":7013.35,"sales_vol":7709.4,"revenue":575389009,"avg_price":72722,"total_cost_pt":73143,"other_cost_pt":19349,"scrap_consump_pt":53794,"margin_pt":8899,"gross_margin":62414021,"electricity":71130937,"scrap_consumed":8457.69,"billet_produced":7744.18,"scrap_exp_total":389913056,"scrap_exp_pt":47007,"delivery":7047.12},{"month":"2026-02","label":"Feb 2026","rod":5929.22,"sales_vol":5113.66,"revenue":415114486,"avg_price":77885,"total_cost_pt":79075,"other_cost_pt":20616,"scrap_consump_pt":58459,"margin_pt":-9063,"gross_margin":-53739052,"electricity":61794635,"scrap_consumed":7344.39,"billet_produced":6730.53,"scrap_exp_total":353906460,"scrap_exp_pt":49778,"delivery":5928.34},{"month":"2026-03","label":"Mar 2026","rod":5104.33,"sales_vol":5850.0,"revenue":498792070,"avg_price":82917,"total_cost_pt":80456,"other_cost_pt":21246,"scrap_consump_pt":59210,"margin_pt":17263,"gross_margin":88116474,"electricity":52061605,"scrap_consumed":6144.94,"billet_produced":5644.33,"scrap_exp_total":295938786,"scrap_exp_pt":51487,"delivery":5076.45},{"month":"2026-04","label":"Apr 2026","rod":1916.24,"sales_vol":1061.46,"revenue":91227340,"avg_price":84539,"total_cost_pt":86375,"other_cost_pt":20540,"scrap_consump_pt":65835,"margin_pt":-38768,"gross_margin":-74288438,"electricity":20039601,"scrap_consumed":2489.24,"billet_produced":2267.71,"scrap_exp_total":835206875,"scrap_exp_pt":47768,"delivery":1956.33}],"top_customers":[{"name":"Halima Steel Corp","vol":742.0,"rev":63754000,"avg_px":85922},{"name":"Mazidsons Construction Ltd","vol":100.0,"rev":8745000,"avg_px":87450},{"name":"Naofa Trading","vol":43.0,"rev":3748500,"avg_px":87174},{"name":"Mokka Traders","vol":42.0,"rev":3668000,"avg_px":87333},{"name":"Shahin Traders","vol":28.0,"rev":2408000,"avg_px":86000},{"name":"Roja Traders","vol":18.0,"rev":1575000,"avg_px":87500},{"name":"R.I Enterprise","vol":15.0,"rev":1308000,"avg_px":87200},{"name":"Mamun & Brothers","vol":14.0,"rev":1218000,"avg_px":87000}],"salesmen":[{"name":"Mahfuz Sir","vol":862.9,"rev":74319300},{"name":"Meraj","vol":86.0,"rev":7464500},{"name":"Nadim","vol":81.0,"rev":7073500},{"name":"Atik Sir","vol":10.0,"rev":877000}],"revenue_data":{"ytd":{"other_rev":46795940,"other_sales":[{"date":"31 Mar","item":"Ovel","customer":"New Madani Re-Roll","value":1045625},{"date":"01 Apr","item":"Ovel","customer":"New Madani Re-Roll","value":1446240},{"date":"07 Apr","item":"Cut Pcs","customer":"Md. Jaman","value":46800}],"top_regions":[{"name":"Sylhet","qty":3885.5},{"name":"Sirajgonj","qty":1333.0},{"name":"Cumilla","qty":1154.9}]},"rates":{"mahfuz":{"name":"Mahfuz","avg":77418,"vol":16675.9,"rev":1291020205},"meraj":{"name":"Meraj","avg":78794,"vol":1051.7,"rev":82867850},"nadim":{"name":"Nadim","avg":78658,"vol":1347.3,"rev":105979525},"halima":{"name":"Halima Steel Corp","avg":77621,"vol":16908.0,"rev":1312423500},"others_rod":{"name":"All Others","avg":78903,"vol":2787.0}},"top_repeat_customers":[{"name":"Halima Steel Corp","vol":16908.0,"rev":1312423500,"txns":77,"avg":77621},{"name":"Mamun & Brothers","vol":473.6,"rev":36632575,"txns":19,"avg":77357},{"name":"Naofa Trading","vol":253.0,"rev":20243300,"txns":16,"avg":80013},{"name":"Trusr Iron & Steel Store","vol":214.0,"rev":16825200,"txns":11,"avg":78622},{"name":"Mandal Hardware","vol":191.0,"rev":15757500,"txns":9,"avg":82500}],"rod_inventory":262.6,"scrap_diff":{"curr":53611,"prev":51487,"diff":2124},"halima_vs_others":{"halima_avg":77621,"halima_vol":16908.0,"others_avg":78903,"others_vol":2787.0},"mtd_other_rev":1493040}};
+
+function fv(v){if(v==null)return'—';var a=Math.abs(+v);if(a>=10000000)return(+v/10000000).toFixed(1)+'Cr';if(a>=100000)return(+v/100000).toFixed(1)+'L';if(a>=1000)return(+v/1000).toFixed(1)+'K';return String(Math.round(+v));}
 function fm(v){return v!=null?(+v).toFixed(1):'—';}
 function fr(v){return v&&+v>0?(+v).toFixed(3):'—';}
-function cf(v){return v?Math.round(+v).toLocaleString('en-IN'):'—';}
 function n(id,val){var e=document.getElementById(id);if(e)e.textContent=val;}
-function sp(id,v){
-  var e=document.getElementById(id);if(!e)return;
-  var pos=v>=0;
-  e.innerHTML='<span class="spb '+(pos?'pos':'neg')+'">'+(pos?'▲':'▼')+' ৳'+Math.abs(v).toLocaleString('en-IN')+'</span>';
+function sp(id,v){var e=document.getElementById(id);if(!e)return;var pos=v>=0;e.innerHTML='<span class="spb '+(pos?'pos':'neg')+'">'+(pos?'▲':'▼')+' ৳'+Math.abs(v).toLocaleString('en-IN')+'</span>';}
+
+var isDark=true;
+function toggleTheme(){
+  isDark=!isDark;
+  document.body.className=isDark?'dark':'light';
+  var lbl=isDark?'☀️ Light':'🌙 Dark';
+  ['theme-btn','cs-theme-btn','rv-theme-btn'].forEach(function(id){var e=document.getElementById(id);if(e)e.textContent=lbl;});
 }
 
-var EMBEDDED={"meta":{"latest_date":"09 Apr 2026","latest_date_iso":"2026-04-09","mtd_start":"01 Apr 2026","generated":"14 Apr 2026 19:18"},"periods":{"today":{"sales_vol":98.9,"rod":253.92,"avg_price":86939,"scrap_exp_pt":54607,"scrap_exp_total":13216599,"electricity":2296581,"elec_pt":9045,"scrap_to_billet":1.108,"scrap_to_rod":1.134,"est_rev_sales":8598300,"total_cost_pt":74887,"revenue":8598300,"other_rev":0,"total_rev":8598300,"other_cost_total":4550759,"scrap_consump_total":14464582,"other_cost_pt":17922,"scrap_consump_pt":56965,"gross_margin":-10417041,"margin_pt":-41025,"delivery":172.96,"trucks":10,"billet":259.82,"sc_consumed":287.95,"hms_consumed":219.0,"bun_consumed":60.0,"internal_bundle":8.95,"oc_total":4550759,"pct_delivered":174.9,"simn":682380,"fesi":23730,"simn_pt":2687,"fesi_pt":93,"billet_prod":259.82,"total_scrap_consumed":287.95},"mtd":{"sales_vol":1061.46,"rod":1916.24,"avg_price":84539,"scrap_exp_pt":53611,"scrap_exp_total":119792900,"electricity":20039601,"elec_pt":10458,"scrap_to_billet":1.098,"scrap_to_rod":1.299,"est_rev_sales":89734300,"total_cost_pt":86375,"revenue":89734300,"other_rev":1493040,"total_rev":91227340,"other_cost_total":39359457,"scrap_consump_total":126156321,"other_cost_pt":20540,"scrap_consump_pt":65835,"gross_margin":-74288438,"margin_pt":-38768,"delivery":1786.83,"trucks":109,"billet":2267.71,"sc_consumed":2489.24,"hms_consumed":1965.0,"bun_consumed":462.0,"internal_bundle":62.24,"oc_total":39359457,"pct_delivered":168.3,"simn":5993010,"fesi":204120,"simn_pt":3127,"fesi_pt":107,"billet_prod":2267.71,"total_scrap_consumed":2489.24},"7d":{"sales_vol":769.5,"rod":1480.92,"avg_price":85956,"scrap_exp_pt":53940,"scrap_exp_total":87825070,"electricity":14907088,"elec_pt":10066,"scrap_to_billet":1.101,"scrap_to_rod":1.239,"est_rev_sales":66142800,"total_cost_pt":82906,"revenue":66142800,"other_rev":46800,"total_rev":66189600,"other_cost_total":29956182,"scrap_consump_total":92821701,"other_cost_pt":20228,"scrap_consump_pt":62678,"gross_margin":-56588283,"margin_pt":-38212,"delivery":1323.53,"trucks":81,"billet":1666.48,"sc_consumed":1835.19,"hms_consumed":1411.0,"bun_consumed":376.0,"internal_bundle":48.19,"oc_total":29956182,"pct_delivered":172.0,"simn":4511970,"fesi":153300,"simn_pt":3047,"fesi_pt":104,"billet_prod":1666.48,"total_scrap_consumed":1835.19},"10d":{"sales_vol":1561.46,"rod":2102.03,"avg_price":85167,"scrap_exp_pt":53538,"scrap_exp_total":135761510,"electricity":22640049,"elec_pt":10771,"scrap_to_billet":1.096,"scrap_to_rod":1.34,"est_rev_sales":132984300,"total_cost_pt":88964,"revenue":132984300,"other_rev":5131325,"total_rev":138115625,"other_cost_total":44112021,"scrap_consump_total":142894317,"other_cost_pt":20985,"scrap_consump_pt":67979,"gross_margin":-48890713,"margin_pt":-23259,"delivery":1998.43,"trucks":120,"billet":2569.12,"sc_consumed":2816.52,"hms_consumed":2225.0,"bun_consumed":525.0,"internal_bundle":66.52,"oc_total":44112021,"pct_delivered":128.0,"simn":6738120,"fesi":229740,"simn_pt":3206,"fesi_pt":109,"billet_prod":2569.12,"total_scrap_consumed":2816.52},"14d":{"sales_vol":2597.46,"rod":2437.82,"avg_price":85227,"scrap_exp_pt":53153,"scrap_exp_total":161876689,"electricity":27158116,"elec_pt":11140,"scrap_to_billet":1.097,"scrap_to_rod":1.377,"est_rev_sales":221373300,"total_cost_pt":91898,"revenue":221373300,"other_rev":10318200,"total_rev":231691500,"other_cost_total":54149987,"scrap_consump_total":169883052,"other_cost_pt":22212,"scrap_consump_pt":69686,"gross_margin":7658461,"margin_pt":3142,"delivery":2464.28,"trucks":149,"billet":3059.8,"sc_consumed":3356.53,"hms_consumed":2641.0,"bun_consumed":638.0,"internal_bundle":77.53,"oc_total":54149987,"pct_delivered":94.9,"simn":7946820,"fesi":262815,"simn_pt":3260,"fesi_pt":108,"billet_prod":3059.8,"total_scrap_consumed":3356.53},"30d":{"sales_vol":3227.46,"rod":4382.83,"avg_price":85137,"scrap_exp_pt":52553,"scrap_exp_total":257496938,"electricity":44135318,"elec_pt":10070,"scrap_to_billet":1.094,"scrap_to_rod":1.223,"est_rev_sales":274775900,"total_cost_pt":82670,"revenue":274775900,"other_rev":15217910,"total_rev":289993810,"other_cost_total":94409430,"scrap_consump_total":267916414,"other_cost_pt":21541,"scrap_consump_pt":61129,"gross_margin":-72332034,"margin_pt":-16503,"delivery":4193.68,"trucks":250,"billet":4899.63,"sc_consumed":5358.74,"hms_consumed":4326.0,"bun_consumed":893.0,"internal_bundle":139.74,"oc_total":94409430,"pct_delivered":129.9,"simn":12718890,"fesi":467670,"simn_pt":2902,"fesi_pt":107,"billet_prod":4899.63,"total_scrap_consumed":5358.74}},"competitors":{"hkg_today":86939,"others_avg":88500,"bsrm":96000,"hkg_vs_others":-1561,"hkg_vs_bsrm":-9061},"stocks":{"hms":20.692,"bundle":801.185,"billet":510.485,"rod":262.592},"monthly":[{"month":"2026-01","label":"Jan 2026","rod":7013.35,"sales_vol":7709.4,"revenue":575389009,"avg_price":72722,"total_cost_pt":73143,"other_cost_pt":19349,"scrap_consump_pt":53794,"margin_pt":8899,"gross_margin":62414021,"electricity":71130937,"scrap_consumed":8457.69,"billet_produced":7744.18,"scrap_to_billet":1.092,"scrap_to_rod":1.206,"scrap_exp_total":389913056,"scrap_exp_pt":47007,"delivery":7047.12},{"month":"2026-02","label":"Feb 2026","rod":5929.22,"sales_vol":5113.66,"revenue":415114486,"avg_price":77885,"total_cost_pt":79075,"other_cost_pt":20616,"scrap_consump_pt":58459,"margin_pt":-9063,"gross_margin":-53739052,"electricity":61794635,"scrap_consumed":7344.39,"billet_produced":6730.53,"scrap_to_billet":1.091,"scrap_to_rod":1.239,"scrap_exp_total":353906460,"scrap_exp_pt":49778,"delivery":5928.34},{"month":"2026-03","label":"Mar 2026","rod":5104.33,"sales_vol":5850.0,"revenue":498792070,"avg_price":82917,"total_cost_pt":80456,"other_cost_pt":21246,"scrap_consump_pt":59210,"margin_pt":17263,"gross_margin":88116474,"electricity":52061605,"scrap_consumed":6144.94,"billet_produced":5644.33,"scrap_to_billet":1.089,"scrap_to_rod":1.204,"scrap_exp_total":295938786,"scrap_exp_pt":51487,"delivery":5076.45},{"month":"2026-04","label":"Apr 2026","rod":1916.24,"sales_vol":1061.46,"revenue":91227340,"avg_price":84539,"total_cost_pt":86375,"other_cost_pt":20540,"scrap_consump_pt":65835,"margin_pt":-38768,"gross_margin":-74288438,"electricity":20039601,"scrap_consumed":2489.24,"billet_produced":2267.71,"scrap_to_billet":1.098,"scrap_to_rod":1.299,"scrap_exp_total":835206875,"scrap_exp_pt":47768,"delivery":1956.33}],"top_customers":[{"name":"Halima Steel Corp","vol":742.0,"rev":63754000,"avg_px":85922},{"name":"Mazidsons Construction Ltd","vol":100.0,"rev":8745000,"avg_px":87450},{"name":"Naofa Trading","vol":43.0,"rev":3748500,"avg_px":87174},{"name":"Mokka Traders","vol":42.0,"rev":3668000,"avg_px":87333},{"name":"Shahin Traders","vol":28.0,"rev":2408000,"avg_px":86000},{"name":"Roja Traders","vol":18.0,"rev":1575000,"avg_px":87500},{"name":"R.I Enterprise","vol":15.0,"rev":1308000,"avg_px":87200},{"name":"Mamun & Brothers","vol":14.0,"rev":1218000,"avg_px":87000}],"salesmen":[{"name":"Mahfuz Sir","vol":862.9,"rev":74319300},{"name":"Meraj","vol":86.0,"rev":7464500},{"name":"Nadim","vol":81.0,"rev":7073500},{"name":"Atik Sir","vol":10.0,"rev":877000}]};
 function loadData(){
-  fetch('data.json?t='+Date.now())
-    .then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json();})
-    .then(function(d){D=d;renderAll();})
-    .catch(function(){D=EMBEDDED;renderAll();});
+  try {
+    fetch('data.json?t='+Date.now())
+      .then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json();})
+      .then(function(d){D=d;renderAll();})
+      .catch(function(e){
+        console.log('fetch failed, using embedded:',e);
+        D=EMBEDDED;renderAll();
+      });
+  } catch(e) {
+    console.log('loadData error:',e);
+    D=EMBEDDED;renderAll();
+  }
 }
 
 function renderAll(){
-  var m=D.periods.mtd, c=D.competitors, s=D.stocks, meta=D.meta;
-
-  // Hide loader, show app
+  document.body.className='dark';
+  var m=D.periods.mtd,c=D.competitors,s=D.stocks,meta=D.meta;
   document.getElementById('load-screen').classList.add('gone');
   document.getElementById('app').style.display='flex';
-
-  // Topbar
-  n('top-date', meta.latest_date);
-  n('top-updated', meta.generated);
-
-  // Month hero
-  var dt=new Date(meta.latest_date_iso||meta.mtd_start);
-  var months=['JANUARY','FEBRUARY','MARCH','APRIL','MAY','JUNE',
-              'JULY','AUGUST','SEPTEMBER','OCTOBER','NOVEMBER','DECEMBER'];
-  var mtdDt=new Date(meta.mtd_start.replace(/ /g,'-').replace(/([A-Za-z]+)/,function(m){
-    var i={'Jan':0,'Feb':1,'Mar':2,'Apr':3,'May':4,'Jun':5,'Jul':6,'Aug':7,'Sep':8,'Oct':9,'Nov':10,'Dec':11};
-    return (i[m]+1<10?'0':'')+(i[m]+1);
-  }));
-  // Parse mtd_start like "01 Apr 2026"
-  var parts=meta.mtd_start.split(' ');
-  var mIdx={'Jan':0,'Feb':1,'Mar':2,'Apr':3,'May':4,'Jun':5,'Jul':6,'Aug':7,'Sep':8,'Oct':9,'Nov':10,'Dec':11};
-  n('month-name', months[mIdx[parts[1]]||3]);
-  n('month-year', parts[2]);
-
-  // MTD stats
-  n('s-sales',  fm(m.sales_vol)+' MT');
-  n('s-prod',   fm(m.rod)+' MT');
-  n('s-deliv',  fm(m.delivery)+' MT');
-  n('s-trucks', m.trucks+' trucks dispatched');
-  n('s-rate',   fv(m.avg_price));
-  n('s-scrap',  fv(m.scrap_exp_pt));
-  n('s-elec',   fv(m.electricity));
-  n('s-ratio',  fr(m.scrap_to_billet));
-
-  // Price intel
-  n('rv-hkg',  cf(c.hkg_today));
-  n('rv-oth',  cf(c.others_avg));
-  n('rv-bsrm', cf(c.bsrm));
-  sp('rv-vo', c.hkg_vs_others);
-  sp('rv-vb', c.hkg_vs_bsrm);
-
-  // Stocks
-  n('iv-hms', fm(s.hms)+' MT');
-  n('iv-bun', fm(s.bundle)+' MT');
-  n('iv-bil', fm(s.billet)+' MT');
-  n('iv-rod', fm(s.rod)+' MT');
-
-  // Tables
-  var ctb=document.getElementById('tb-cust');
-  if(ctb) ctb.innerHTML=D.top_customers.map(function(c){
-    return'<tr><td class="tnm">'+c.name+'</td><td class="tn">'+fm(c.vol)+'</td><td class="tn">'+fv(c.rev)+'</td><td class="tn">'+fv(c.avg_px)+'</td></tr>';
-  }).join('');
-  var stb=document.getElementById('tb-sal');
-  if(stb) stb.innerHTML=D.salesmen.map(function(s){
-    return'<tr><td class="tnm">'+s.name+'</td><td class="tn">'+fm(s.vol)+'</td><td class="tn">'+fv(s.rev)+'</td></tr>';
-  }).join('');
-
-  // Monthly
+  n('top-date',meta.latest_date); n('top-gen',meta.generated); n('up-info','Updated: '+meta.generated);
+  var MN={Jan:'JANUARY',Feb:'FEBRUARY',Mar:'MARCH',Apr:'APRIL',May:'MAY',Jun:'JUNE',Jul:'JULY',Aug:'AUGUST',Sep:'SEPTEMBER',Oct:'OCTOBER',Nov:'NOVEMBER',Dec:'DECEMBER'};
+  var mparts=meta.mtd_start.split(' '); var mlbl=MN[mparts[1]]||mparts[1].toUpperCase();
+  n('main-month-label', mlbl);
+  n('s-sales',fm(m.sales_vol)+' MT'); n('s-prod',fm(m.rod)+' MT');
+  n('s-deliv',fm(m.delivery)+' MT'); n('s-trucks',m.trucks+' trucks dispatched');
+  n('s-rate',fv(m.avg_price)); n('s-scrap',fv(m.scrap_exp_pt));
+  n('s-elec',fv(m.electricity)); n('s-ratio',fr(m.scrap_to_billet));
+  n('iv-hms',fm(s.hms)+' MT'); n('iv-bun',fm(s.bundle)+' MT');
+  n('iv-bil',fm(s.billet)+' MT'); n('iv-rod',fm(s.rod)+' MT');
   var mtb=document.getElementById('tb-mo');
-  if(mtb) mtb.innerHTML=D.monthly.map(function(m){
-    var p=m.margin_pt>=0;
-    return'<tr><td style="font-weight:700">'+m.label+'</td>'+
-      '<td class="tn">'+Math.round(m.rod)+'</td>'+
-      '<td class="tn" style="color:var(--silver2)">'+fv(m.revenue)+'</td>'+
-      '<td class="tn" style="color:var(--red2)">'+fv(m.total_cost_pt)+'</td>'+
-      '<td class="tn" style="color:'+(p?'#00c853':'var(--red2)')+'">'+
-      (p?'▲':'▼')+fv(Math.abs(m.margin_pt))+'</td></tr>';
-  }).join('');
+  if(mtb)mtb.innerHTML=D.monthly.map(function(m){var p=m.margin_pt>=0;return'<tr><td style="font-weight:700;color:var(--txt)">'+m.label+'</td><td class="tn">'+Math.round(m.rod)+'</td><td class="tn" style="color:var(--silver)">'+fv(m.revenue)+'</td><td class="tn" style="color:var(--red)">'+fv(m.total_cost_pt)+'</td><td class="tn" style="color:'+(p?'#00c853':'var(--red)')+'">'+( p?'▲':'▼')+fv(Math.abs(m.margin_pt))+'</td></tr>';}).join('');
   var mcd=document.getElementById('mo-cards');
-  if(mcd) mcd.innerHTML=D.monthly.map(function(m){
-    var p=m.margin_pt>=0;
-    return'<div class="mc-card" style="border-left:3px solid '+(p?'#00c853':'var(--red)')+'">' +
-      '<div class="mc-card-hdr"><span class="mc-card-name">'+m.label+'</span>'+
-      '<span class="spb '+(p?'pos':'neg')+'">'+(p?'▲':'▼')+' ৳'+fv(Math.abs(m.margin_pt))+'/T</span></div>'+
-      '<div class="mc-card-grid">'+
-        '<div class="mcgi"><div class="lbl">Prod</div><div class="val">'+Math.round(m.rod)+'MT</div></div>'+
-        '<div class="mcgi"><div class="lbl">Revenue</div><div class="val" style="color:var(--silver2)">'+fv(m.revenue)+'</div></div>'+
-        '<div class="mcgi"><div class="lbl">Cost/T</div><div class="val" style="color:var(--red2)">'+fv(m.total_cost_pt)+'</div></div>'+
-        '<div class="mcgi"><div class="lbl">Elec</div><div class="val">'+fv(m.electricity)+'</div></div>'+
-        '<div class="mcgi"><div class="lbl">Scrap</div><div class="val">'+Math.round(m.scrap_consumed)+'MT</div></div>'+
-        '<div class="mcgi"><div class="lbl">Delivery</div><div class="val" style="color:var(--silver2)">'+Math.round(m.delivery)+'MT</div></div>'+
-      '</div></div>';
-  }).join('');
-
+  if(mcd)mcd.innerHTML=D.monthly.map(function(m){var p=m.margin_pt>=0;return'<div class="mc-card" style="border-left:3px solid '+(p?'#00c853':'var(--red)')+'"><div class="mc-card-hdr"><span class="mc-card-name">'+m.label+'</span><span class="spb '+(p?'pos':'neg')+'">'+(p?'▲':'▼')+' ৳'+fv(Math.abs(m.margin_pt))+'/T</span></div><div class="mc-card-grid"><div class="mcgi"><div class="lbl">Prod</div><div class="val">'+Math.round(m.rod)+' MT</div></div><div class="mcgi"><div class="lbl">Revenue</div><div class="val" style="color:var(--silver)">'+fv(m.revenue)+'</div></div><div class="mcgi"><div class="lbl">Cost/T</div><div class="val" style="color:var(--red)">'+fv(m.total_cost_pt)+'</div></div></div></div>';}).join('');
   setP('7d');
 }
 
 function setP(w){
   curP=w;
-  document.querySelectorAll('.tbtn').forEach(function(b){
-    b.classList.toggle('on',b.textContent.toLowerCase().replace(/ /g,'')=== w);
-  });
+  document.querySelectorAll('.tbtn').forEach(function(b){b.classList.toggle('on',b.textContent.toLowerCase().replace(/ /g,'')=== w);});
   var m=D.periods&&D.periods[w]; if(!m)return;
-  n('tm-sales',  fm(m.sales_vol)+' MT');
-  n('tm-prod',   fm(m.rod)+' MT');
-  n('tm-rate',   fv(m.avg_price));
-  n('tm-rev',    fv(m.revenue));
-  n('tm-scrap',  fv(m.scrap_exp_total));
-  n('tm-costpt', fv(m.total_cost_pt));
+  n('tm0',fm(m.sales_vol)+' MT'); n('tm1',fm(m.rod)+' MT');
+  n('tm2',fv(m.avg_price)); n('tm3',fv(m.revenue));
+  n('tm4',fv(m.scrap_exp_total)); n('tm5',fv(m.total_cost_pt));
   refreshOv(w);
 }
 
 function refreshOv(w){
   var m=D.periods&&D.periods[w||curP]; if(!m)return;
   var b=(w||curP).toUpperCase();
-  ['mg-bdg','cs-bdg','rv-bdg','iv-bdg'].forEach(function(id){n(id,b);});
-
-  // Margins
-  n('mg-tr',fv(m.total_rev));n('mg-sr',fv(m.revenue));n('mg-or',fv(m.other_rev));
-  n('mg-sc',fv(Math.round(m.scrap_consump_pt*m.rod)));
-  n('mg-oc',fv(m.oc_total));n('mg-tc',fv(m.total_cost_pt));n('mg-ap',fv(m.avg_price));
+  ['mg-bdg','iv-bdg'].forEach(function(id){n(id,b);});
+  n('mg-tr',fv(m.total_rev)); n('mg-sr',fv(m.revenue)); n('mg-or',fv(m.other_rev));
+  n('mg-sc',fv(m.scrap_consump_total)); n('mg-oc',fv(m.oc_total));
+  n('mg-tc',fv(m.total_cost_pt)); n('mg-ap',fv(m.avg_price));
   var gm=document.getElementById('mg-gm');
-  if(gm){gm.textContent=(m.gross_margin<0?'-':'')+fv(Math.abs(m.gross_margin));gm.style.color=m.gross_margin>=0?'#00c853':'var(--red2)';}
-  n('mg-gms',m.gross_margin>=0?'৳  ·  Profit':'৳  ·  Loss');
+  if(gm){gm.textContent=(m.gross_margin<0?'-':'')+fv(Math.abs(m.gross_margin));gm.style.color=m.gross_margin>=0?'#00c853':'var(--red)';}
+  n('mg-gms',m.gross_margin>=0?'৳ · Profit':'৳ · Loss');
   var mp=document.getElementById('mg-mp');
-  if(mp){mp.textContent=(m.margin_pt<0?'-':'')+fv(Math.abs(m.margin_pt));mp.style.color=m.margin_pt>=0?'#00c853':'var(--red2)';}
-  var spr=m.avg_price-m.total_cost_pt;
-  var se=document.getElementById('mg-sp');
-  if(se){se.textContent=(spr<0?'-':'')+fv(Math.abs(spr));se.style.color=spr>=0?'#00c853':'var(--red2)';}
-  n('mg-rod',fm(m.rod));n('mg-sv',fm(m.sales_vol));
-
-  // Costing
-  n('cs-ep',fv(m.scrap_exp_pt));n('cs-et',fv(m.scrap_exp_total));
-  n('cs-el',fv(m.electricity));n('cs-sc',fv(m.scrap_consump_pt));
-  n('cs-oc',fv(m.other_cost_pt));n('cs-tc',fv(m.total_cost_pt));
-  n('cs-rod',fm(m.rod));n('cs-rat',fr(m.scrap_to_billet));
-
-  // Revenue
-  n('rv-vol',fm(m.sales_vol));n('rv-rev',fv(m.revenue));
-  n('rv-del',fm(m.delivery));n('rv-trk',m.trucks);
-
-  // Inventory flows
-  n('iv-sc',fm(m.sc_consumed));n('iv-bp',fm(m.billet));
-  n('iv-rp',fm(m.rod));n('iv-del',fm(m.delivery));
-  n('iv-rat',fr(m.scrap_to_billet));
+  if(mp){mp.textContent=(m.margin_pt<0?'-':'')+fv(Math.abs(m.margin_pt));mp.style.color=m.margin_pt>=0?'#00c853':'var(--red)';}
+  var spr=m.avg_price-m.total_cost_pt; var se=document.getElementById('mg-sp');
+  if(se){se.textContent=(spr<0?'-':'')+fv(Math.abs(spr));se.style.color=spr>=0?'#00c853':'var(--red)';}
+  n('mg-rod',fm(m.rod)); n('mg-sv',fm(m.sales_vol));
+  n('iv-sc',fm(m.sc_consumed)); n('iv-bp',fm(m.billet)); n('iv-rp',fm(m.rod)); n('iv-del',fm(m.delivery)); n('iv-rat',fr(m.scrap_to_billet));
 }
 
-function openOv(name){
-  var e=document.getElementById('ov-'+name);
-  if(e)e.classList.add('open');
-  if(name==='costing'){renderCosting(costP);}else{refreshOv(curP);}
-}
-function closeOv(){
-  document.querySelectorAll('.overlay.open').forEach(function(e){e.classList.remove('open');});
-}
-
-
-var costP = 'mtd';
-function setCostP(w) {
-  costP = w;
-  document.querySelectorAll('.cpbtn').forEach(function(b){
-    b.classList.toggle('on', b.textContent.toLowerCase().replace(/ /g,'') === w);
-  });
+function setCostP(w){
+  costP=w;
+  document.querySelectorAll('.cpbtn').forEach(function(b){b.classList.toggle('on',b.textContent.toLowerCase().replace(/ /g,'')=== w);});
   renderCosting(w);
 }
-function renderCosting(w) {
-  var m = D.periods[w]; if(!m) return;
-  var meta = D.meta;
-  var parts = meta.mtd_start.split(' ');
-  var monthName = parts[1].toUpperCase() + ' ' + parts[2];
-  n('cs-month-badge', monthName);
-  n('cs-elec-month', '৳ ' + monthName);
-  n('cs-tc-pt',       fv(m.total_cost_pt));
-  n('cs-sc-pt',       fv(m.scrap_consump_pt));
-  n('cs-oc-pt',       fv(m.other_cost_pt));
-  n('cs-exp-pt',      fv(m.scrap_exp_pt));
-  n('cs-consump-pt',  fv(m.scrap_consump_pt));
-  // Split bar
-  var expPct = m.scrap_consump_pt > 0 ? Math.round(m.scrap_exp_pt / m.scrap_consump_pt * 100) : 77;
-  var expBar = document.getElementById('cs-bar-exp');
-  var gapBar = document.getElementById('cs-bar-gap');
-  if(expBar) expBar.style.width = expPct + '%';
-  if(gapBar) { gapBar.style.left = expPct + '%'; gapBar.style.right = '0'; }
-  var gap = m.scrap_consump_pt - m.scrap_exp_pt;
-  n('cs-gap-label', gap > 0 ? '▲ GAP ' + fv(gap) + ' / TON' : '▼ GAP ' + fv(Math.abs(gap)) + ' / TON');
-  // Production strip - use MTD always for these
-  var pm = D.periods.mtd;
-  n('cs-scrap-used', Math.round(pm.total_scrap_consumed || pm.sc_consumed).toLocaleString('en-IN'));
-  n('cs-billet',     Math.round(pm.billet_prod || pm.billet).toLocaleString('en-IN'));
-  n('cs-rod',        Math.round(pm.rod).toLocaleString('en-IN'));
-  n('cs-ratio',      pm.scrap_to_rod ? pm.scrap_to_rod.toFixed(3) : '—');
-  // Electricity
-  n('cs-elec-total', fv(m.electricity));
-  n('cs-elec-pt',    fv(m.elec_pt));
-  // Chemicals - always MTD
-  n('cs-simn-pt',    fv(pm.simn_pt));
-  n('cs-fesi-pt',    fv(pm.fesi_pt));
-  n('cs-simn-total', fv(pm.simn) + ' total');
-  n('cs-fesi-total', fv(pm.fesi) + ' total');
-  var maxChem = Math.max(pm.simn_pt || 1, pm.fesi_pt || 1);
-  var simnBar = document.getElementById('cs-simn-bar');
-  var fesiBar = document.getElementById('cs-fesi-bar');
-  if(simnBar) simnBar.style.width = Math.round((pm.simn_pt||0)/maxChem*100) + '%';
-  if(fesiBar) fesiBar.style.width = Math.round((pm.fesi_pt||0)/maxChem*100) + '%';
+
+function renderCosting(w){
+  var m=D.periods[w]; if(!m)return;
+  var pm=D.periods.mtd;
+  var parts=D.meta.mtd_start.split(' ');
+  var MN={Jan:'January',Feb:'February',Mar:'March',Apr:'April',May:'May',Jun:'June',Jul:'July',Aug:'August',Sep:'September',Oct:'October',Nov:'November',Dec:'December'};
+  var mon=MN[parts[1]]||parts[1];
+  n('cs-heading',mon+"'s Costing Breakdown");
+  n('cs-tc-pt-mtd',fv(pm.total_cost_pt));
+  n('cs-consump-pt',fv(pm.scrap_consump_pt)); n('cs-exp-pt',fv(pm.scrap_exp_pt));
+  var expPct=pm.scrap_consump_pt>0?Math.round(pm.scrap_exp_pt/pm.scrap_consump_pt*100):81;
+  var eb=document.getElementById('cs-bar-exp'); var gb=document.getElementById('cs-bar-gap');
+  if(eb)eb.style.width=expPct+'%'; if(gb){gb.style.left=expPct+'%';gb.style.right='0';}
+  var gap=pm.scrap_consump_pt-pm.scrap_exp_pt;
+  n('cs-gap-label',gap>0?'▲ GAP '+fv(gap)+' / TON':'▼ GAP '+fv(Math.abs(gap))+' / TON');
+  n('cs-scrap-used',Math.round(pm.total_scrap_consumed||pm.sc_consumed).toLocaleString('en-IN'));
+  n('cs-billet',Math.round(pm.billet_prod||pm.billet).toLocaleString('en-IN'));
+  n('cs-rod',Math.round(pm.rod).toLocaleString('en-IN'));
+  n('cs-ratio',pm.scrap_to_rod?pm.scrap_to_rod.toFixed(3):'—');
+  n('cs-elec-total',fv(pm.electricity)); n('cs-elec-pt',fv(pm.elec_pt));
+  n('cs-oc-pt-mtd',fv(pm.other_cost_pt));
+  n('cs-simn-pt',fv(pm.simn_pt)); n('cs-fesi-pt',fv(pm.fesi_pt));
+  n('cs-boric-pt',fv(pm.boric_pt)); n('cs-quartz-pt',fv(pm.quartz_pt));
+  n('cs-tc-pt',fv(m.total_cost_pt)); n('cs-sc-pt',fv(m.scrap_consump_pt)); n('cs-oc-pt',fv(m.other_cost_pt));
+}
+
+function setRvP(w){
+  rvP=w;
+  ['today','7d','10d','14d','30d'].forEach(function(k){
+    var b=document.getElementById('rv-tbtn-'+k);
+    if(b){b.style.background=k===w?'var(--red)':'var(--bg)';b.style.color=k===w?'#fff':'var(--dim)';}
+  });
+  renderRevenue(w);
+}
+
+function renderRevenue(w) {
+  var m=D.periods[w]; if(!m)return;
+  var pm=D.periods.mtd; var c=D.competitors; var rv=D.revenue_data; var meta=D.meta;
+  var parts=meta.mtd_start.split(' ');
+  var MN={Jan:'January',Feb:'February',Mar:'March',Apr:'April',May:'May',Jun:'June',Jul:'July',Aug:'August',Sep:'September',Oct:'October',Nov:'November',Dec:'December'};
+  var mon=MN[parts[1]]||parts[1];
+  n('rv-heading',mon+"'s Revenue Breakdown");
+  // April MTD fixed
+  n('rv-mtd-ap',fv(pm.avg_price)); n('rv-mtd-vol',pm.sales_vol.toFixed(1));
+  n('rv-mtd-rev',fv(pm.revenue)); n('rv-mtd-del',pm.delivery.toFixed(1));
+  n('rv-others-rate',fv(c.others_avg));
+  var vs=pm.avg_price-c.others_avg; var el_vs=document.getElementById('rv-mtd-vs');
+  if(el_vs){el_vs.textContent=(vs>=0?'▲ ':'▼ ')+fv(Math.abs(vs));el_vs.style.color=vs>=0?'#00c853':'var(--red)';}
+  // 2026 Overview fixed
+  if(rv){
+    var rates=rv.rates;
+    n('rv-mahfuz-avg', rates.mahfuz?fv(rates.mahfuz.avg):'—');
+    n('rv-meraj-avg',  rates.meraj?fv(rates.meraj.avg):'—');
+    n('rv-nadim-avg',  rates.nadim?fv(rates.nadim.avg):'—');
+    n('rv-halima-avg', rates.halima?fv(rates.halima.avg):'—');
+    if(rv.halima_vs_others){
+      var hv=rv.halima_vs_others;
+      n('rv-other-rev-mtd', fv(rv.mtd_other_rev||0));
+      n('rv-rod-inv', rv.rod_inventory?rv.rod_inventory+' MT':'—');
+      n('rv-halima-vol', fv(hv.halima_vol)+' MT');
+      n('rv-others-vol', fv(hv.others_vol)+' MT');
+      var maxV=Math.max(hv.halima_vol,hv.others_vol)||1;
+      var hb=document.getElementById('rv-halima-bar'); var ob=document.getElementById('rv-others-bar');
+      if(hb)hb.style.width=Math.round(hv.halima_vol/maxV*100)+'%';
+      if(ob)ob.style.width=Math.round(hv.others_vol/maxV*100)+'%';
+    }
+    if(rv.ytd&&rv.ytd.top_regions){
+      var regs=rv.ytd.top_regions;
+      n('rv-reg1-name', regs[0]?regs[0].name:'—'); n('rv-reg1-qty', regs[0]?Math.round(regs[0].qty)+' MT':'—');
+      n('rv-reg2-name', regs[1]?regs[1].name:'—'); n('rv-reg2-qty', regs[1]?Math.round(regs[1].qty)+' MT':'—');
+      n('rv-reg3-name', regs[2]?regs[2].name:'—'); n('rv-reg3-qty', regs[2]?Math.round(regs[2].qty)+' MT':'—');
+    }
+    n('rv-other-rev-total', fv(rv.ytd&&rv.ytd.other_rev||0));
+  }
+  // Toggle driven
+  n('rv-vol-big',m.sales_vol.toFixed(1)+' MT'); n('rv-hkg-rate',fv(m.avg_price)); n('rv-rev-big',fv(m.revenue));
+  ['today','7d','10d','14d','30d'].forEach(function(k){var b=document.getElementById('rv-tbtn-'+k);if(b){b.style.background=k===w?'var(--red)':'var(--bg)';b.style.color=k===w?'#fff':'var(--dim)';}});
+}
+
+function openOv(name){ if(name==='margins'){var e=document.getElementById('ov-margins');if(e)e.classList.add('open');renderMargins();return;}
+  var e=document.getElementById('ov-'+name); if(e)e.classList.add('open');
+  if(name==='costing'){renderCosting(costP);}
+  else if(name==='revenue'){setRvP(rvP);}
+  else{refreshOv(curP);}
+}
+function closeOv(){document.querySelectorAll('.overlay.open').forEach(function(e){e.classList.remove('open');});}
+function handleUpload(inp){
+  var file=inp.files[0]; if(!file)return;
+  n('up-st','⏳');
+  setTimeout(function(){n('up-st','');},2000);
+}
+var s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';document.head.appendChild(s);
+
+var mgCostP='7d', mgRevP='7d';
+
+function setMgCostP(w) {
+  mgCostP=w;
+  ['today','7d','10d','14d','30d'].forEach(function(k){
+    var b=document.getElementById('mg-cs-'+k);
+    if(b){b.style.background=k===w?'var(--red)':'var(--bg)';b.style.color=k===w?'#fff':'var(--dim)';b.style.borderColor=k===w?'var(--red)':'var(--b1)';}
+  });
+  renderMgCost(w);
+}
+function setMgRevP(w) {
+  mgRevP=w;
+  ['today','7d','10d','14d','30d'].forEach(function(k){
+    var b=document.getElementById('mg-rv-'+k);
+    if(b){b.style.background=k===w?'var(--red)':'var(--bg)';b.style.color=k===w?'#fff':'var(--dim)';b.style.borderColor=k===w?'var(--red)':'var(--b1)';}
+  });
+  renderMgRev(w);
+}
+function renderMgCost(w) {
+  var m=D.periods[w]; if(!m)return;
+  n('mg-cs-tc', fv(m.total_cost_pt));
+  n('mg-cs-sc', fv(m.scrap_consump_pt));
+  n('mg-cs-oc', fv(m.other_cost_pt));
+}
+function renderMgRev(w) {
+  var m=D.periods[w]; if(!m)return;
+  n('mg-rv-rev', fv(m.revenue));
+  n('mg-rv-ap',  fv(m.avg_price));
+  n('mg-rv-vol', m.sales_vol.toFixed(1)+' MT');
+}
+function renderMargins() {
+  var pm=D.periods.mtd; var c=D.competitors;
+  // Top fixed MTD metrics
+  var gm=document.getElementById('mg-gm');
+  if(gm){gm.textContent=(pm.gross_margin<0?'-':'')+fv(Math.abs(pm.gross_margin));gm.style.color=pm.gross_margin>=0?'var(--green)':'var(--red)';}
+  n('mg-gms',pm.gross_margin>=0?'৳ · Profit MTD':'৳ · Loss MTD');
+  var mp=document.getElementById('mg-mp');
+  if(mp){mp.textContent=(pm.margin_pt<0?'-':'')+fv(Math.abs(pm.margin_pt));mp.style.color=pm.margin_pt>=0?'var(--green)':'var(--red)';}
+  var spr=pm.avg_price-pm.total_cost_pt; var se=document.getElementById('mg-sp');
+  if(se){se.textContent=(spr<0?'-':'')+fv(Math.abs(spr));se.style.color=spr>=0?'var(--green)':'var(--red)';}
+  n('mg-ap',  fv(pm.avg_price));
+  n('mg-tc',  fv(pm.total_cost_pt));
+  n('mg-sc-pt',fv(pm.scrap_consump_pt));
+  n('mg-oc-pt',fv(pm.other_cost_pt));
+  n('mg-hkg',  fv(c.hkg_today));
+  n('mg-oth',  fv(c.others_avg));
+  n('mg-bsrm', fv(c.bsrm));
+  var vo=c.hkg_vs_others; var el_vo=document.getElementById('mg-vso');
+  if(el_vo){el_vo.textContent=(vo>=0?'▲ ':'▼ ')+fv(Math.abs(vo));el_vo.style.color=vo>=0?'var(--green)':'var(--red)';}
+  // Toggle-driven bottom
+  renderMgCost(mgCostP); renderMgRev(mgRevP);
 }
 
 loadData();
+
 </script>
 </body>
 </html>
