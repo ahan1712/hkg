@@ -19,7 +19,7 @@ body.dark{--bg:#000;--s1:#0a0a0a;--s2:#0f0f0f;--s3:#111;--b1:#1a1a1a;--b2:#222;-
   --red:#cc0000;--red2:#e8000a;--silver:#c8c8d0;--dim:#555;--dim2:#444;--dim3:#333;
   --txt:#fff;--txt2:#c8c8d0;--txt3:#888;--sub:#444;--sub2:#333;--green:#00c853;
   --card:#0a0a0a;--card2:#0f0f0f;--bdr:#1a1a1a;--ls:#fff}
-body.light{--bg:#f2f2f7;--s1:#fff;--s2:#f8f8fc;--s3:#ececf2;--b1:#e0e0e8;--b2:#d0d0da;--b3:#c0c0cc;
+body.light{--bg:#f0ede8;--s1:#faf8f5;--s2:#f4f1ec;--s3:#e8e4dd;--b1:#ddd9d0;--b2:#cdc8be;--b3:#bdb8ad;
   --red:#cc0000;--red2:#cc0000;--silver:#333;--dim:#666;--dim2:#555;--dim3:#888;
   --txt:#000;--txt2:#111;--txt3:#555;--sub:#333;--sub2:#555;--green:#00843d;
   --card:#fff;--card2:#f8f8fc;--bdr:#e0e0e8;--ls:#000}
@@ -533,14 +533,40 @@ tr:last-child td{border-bottom:none}
       </div>
     </div>
 
-    <!-- TOP HALF: COMING SOON -->
-    <div style="flex:1;display:flex;align-items:center;justify-content:center;background:var(--s1);border-bottom:2px solid var(--red);min-height:0;flex-direction:column;gap:8px">
-      <div style="font-size:28px;font-weight:700;letter-spacing:4px;color:var(--b2);text-transform:uppercase">Coming Soon</div>
-      <div style="font-size:10px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:var(--b2)">Margin analysis in development</div>
+    <!-- CHART SECTION: 2026 Revenue Breakdown -->
+    <div style="flex-shrink:0;display:flex;flex-direction:column;border-bottom:1px solid var(--b1)">
+      <div style="padding:6px 14px;background:var(--bg);border-bottom:1px solid var(--b1);border-left:3px solid var(--red);display:flex;align-items:center;justify-content:space-between">
+        <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--txt)">2026 Revenue</div>
+        <div style="font-size:18px;font-weight:700;letter-spacing:-.5px;line-height:1" id="mg-rem-val">—</div>
+      </div>
+      <!-- Single horizontal strip with inline labels -->
+      <div style="padding:12px 14px 14px;background:var(--s2)" id="mg-chart-area">
+        <!-- Rendered by JS -->
+      </div>
     </div>
 
-    <!-- BOTTOM HALF: BOTH toggles + driven data -->
-    <div style="flex:1;display:flex;flex-direction:column;min-height:0">
+    <!-- SALESMAN MARGIN PANE -->
+    <div style="flex-shrink:0;display:flex;flex-direction:column;border-bottom:2px solid var(--red)">
+      <div style="padding:5px 14px;background:var(--bg);border-bottom:1px solid var(--b1);border-left:3px solid var(--red)">
+        <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--txt)">Individual Margin / Ton</div>
+      </div>
+      <div style="display:flex;align-items:stretch;background:var(--s1)" id="mg-sm-row">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+
+    <!-- COMING SOON -->
+    <div style="flex-shrink:0;display:flex;flex-direction:column;border-bottom:2px solid var(--red)">
+      <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:22px 14px;background:var(--s1);gap:6px">
+        <div style="width:28px;height:1px;background:var(--b2)"></div>
+        <div style="font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--b2)">Coming Soon</div>
+        <div style="font-size:8px;font-weight:400;letter-spacing:1.5px;color:var(--b3)">More margin analytics in development</div>
+        <div style="width:28px;height:1px;background:var(--b2)"></div>
+      </div>
+    </div>
+
+    <!-- TOGGLE SECTION: two toggles (~40%) -->
+    <div style="flex:2;display:flex;flex-direction:column;min-height:0">
 
       <!-- COSTING toggle -->
       <div style="padding:4px 14px;background:var(--bg);border-bottom:1px solid var(--b1);flex-shrink:0;display:flex;align-items:center;justify-content:space-between">
@@ -557,18 +583,18 @@ tr:last-child td{border-bottom:none}
       <div style="flex:1;display:flex;align-items:stretch;background:var(--s2);border-bottom:1px solid var(--b1);min-height:0">
         <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:0 14px;border-right:1px solid var(--b1)">
           <div style="font-size:7px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:var(--dim);margin-bottom:3px">Total Cost / Ton</div>
-          <div style="font-size:30px;font-weight:700;letter-spacing:-1.5px;color:var(--red);line-height:1" id="mg-cs-tc">—</div>
+          <div style="font-size:28px;font-weight:700;letter-spacing:-1.5px;color:var(--red);line-height:1" id="mg-cs-tc">—</div>
           <div style="font-size:6.5px;color:var(--dim3);margin-top:2px">৳/MT rod</div>
         </div>
-        <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:0 12px;gap:6px">
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:0 12px;gap:5px">
           <div>
             <div style="font-size:6.5px;font-weight:500;text-transform:uppercase;color:var(--dim);margin-bottom:1px">Scrap/Ton</div>
-            <div style="font-size:16px;font-weight:700;color:var(--red);line-height:1;letter-spacing:-.3px" id="mg-cs-sc">—</div>
+            <div style="font-size:15px;font-weight:700;color:var(--red);line-height:1;letter-spacing:-.3px" id="mg-cs-sc">—</div>
           </div>
           <div style="height:1px;background:var(--b1)"></div>
           <div>
             <div style="font-size:6.5px;font-weight:500;text-transform:uppercase;color:var(--dim);margin-bottom:1px">Other/Ton</div>
-            <div style="font-size:16px;font-weight:700;color:var(--dim);line-height:1;letter-spacing:-.3px" id="mg-cs-oc">—</div>
+            <div style="font-size:15px;font-weight:700;color:var(--dim);line-height:1;letter-spacing:-.3px" id="mg-cs-oc">—</div>
           </div>
         </div>
       </div>
@@ -588,18 +614,18 @@ tr:last-child td{border-bottom:none}
       <div style="flex:1;display:flex;align-items:stretch;background:var(--card);min-height:0">
         <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:0 14px;border-right:1px solid var(--b1)">
           <div style="font-size:7px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:var(--dim);margin-bottom:3px">HKG Avg Rate</div>
-          <div style="font-size:30px;font-weight:700;letter-spacing:-1.5px;color:var(--green);line-height:1" id="mg-rv-ap">—</div>
+          <div style="font-size:28px;font-weight:700;letter-spacing:-1.5px;color:var(--green);line-height:1" id="mg-rv-ap">—</div>
           <div style="font-size:6.5px;color:var(--dim3);margin-top:2px">৳/MT wtd avg</div>
         </div>
-        <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:0 12px;gap:6px">
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:0 12px;gap:5px">
           <div>
             <div style="font-size:6.5px;font-weight:500;text-transform:uppercase;color:var(--dim);margin-bottom:1px">Total Sales Rev</div>
-            <div style="font-size:16px;font-weight:700;color:var(--green);line-height:1;letter-spacing:-.3px" id="mg-rv-rev">—</div>
+            <div style="font-size:15px;font-weight:700;color:var(--green);line-height:1;letter-spacing:-.3px" id="mg-rv-rev">—</div>
           </div>
           <div style="height:1px;background:var(--b1)"></div>
           <div>
             <div style="font-size:6.5px;font-weight:500;text-transform:uppercase;color:var(--dim);margin-bottom:1px">Sales Volume</div>
-            <div style="font-size:16px;font-weight:700;color:var(--txt2);line-height:1;letter-spacing:-.3px" id="mg-rv-vol">—</div>
+            <div style="font-size:15px;font-weight:700;color:var(--txt2);line-height:1;letter-spacing:-.3px" id="mg-rv-vol">—</div>
           </div>
         </div>
       </div>
@@ -607,25 +633,107 @@ tr:last-child td{border-bottom:none}
 
   </div>
   <!-- INVENTORY -->
-  <div class="overlay" id="ov-inventory">
-    <div class="ov-hdr"><div style="font-size:17px;font-weight:700;color:var(--txt)">Inventory</div><button class="ov-back" onclick="closeOv()">← Back</button></div>
-    <div class="ov-body">
-      <div class="sec"><span class="sec-title">Closing Stocks</span></div>
-      <div class="kgrid">
-        <div class="kc cr"><div class="kc-lbl">HMS Scrap</div><div class="kc-val r" id="iv-hms">—</div><div class="kc-sub">MT</div></div>
-        <div class="kc"><div class="kc-lbl">Bundle Scrap</div><div class="kc-val" id="iv-bun">—</div><div class="kc-sub">MT</div></div>
-        <div class="kc cs"><div class="kc-lbl">Billet</div><div class="kc-val s" id="iv-bil">—</div><div class="kc-sub">MT</div></div>
-        <div class="kc cs"><div class="kc-lbl">Rod Inventory</div><div class="kc-val s" id="iv-rod">—</div><div class="kc-sub">MT</div></div>
-      </div>
-      <div class="sec"><span class="sec-title">Period Flows</span><span style="font-size:8px;font-weight:700;padding:2px 7px;border-radius:2px;background:rgba(204,0,0,.15);color:var(--red)" id="iv-bdg">—</span></div>
-      <div class="kgrid">
-        <div class="kc"><div class="kc-lbl">Scrap Consumed</div><div class="kc-val" id="iv-sc">—</div><div class="kc-sub">MT</div></div>
-        <div class="kc cs"><div class="kc-lbl">Billet Produced</div><div class="kc-val s" id="iv-bp">—</div><div class="kc-sub">MT</div></div>
-        <div class="kc"><div class="kc-lbl">Rod Produced</div><div class="kc-val" id="iv-rp">—</div><div class="kc-sub">MT</div></div>
-        <div class="kc cs"><div class="kc-lbl">Delivered</div><div class="kc-val s" id="iv-del">—</div><div class="kc-sub">MT</div></div>
-        <div class="kc cs kc-full"><div class="kc-lbl">Scrap → Billet Ratio</div><div class="kc-val s" id="iv-rat">—</div><div class="kc-sub">MT scrap / MT billet</div></div>
+  <div class="overlay" id="ov-inventory" style="overflow:hidden">
+    <div class="ov-hdr">
+      <div style="font-size:17px;font-weight:700;letter-spacing:.5px;color:var(--txt)">Inventory</div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <button class="theme-btn" onclick="toggleTheme()" style="font-size:8px;padding:3px 7px" id="iv-theme-btn">☀️</button>
+        <button class="ov-back" onclick="closeOv()">← Back</button>
       </div>
     </div>
+
+    <!-- CLOSING STOCKS label -->
+    <div style="padding:5px 14px;background:var(--bg);border-bottom:1px solid var(--b1);border-left:3px solid var(--red);flex-shrink:0">
+      <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--txt)">Closing Stocks</div>
+    </div>
+
+    <!-- 4 big blocks: HMS / Bundle / Billet / Rod -->
+    <div style="flex:1.2;display:flex;align-items:stretch;background:var(--s1);border-bottom:1px solid var(--b1);min-height:0">
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border-right:1px solid var(--b1);padding:8px 4px">
+        <div style="font-size:7.5px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--dim);margin-bottom:4px">HMS Scrap</div>
+        <div style="font-size:32px;font-weight:700;letter-spacing:-1px;color:var(--txt);line-height:1" id="iv-hms">—</div>
+        <div style="font-size:8px;color:var(--dim3);margin-top:3px;font-weight:500">MT</div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border-right:1px solid var(--b1);padding:8px 4px">
+        <div style="font-size:7.5px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--dim);margin-bottom:4px">Bundle Scrap</div>
+        <div style="font-size:32px;font-weight:700;letter-spacing:-1px;color:var(--txt);line-height:1" id="iv-bun">—</div>
+        <div style="font-size:8px;color:var(--dim3);margin-top:3px;font-weight:500">MT</div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border-right:1px solid var(--b1);padding:8px 4px">
+        <div style="font-size:7.5px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--dim);margin-bottom:4px">Billet</div>
+        <div style="font-size:32px;font-weight:700;letter-spacing:-1px;color:var(--silver);line-height:1" id="iv-bil">—</div>
+        <div style="font-size:8px;color:var(--dim3);margin-top:3px;font-weight:500">MT</div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8px 4px">
+        <div style="font-size:7.5px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--dim);margin-bottom:4px">Rod</div>
+        <div style="font-size:32px;font-weight:700;letter-spacing:-1px;color:var(--red);line-height:1" id="iv-rod">—</div>
+        <div style="font-size:8px;color:var(--dim3);margin-top:3px;font-weight:500">MT</div>
+      </div>
+    </div>
+
+    <!-- SiMn + FeSi — slightly smaller -->
+    <div style="flex:.65;display:flex;align-items:stretch;background:var(--card);border-bottom:1px solid var(--b1);min-height:0">
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border-right:1px solid var(--b1)">
+        <div style="font-size:7px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#1d9e75;margin-bottom:3px">SiMn</div>
+        <div style="font-size:24px;font-weight:700;letter-spacing:-.5px;color:#1d9e75;line-height:1" id="iv-simn">—</div>
+        <div style="font-size:7px;color:var(--dim3);margin-top:2px">MT</div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center">
+        <div style="font-size:7px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#ba7517;margin-bottom:3px">FeSi</div>
+        <div style="font-size:24px;font-weight:700;letter-spacing:-.5px;color:#ba7517;line-height:1" id="iv-fesi">—</div>
+        <div style="font-size:7px;color:var(--dim3);margin-top:2px">MT</div>
+      </div>
+    </div>
+
+    <!-- ESTIMATED VALUE label -->
+    <div style="padding:5px 14px;background:var(--bg);border-bottom:1px solid var(--b1);border-left:3px solid var(--red);flex-shrink:0">
+      <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--txt)">Estimated Value</div>
+    </div>
+
+    <!-- 4 value blocks: HMS / Bundle / Billet / Rod -->
+    <div style="flex:1.2;display:flex;align-items:stretch;background:var(--s1);border-bottom:1px solid var(--b1);min-height:0">
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border-right:1px solid var(--b1);padding:8px 4px">
+        <div style="font-size:7.5px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--dim);margin-bottom:4px">HMS Scrap</div>
+        <div style="font-size:22px;font-weight:700;letter-spacing:-.5px;color:var(--txt);line-height:1" id="iv-hms-val">—</div>
+        <div style="font-size:6.5px;color:var(--dim3);margin-top:3px" id="iv-hms-px">৳—/MT</div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border-right:1px solid var(--b1);padding:8px 4px">
+        <div style="font-size:7.5px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--dim);margin-bottom:4px">Bundle Scrap</div>
+        <div style="font-size:22px;font-weight:700;letter-spacing:-.5px;color:var(--txt);line-height:1" id="iv-bun-val">—</div>
+        <div style="font-size:6.5px;color:var(--dim3);margin-top:3px" id="iv-bun-px">৳—/MT</div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border-right:1px solid var(--b1);padding:8px 4px">
+        <div style="font-size:7.5px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--dim);margin-bottom:4px">Billet</div>
+        <div style="font-size:22px;font-weight:700;letter-spacing:-.5px;color:var(--silver);line-height:1" id="iv-bil-val">—</div>
+        <div style="font-size:6.5px;color:var(--dim3);margin-top:3px" id="iv-bil-px">৳—/MT</div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8px 4px">
+        <div style="font-size:7.5px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--dim);margin-bottom:4px">Rod</div>
+        <div style="font-size:22px;font-weight:700;letter-spacing:-.5px;color:var(--red);line-height:1" id="iv-rod-val">—</div>
+        <div style="font-size:6.5px;color:var(--dim3);margin-top:3px" id="iv-rod-px">৳—/MT</div>
+      </div>
+    </div>
+
+    <!-- SiMn + FeSi estimated values -->
+    <div style="flex:.65;display:flex;align-items:stretch;background:var(--card);border-bottom:1px solid var(--b1);min-height:0">
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border-right:1px solid var(--b1)">
+        <div style="font-size:7px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#1d9e75;margin-bottom:3px">SiMn</div>
+        <div style="font-size:18px;font-weight:700;letter-spacing:-.3px;color:#1d9e75;line-height:1" id="iv-simn-val">—</div>
+        <div style="font-size:6.5px;color:var(--dim3);margin-top:2px" id="iv-simn-px">৳—/MT</div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center">
+        <div style="font-size:7px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#ba7517;margin-bottom:3px">FeSi</div>
+        <div style="font-size:18px;font-weight:700;letter-spacing:-.3px;color:#ba7517;line-height:1" id="iv-fesi-val">—</div>
+        <div style="font-size:6.5px;color:var(--dim3);margin-top:2px" id="iv-fesi-px">৳—/MT</div>
+      </div>
+    </div>
+
+    <!-- TOTAL -->
+    <div style="flex:.6;display:flex;align-items:center;justify-content:space-between;padding:0 16px;background:var(--s2);min-height:0">
+      <div style="font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--dim)">Total Inventory Value</div>
+      <div style="font-size:26px;font-weight:700;letter-spacing:-1px;color:var(--red)" id="iv-total-val">—</div>
+    </div>
+
   </div>
   <!-- FINANCES -->
   <div class="overlay" id="ov-finances">
@@ -638,20 +746,46 @@ tr:last-child td{border-bottom:none}
     </div>
   </div>
   <!-- MONTHLY -->
-  <div class="overlay" id="ov-monthly">
-    <div class="ov-hdr"><div style="font-size:17px;font-weight:700;color:var(--txt)">Monthly</div><button class="ov-back" onclick="closeOv()">← Back</button></div>
-    <div class="ov-body">
-      <div class="sec"><span class="sec-title">Year at a Glance</span></div>
-      <div class="tw"><table><thead><tr><th>Month</th><th class="tn">Prod</th><th class="tn">Revenue</th><th class="tn">Cost/T</th><th class="tn">Margin/T</th></tr></thead><tbody id="tb-mo"></tbody></table></div>
-      <div class="sec"><span class="sec-title">Monthly Detail</span></div>
-      <div id="mo-cards"></div>
+  <div class="overlay" id="ov-monthly" style="overflow:hidden">
+    <div class="ov-hdr">
+      <div style="font-size:17px;font-weight:700;letter-spacing:.5px;color:var(--txt)">Monthly</div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <button class="theme-btn" onclick="toggleTheme()" style="font-size:8px;padding:3px 7px" id="mo-theme-btn">☀️</button>
+        <button class="ov-back" onclick="closeOv()">← Back</button>
+      </div>
     </div>
+
+    <!-- YEAR AT A GLANCE table -->
+    <div style="padding:5px 14px;background:var(--bg);border-bottom:1px solid var(--b1);border-left:3px solid var(--red);flex-shrink:0">
+      <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--txt)">Year at a Glance</div>
+    </div>
+    <div style="flex-shrink:0;overflow-x:auto;border-bottom:2px solid var(--red);max-height:260px;overflow-y:auto">
+      <table style="width:100%;border-collapse:collapse;font-size:11px;min-width:360px">
+        <thead>
+          <tr style="background:var(--s1)">
+            <th style="padding:7px 10px;text-align:left;font-size:7.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--dim);border-bottom:1px solid var(--b1)">Month</th>
+            <th style="padding:7px 8px;text-align:right;font-size:7.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--dim);border-bottom:1px solid var(--b1)">Sales</th>
+            <th style="padding:7px 8px;text-align:right;font-size:7.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--dim);border-bottom:1px solid var(--b1)">Production</th>
+            <th style="padding:7px 8px;text-align:right;font-size:7.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--red);border-bottom:1px solid var(--b1)">Cost/Ton</th>
+            <th style="padding:7px 8px;text-align:right;font-size:7.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--dim);border-bottom:1px solid var(--b1)">Avg Price</th>
+          </tr>
+        </thead>
+        <tbody id="tb-mo"></tbody>
+      </table>
+    </div>
+
+    <!-- MONTHLY DETAIL cards — scrollable -->
+    <div style="padding:5px 14px;background:var(--bg);border-bottom:1px solid var(--b1);border-left:3px solid var(--red);flex-shrink:0">
+      <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--txt)">Monthly Detail</div>
+    </div>
+    <div style="flex:1;overflow-y:auto;min-height:0" id="mo-cards"></div>
+
   </div>
 </div><!-- end app -->
 <script>
 
 var D={},curP='7d',costP='7d',rvP='7d';
-var EMBEDDED={"meta":{"latest_date":"09 Apr 2026","latest_date_iso":"2026-04-09","mtd_start":"01 Apr 2026","generated":"16 Apr 2026 06:18"},"periods":{"today":{"sales_vol":98.9,"rod":253.92,"avg_price":86939,"scrap_exp_pt":54607,"scrap_exp_total":13216599,"electricity":2296581,"elec_pt":9045,"scrap_to_billet":1.108,"scrap_to_rod":1.134,"total_cost_pt":74887,"revenue":8598300,"other_rev":0,"total_rev":8598300,"other_cost_total":4550759,"scrap_consump_total":14464582,"other_cost_pt":17922,"scrap_consump_pt":56965,"gross_margin":-10417041,"margin_pt":-41025,"delivery":172.96,"trucks":10,"billet":259.82,"sc_consumed":287.95,"hms_consumed":219.0,"bun_consumed":60.0,"internal_bundle":8.95,"oc_total":4550759,"pct_delivered":174.9,"simn":682380,"fesi":23730,"simn_pt":2687,"fesi_pt":93,"boric":24375,"quartz":128750,"boric_pt":96,"quartz_pt":507,"billet_prod":259.82,"total_scrap_consumed":287.95,"est_rev_sales":8598300},"mtd":{"sales_vol":1061.46,"rod":1916.24,"avg_price":84539,"scrap_exp_pt":53611,"scrap_exp_total":119792900,"electricity":20039601,"elec_pt":10458,"scrap_to_billet":1.098,"scrap_to_rod":1.299,"total_cost_pt":86375,"revenue":89734300,"other_rev":1493040,"total_rev":91227340,"other_cost_total":39359457,"scrap_consump_total":126156321,"other_cost_pt":20540,"scrap_consump_pt":65835,"gross_margin":-74288438,"margin_pt":-38768,"delivery":1786.83,"trucks":109,"billet":2267.71,"sc_consumed":2489.24,"hms_consumed":1965.0,"bun_consumed":462.0,"internal_bundle":62.24,"oc_total":39359457,"pct_delivered":168.3,"simn":5993010,"fesi":204120,"simn_pt":3127,"fesi_pt":107,"boric":160875,"quartz":837500,"boric_pt":84,"quartz_pt":437,"billet_prod":2267.71,"total_scrap_consumed":2489.24,"est_rev_sales":89734300},"7d":{"sales_vol":769.5,"rod":1480.92,"avg_price":85956,"scrap_exp_pt":53940,"scrap_exp_total":87825070,"electricity":14907088,"elec_pt":10066,"scrap_to_billet":1.101,"scrap_to_rod":1.239,"total_cost_pt":82906,"revenue":66142800,"other_rev":46800,"total_rev":66189600,"other_cost_total":29956182,"scrap_consump_total":92821701,"other_cost_pt":20228,"scrap_consump_pt":62678,"gross_margin":-56588283,"margin_pt":-38212,"delivery":1323.53,"trucks":81,"billet":1666.48,"sc_consumed":1835.19,"hms_consumed":1411.0,"bun_consumed":376.0,"internal_bundle":48.19,"oc_total":29956182,"pct_delivered":172.0,"simn":4511970,"fesi":153300,"simn_pt":3047,"fesi_pt":104,"boric":126750,"quartz":687500,"boric_pt":86,"quartz_pt":464,"billet_prod":1666.48,"total_scrap_consumed":1835.19,"est_rev_sales":66142800},"10d":{"sales_vol":1561.46,"rod":2102.03,"avg_price":85167,"scrap_exp_pt":53538,"scrap_exp_total":135761510,"electricity":22640049,"elec_pt":10771,"scrap_to_billet":1.096,"scrap_to_rod":1.34,"total_cost_pt":88964,"revenue":132984300,"other_rev":5131325,"total_rev":138115625,"other_cost_total":44112021,"scrap_consump_total":142894317,"other_cost_pt":20985,"scrap_consump_pt":67979,"gross_margin":-48890713,"margin_pt":-23259,"delivery":1998.43,"trucks":120,"billet":2569.12,"sc_consumed":2816.52,"hms_consumed":2225.0,"bun_consumed":525.0,"internal_bundle":66.52,"oc_total":44112021,"pct_delivered":128.0,"simn":6738120,"fesi":229740,"simn_pt":3206,"fesi_pt":109,"boric":180375,"quartz":918750,"boric_pt":86,"quartz_pt":437,"billet_prod":2569.12,"total_scrap_consumed":2816.52,"est_rev_sales":132984300},"14d":{"sales_vol":2597.46,"rod":2437.82,"avg_price":85227,"scrap_exp_pt":53153,"scrap_exp_total":161876689,"electricity":27158116,"elec_pt":11140,"scrap_to_billet":1.097,"scrap_to_rod":1.377,"total_cost_pt":91898,"revenue":221373300,"other_rev":10318200,"total_rev":231691500,"other_cost_total":54149987,"scrap_consump_total":169883052,"other_cost_pt":22212,"scrap_consump_pt":69686,"gross_margin":7658461,"margin_pt":3142,"delivery":2464.28,"trucks":149,"billet":3059.8,"sc_consumed":3356.53,"hms_consumed":2641.0,"bun_consumed":638.0,"internal_bundle":77.53,"oc_total":54149987,"pct_delivered":94.9,"simn":7946820,"fesi":262815,"simn_pt":3260,"fesi_pt":108,"boric":214013,"quartz":1173125,"boric_pt":88,"quartz_pt":481,"billet_prod":3059.8,"total_scrap_consumed":3356.53,"est_rev_sales":221373300},"30d":{"sales_vol":3227.46,"rod":4382.83,"avg_price":85137,"scrap_exp_pt":52553,"scrap_exp_total":257496938,"electricity":44135318,"elec_pt":10070,"scrap_to_billet":1.094,"scrap_to_rod":1.223,"total_cost_pt":82670,"revenue":274775900,"other_rev":15217910,"total_rev":289993810,"other_cost_total":94409430,"scrap_consump_total":267916414,"other_cost_pt":21541,"scrap_consump_pt":61129,"gross_margin":-72332034,"margin_pt":-16503,"delivery":4193.68,"trucks":250,"billet":4899.63,"sc_consumed":5358.74,"hms_consumed":4326.0,"bun_consumed":893.0,"internal_bundle":139.74,"oc_total":94409430,"pct_delivered":129.9,"simn":12718890,"fesi":467670,"simn_pt":2902,"fesi_pt":107,"boric":390000,"quartz":2114375,"boric_pt":89,"quartz_pt":482,"billet_prod":4899.63,"total_scrap_consumed":5358.74,"est_rev_sales":274775900}},"competitors":{"hkg_today":86939,"others_avg":88500,"bsrm":96000,"hkg_vs_others":-1561,"hkg_vs_bsrm":-9061},"stocks":{"hms":20.692,"bundle":801.185,"billet":510.485,"rod":262.592},"monthly":[{"month":"2026-01","label":"Jan 2026","rod":7013.35,"sales_vol":7709.4,"revenue":575389009,"avg_price":72722,"total_cost_pt":73143,"other_cost_pt":19349,"scrap_consump_pt":53794,"margin_pt":8899,"gross_margin":62414021,"electricity":71130937,"scrap_consumed":8457.69,"billet_produced":7744.18,"scrap_exp_total":389913056,"scrap_exp_pt":47007,"delivery":7047.12},{"month":"2026-02","label":"Feb 2026","rod":5929.22,"sales_vol":5113.66,"revenue":415114486,"avg_price":77885,"total_cost_pt":79075,"other_cost_pt":20616,"scrap_consump_pt":58459,"margin_pt":-9063,"gross_margin":-53739052,"electricity":61794635,"scrap_consumed":7344.39,"billet_produced":6730.53,"scrap_exp_total":353906460,"scrap_exp_pt":49778,"delivery":5928.34},{"month":"2026-03","label":"Mar 2026","rod":5104.33,"sales_vol":5850.0,"revenue":498792070,"avg_price":82917,"total_cost_pt":80456,"other_cost_pt":21246,"scrap_consump_pt":59210,"margin_pt":17263,"gross_margin":88116474,"electricity":52061605,"scrap_consumed":6144.94,"billet_produced":5644.33,"scrap_exp_total":295938786,"scrap_exp_pt":51487,"delivery":5076.45},{"month":"2026-04","label":"Apr 2026","rod":1916.24,"sales_vol":1061.46,"revenue":91227340,"avg_price":84539,"total_cost_pt":86375,"other_cost_pt":20540,"scrap_consump_pt":65835,"margin_pt":-38768,"gross_margin":-74288438,"electricity":20039601,"scrap_consumed":2489.24,"billet_produced":2267.71,"scrap_exp_total":835206875,"scrap_exp_pt":47768,"delivery":1956.33}],"top_customers":[{"name":"Halima Steel Corp","vol":742.0,"rev":63754000,"avg_px":85922},{"name":"Mazidsons Construction Ltd","vol":100.0,"rev":8745000,"avg_px":87450},{"name":"Naofa Trading","vol":43.0,"rev":3748500,"avg_px":87174},{"name":"Mokka Traders","vol":42.0,"rev":3668000,"avg_px":87333},{"name":"Shahin Traders","vol":28.0,"rev":2408000,"avg_px":86000},{"name":"Roja Traders","vol":18.0,"rev":1575000,"avg_px":87500},{"name":"R.I Enterprise","vol":15.0,"rev":1308000,"avg_px":87200},{"name":"Mamun & Brothers","vol":14.0,"rev":1218000,"avg_px":87000}],"salesmen":[{"name":"Mahfuz Sir","vol":862.9,"rev":74319300},{"name":"Meraj","vol":86.0,"rev":7464500},{"name":"Nadim","vol":81.0,"rev":7073500},{"name":"Atik Sir","vol":10.0,"rev":877000}],"revenue_data":{"ytd":{"other_rev":46795940,"other_sales":[{"date":"31 Mar","item":"Ovel","customer":"New Madani Re-Roll","value":1045625},{"date":"01 Apr","item":"Ovel","customer":"New Madani Re-Roll","value":1446240},{"date":"07 Apr","item":"Cut Pcs","customer":"Md. Jaman","value":46800}],"top_regions":[{"name":"Sylhet","qty":3885.5},{"name":"Sirajgonj","qty":1333.0},{"name":"Cumilla","qty":1154.9}]},"rates":{"mahfuz":{"name":"Mahfuz","avg":77418,"vol":16675.9,"rev":1291020205},"meraj":{"name":"Meraj","avg":78794,"vol":1051.7,"rev":82867850},"nadim":{"name":"Nadim","avg":78658,"vol":1347.3,"rev":105979525},"halima":{"name":"Halima Steel Corp","avg":77621,"vol":16908.0,"rev":1312423500},"others_rod":{"name":"All Others","avg":78903,"vol":2787.0}},"top_repeat_customers":[{"name":"Halima Steel Corp","vol":16908.0,"rev":1312423500,"txns":77,"avg":77621},{"name":"Mamun & Brothers","vol":473.6,"rev":36632575,"txns":19,"avg":77357},{"name":"Naofa Trading","vol":253.0,"rev":20243300,"txns":16,"avg":80013},{"name":"Trusr Iron & Steel Store","vol":214.0,"rev":16825200,"txns":11,"avg":78622},{"name":"Mandal Hardware","vol":191.0,"rev":15757500,"txns":9,"avg":82500}],"rod_inventory":262.6,"scrap_diff":{"curr":53611,"prev":51487,"diff":2124},"halima_vs_others":{"halima_avg":77621,"halima_vol":16908.0,"others_avg":78903,"others_vol":2787.0},"mtd_other_rev":1493040}};
+var EMBEDDED={"meta":{"latest_date":"09 Apr 2026","latest_date_iso":"2026-04-09","mtd_start":"01 Apr 2026","generated":"16 Apr 2026 06:18"},"periods":{"today":{"sales_vol":98.9,"rod":253.92,"avg_price":86939,"scrap_exp_pt":54607,"scrap_exp_total":13216599,"electricity":2296581,"elec_pt":9045,"scrap_to_billet":1.108,"scrap_to_rod":1.134,"total_cost_pt":74887,"revenue":8598300,"other_rev":0,"total_rev":8598300,"other_cost_total":4550759,"scrap_consump_total":14464582,"other_cost_pt":17922,"scrap_consump_pt":56965,"gross_margin":-10417041,"margin_pt":-41025,"delivery":172.96,"trucks":10,"billet":259.82,"sc_consumed":287.95,"hms_consumed":219.0,"bun_consumed":60.0,"internal_bundle":8.95,"oc_total":4550759,"pct_delivered":174.9,"simn":682380,"fesi":23730,"simn_pt":2687,"fesi_pt":93,"boric":24375,"quartz":128750,"boric_pt":96,"quartz_pt":507,"billet_prod":259.82,"total_scrap_consumed":287.95,"est_rev_sales":8598300},"mtd":{"sales_vol":1061.46,"rod":1916.24,"avg_price":84539,"scrap_exp_pt":53611,"scrap_exp_total":119792900,"electricity":20039601,"elec_pt":10458,"scrap_to_billet":1.098,"scrap_to_rod":1.299,"total_cost_pt":86375,"revenue":89734300,"other_rev":1493040,"total_rev":91227340,"other_cost_total":39359457,"scrap_consump_total":126156321,"other_cost_pt":20540,"scrap_consump_pt":65835,"gross_margin":-74288438,"margin_pt":-38768,"delivery":1786.83,"trucks":109,"billet":2267.71,"sc_consumed":2489.24,"hms_consumed":1965.0,"bun_consumed":462.0,"internal_bundle":62.24,"oc_total":39359457,"pct_delivered":168.3,"simn":5993010,"fesi":204120,"simn_pt":3127,"fesi_pt":107,"boric":160875,"quartz":837500,"boric_pt":84,"quartz_pt":437,"billet_prod":2267.71,"total_scrap_consumed":2489.24,"est_rev_sales":89734300},"7d":{"sales_vol":769.5,"rod":1480.92,"avg_price":85956,"scrap_exp_pt":53940,"scrap_exp_total":87825070,"electricity":14907088,"elec_pt":10066,"scrap_to_billet":1.101,"scrap_to_rod":1.239,"total_cost_pt":82906,"revenue":66142800,"other_rev":46800,"total_rev":66189600,"other_cost_total":29956182,"scrap_consump_total":92821701,"other_cost_pt":20228,"scrap_consump_pt":62678,"gross_margin":-56588283,"margin_pt":-38212,"delivery":1323.53,"trucks":81,"billet":1666.48,"sc_consumed":1835.19,"hms_consumed":1411.0,"bun_consumed":376.0,"internal_bundle":48.19,"oc_total":29956182,"pct_delivered":172.0,"simn":4511970,"fesi":153300,"simn_pt":3047,"fesi_pt":104,"boric":126750,"quartz":687500,"boric_pt":86,"quartz_pt":464,"billet_prod":1666.48,"total_scrap_consumed":1835.19,"est_rev_sales":66142800},"10d":{"sales_vol":1561.46,"rod":2102.03,"avg_price":85167,"scrap_exp_pt":53538,"scrap_exp_total":135761510,"electricity":22640049,"elec_pt":10771,"scrap_to_billet":1.096,"scrap_to_rod":1.34,"total_cost_pt":88964,"revenue":132984300,"other_rev":5131325,"total_rev":138115625,"other_cost_total":44112021,"scrap_consump_total":142894317,"other_cost_pt":20985,"scrap_consump_pt":67979,"gross_margin":-48890713,"margin_pt":-23259,"delivery":1998.43,"trucks":120,"billet":2569.12,"sc_consumed":2816.52,"hms_consumed":2225.0,"bun_consumed":525.0,"internal_bundle":66.52,"oc_total":44112021,"pct_delivered":128.0,"simn":6738120,"fesi":229740,"simn_pt":3206,"fesi_pt":109,"boric":180375,"quartz":918750,"boric_pt":86,"quartz_pt":437,"billet_prod":2569.12,"total_scrap_consumed":2816.52,"est_rev_sales":132984300},"14d":{"sales_vol":2597.46,"rod":2437.82,"avg_price":85227,"scrap_exp_pt":53153,"scrap_exp_total":161876689,"electricity":27158116,"elec_pt":11140,"scrap_to_billet":1.097,"scrap_to_rod":1.377,"total_cost_pt":91898,"revenue":221373300,"other_rev":10318200,"total_rev":231691500,"other_cost_total":54149987,"scrap_consump_total":169883052,"other_cost_pt":22212,"scrap_consump_pt":69686,"gross_margin":7658461,"margin_pt":3142,"delivery":2464.28,"trucks":149,"billet":3059.8,"sc_consumed":3356.53,"hms_consumed":2641.0,"bun_consumed":638.0,"internal_bundle":77.53,"oc_total":54149987,"pct_delivered":94.9,"simn":7946820,"fesi":262815,"simn_pt":3260,"fesi_pt":108,"boric":214013,"quartz":1173125,"boric_pt":88,"quartz_pt":481,"billet_prod":3059.8,"total_scrap_consumed":3356.53,"est_rev_sales":221373300},"30d":{"sales_vol":3227.46,"rod":4382.83,"avg_price":85137,"scrap_exp_pt":52553,"scrap_exp_total":257496938,"electricity":44135318,"elec_pt":10070,"scrap_to_billet":1.094,"scrap_to_rod":1.223,"total_cost_pt":82670,"revenue":274775900,"other_rev":15217910,"total_rev":289993810,"other_cost_total":94409430,"scrap_consump_total":267916414,"other_cost_pt":21541,"scrap_consump_pt":61129,"gross_margin":-72332034,"margin_pt":-16503,"delivery":4193.68,"trucks":250,"billet":4899.63,"sc_consumed":5358.74,"hms_consumed":4326.0,"bun_consumed":893.0,"internal_bundle":139.74,"oc_total":94409430,"pct_delivered":129.9,"simn":12718890,"fesi":467670,"simn_pt":2902,"fesi_pt":107,"boric":390000,"quartz":2114375,"boric_pt":89,"quartz_pt":482,"billet_prod":4899.63,"total_scrap_consumed":5358.74,"est_rev_sales":274775900}},"competitors":{"hkg_today":86939,"others_avg":88500,"bsrm":96000,"hkg_vs_others":-1561,"hkg_vs_bsrm":-9061},"stocks":{"hms":20.69,"bundle":801.19,"billet":510.49,"rod":262.59,"simn":21.32,"fesi":1.85},"monthly":[{"month":"2026-01","label":"Jan 2026","rod":7013.4,"sales_vol":7709.4,"revenue":575389009,"avg_price":72722,"total_cost_pt":73142,"other_cost_pt":19348,"scrap_consump_pt":53793,"margin_pt":8899,"gross_margin":62414021,"electricity":71130937,"scrap_exp_total":389913055,"scrap_exp_pt":47007,"salary_total":10843707,"px_sc_diff":25715,"delivery":7047.1,"billet_produced":7744.2,"scrap_consumed":8457.7},{"month":"2026-02","label":"Feb 2026","rod":5929.2,"sales_vol":5113.7,"revenue":415114486,"avg_price":77885,"total_cost_pt":79075,"other_cost_pt":20615,"scrap_consump_pt":58459,"margin_pt":-9063,"gross_margin":-53739051,"electricity":61794635,"scrap_exp_total":353906460,"scrap_exp_pt":49777,"salary_total":10918572,"px_sc_diff":28108,"delivery":5928.3,"billet_produced":6730.5,"scrap_consumed":7344.4},{"month":"2026-03","label":"Mar 2026","rod":5104.3,"sales_vol":5850.0,"revenue":498792070,"avg_price":82917,"total_cost_pt":80456,"other_cost_pt":21245,"scrap_consump_pt":59210,"margin_pt":17263,"gross_margin":88116473,"electricity":52061605,"scrap_exp_total":295938786,"scrap_exp_pt":51487,"salary_total":13717438,"px_sc_diff":31430,"delivery":5076.5,"billet_produced":5644.3,"scrap_consumed":6144.9},{"month":"2026-04","label":"Apr 2026","rod":1916.2,"sales_vol":1061.5,"revenue":91227340,"avg_price":84538,"total_cost_pt":86375,"other_cost_pt":20539,"scrap_consump_pt":65835,"margin_pt":-38767,"gross_margin":-74288438,"electricity":20039601,"scrap_exp_total":119792900,"scrap_exp_pt":53611,"salary_total":3559635,"px_sc_diff":30927,"delivery":1786.8,"billet_produced":2267.7,"scrap_consumed":2489.2}],"top_customers":[{"name":"Halima Steel Corp","vol":742.0,"rev":63754000,"avg_px":85922},{"name":"Mazidsons Construction Ltd","vol":100.0,"rev":8745000,"avg_px":87450},{"name":"Naofa Trading","vol":43.0,"rev":3748500,"avg_px":87174},{"name":"Mokka Traders","vol":42.0,"rev":3668000,"avg_px":87333},{"name":"Shahin Traders","vol":28.0,"rev":2408000,"avg_px":86000},{"name":"Roja Traders","vol":18.0,"rev":1575000,"avg_px":87500},{"name":"R.I Enterprise","vol":15.0,"rev":1308000,"avg_px":87200},{"name":"Mamun & Brothers","vol":14.0,"rev":1218000,"avg_px":87000}],"salesmen":[{"name":"Mahfuz Sir","vol":862.9,"rev":74319300},{"name":"Meraj","vol":86.0,"rev":7464500},{"name":"Nadim","vol":81.0,"rev":7073500},{"name":"Atik Sir","vol":10.0,"rev":877000}],"revenue_data":{"ytd":{"other_rev":46795940,"other_sales":[{"date":"31 Mar","item":"Ovel","customer":"New Madani Re-Roll","value":1045625},{"date":"01 Apr","item":"Ovel","customer":"New Madani Re-Roll","value":1446240},{"date":"07 Apr","item":"Cut Pcs","customer":"Md. Jaman","value":46800}],"top_regions":[{"name":"Sylhet","qty":3885.5},{"name":"Sirajgonj","qty":1333.0},{"name":"Cumilla","qty":1154.9}]},"rates":{"mahfuz":{"name":"Mahfuz","avg":77418,"vol":16675.9,"rev":1291020205},"meraj":{"name":"Meraj","avg":78794,"vol":1051.7,"rev":82867850},"nadim":{"name":"Nadim","avg":78658,"vol":1347.3,"rev":105979525},"halima":{"name":"Halima Steel Corp","avg":77621,"vol":16908.0,"rev":1312423500},"others_rod":{"name":"All Others","avg":78903,"vol":2787.0}},"top_repeat_customers":[{"name":"Halima Steel Corp","vol":16908.0,"rev":1312423500,"txns":77,"avg":77621},{"name":"Mamun & Brothers","vol":473.6,"rev":36632575,"txns":19,"avg":77357},{"name":"Naofa Trading","vol":253.0,"rev":20243300,"txns":16,"avg":80013},{"name":"Trusr Iron & Steel Store","vol":214.0,"rev":16825200,"txns":11,"avg":78622},{"name":"Mandal Hardware","vol":191.0,"rev":15757500,"txns":9,"avg":82500}],"rod_inventory":262.6,"scrap_diff":{"curr":53611,"prev":51487,"diff":2124},"halima_vs_others":{"halima_avg":77621,"halima_vol":16908.0,"others_avg":78903,"others_vol":2787.0},"mtd_other_rev":1493040},"stock_prices":{"hms":54715,"bundle":45688,"billet":171277,"rod":84538,"simn":568633,"fesi":88767},"inventory_meta":{"hms_days":0.1,"bun_days":15.6,"rod_days":2.2,"rod_daily_sales":117.9,"total_inv_val":159658326},"ytd_breakdown":{"revenue":1580522905,"rod_rev":1533726965,"other_rev":46795940,"scrap":1152280294,"electricity":205026778,"salary":39039352,"other":161673475,"remaining":22503006},"salesman_margins":{"Mahfuz":{"name":"Mahfuz Sir","vol":16675.9,"rev":1291020205,"avg_price":77418,"cost_allocated":1290476062,"margin_total":544142,"margin_pt":32},"Meraj":{"name":"Meraj","vol":1051.7,"rev":82867850,"avg_price":78794,"cost_allocated":82293523,"margin_total":574326,"margin_pt":546},"Nadim":{"name":"Nadim","vol":1414.3,"rev":111006225,"avg_price":78485,"cost_allocated":110247610,"margin_total":758614,"margin_pt":536}}};
 
 function fv(v){if(v==null)return'—';var a=Math.abs(+v);if(a>=10000000)return(+v/10000000).toFixed(1)+'Cr';if(a>=100000)return(+v/100000).toFixed(1)+'L';if(a>=1000)return(+v/1000).toFixed(1)+'K';return String(Math.round(+v));}
 function fm(v){return v!=null?(+v).toFixed(1):'—';}
@@ -663,6 +797,7 @@ var isDark=true;
 function toggleTheme(){
   isDark=!isDark;
   document.body.className=isDark?'dark':'light';
+  if(document.getElementById('mg-waterfall'))renderMargins();
   var lbl=isDark?'☀️ Light':'🌙 Dark';
   ['theme-btn','cs-theme-btn','rv-theme-btn'].forEach(function(id){var e=document.getElementById(id);if(e)e.textContent=lbl;});
 }
@@ -698,9 +833,74 @@ function renderAll(){
   n('iv-hms',fm(s.hms)+' MT'); n('iv-bun',fm(s.bundle)+' MT');
   n('iv-bil',fm(s.billet)+' MT'); n('iv-rod',fm(s.rod)+' MT');
   var mtb=document.getElementById('tb-mo');
-  if(mtb)mtb.innerHTML=D.monthly.map(function(m){var p=m.margin_pt>=0;return'<tr><td style="font-weight:700;color:var(--txt)">'+m.label+'</td><td class="tn">'+Math.round(m.rod)+'</td><td class="tn" style="color:var(--silver)">'+fv(m.revenue)+'</td><td class="tn" style="color:var(--red)">'+fv(m.total_cost_pt)+'</td><td class="tn" style="color:'+(p?'#00c853':'var(--red)')+'">'+( p?'▲':'▼')+fv(Math.abs(m.margin_pt))+'</td></tr>';}).join('');
+  var months2026=['Jan 2026','Feb 2026','Mar 2026','Apr 2026','May 2026','Jun 2026','Jul 2026','Aug 2026','Sep 2026','Oct 2026','Nov 2026','Dec 2026'];
+  var realMap={};D.monthly.forEach(function(m){realMap[m.label]=m;});
+  if(mtb)mtb.innerHTML=months2026.map(function(lbl){
+    var m=realMap[lbl];
+    if(m){
+      var ap_vs_cost=m.avg_price-m.total_cost_pt;
+      var spread_col=ap_vs_cost>=0?'var(--green)':'var(--red)';
+      return '<tr style="border-bottom:1px solid var(--b1)">'
+        +'<td style="padding:11px 10px;font-weight:700;color:var(--txt);font-size:13px">'+m.label+'</td>'
+        +'<td style="padding:11px 8px;text-align:right;font-variant-numeric:tabular-nums;color:var(--silver);font-weight:600;font-size:13px">'+m.sales_vol.toFixed(0)+' <span style="font-size:9px;color:var(--dim)">MT</span></td>'
+        +'<td style="padding:11px 8px;text-align:right;font-variant-numeric:tabular-nums;color:var(--txt);font-weight:600;font-size:13px">'+m.rod.toFixed(0)+' <span style="font-size:9px;color:var(--dim)">MT</span></td>'
+        +'<td style="padding:11px 8px;text-align:right;font-variant-numeric:tabular-nums;color:var(--red);font-weight:700;font-size:13px">'+fv(m.total_cost_pt)+'</td>'
+        +'<td style="padding:11px 8px;text-align:right;font-variant-numeric:tabular-nums;font-weight:700;font-size:13px;color:'+spread_col+'">'+fv(m.avg_price)+'</td>'
+        +'</tr>';
+    } else {
+      return '<tr style="border-bottom:1px solid var(--b1);opacity:.35">'
+        +'<td style="padding:11px 10px;font-weight:700;color:var(--dim);font-size:13px">'+lbl+'</td>'
+        +'<td style="padding:11px 8px;text-align:right;color:var(--b3);font-size:13px">—</td>'
+        +'<td style="padding:11px 8px;text-align:right;color:var(--b3);font-size:13px">—</td>'
+        +'<td style="padding:11px 8px;text-align:right;color:var(--b3);font-size:13px">—</td>'
+        +'<td style="padding:11px 8px;text-align:right;color:var(--b3);font-size:13px">—</td>'
+        +'</tr>';
+    }
+  }).join('');
+
   var mcd=document.getElementById('mo-cards');
-  if(mcd)mcd.innerHTML=D.monthly.map(function(m){var p=m.margin_pt>=0;return'<div class="mc-card" style="border-left:3px solid '+(p?'#00c853':'var(--red)')+'"><div class="mc-card-hdr"><span class="mc-card-name">'+m.label+'</span><span class="spb '+(p?'pos':'neg')+'">'+(p?'▲':'▼')+' ৳'+fv(Math.abs(m.margin_pt))+'/T</span></div><div class="mc-card-grid"><div class="mcgi"><div class="lbl">Prod</div><div class="val">'+Math.round(m.rod)+' MT</div></div><div class="mcgi"><div class="lbl">Revenue</div><div class="val" style="color:var(--silver)">'+fv(m.revenue)+'</div></div><div class="mcgi"><div class="lbl">Cost/T</div><div class="val" style="color:var(--red)">'+fv(m.total_cost_pt)+'</div></div></div></div>';}).join('');
+  if(mcd)mcd.innerHTML=D.monthly.slice().reverse().map(function(m){
+    var pos=m.margin_pt>=0;
+    var diff=m.px_sc_diff||0;
+    var diffCol=diff>=0?'var(--green)':'var(--red)';
+    return '<div style="margin:10px 12px;background:var(--card);border-radius:6px;overflow:hidden;border:1px solid var(--b1);border-left:3px solid '+(pos?'var(--green)':'var(--red)')+';">'
+      +'<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:1px solid var(--b1);background:var(--s1)">'
+        +'<div style="font-size:16px;font-weight:700;letter-spacing:.5px;color:var(--txt)">'+m.label+'</div>'
+        +'<div style="font-size:11px;font-weight:700;padding:3px 10px;border-radius:3px;background:'+(pos?'rgba(0,200,83,.12)':'rgba(204,0,0,.12)')+';color:'+(pos?'var(--green)':'var(--red)')+';">'+(pos?'▲':'▼')+' ৳'+fv(Math.abs(m.margin_pt))+'/T</div>'
+      +'</div>'
+      // Row 1: Est Revenue + Electricity + Scrap Exp
+      +'<div style="display:grid;grid-template-columns:1fr 1fr 1fr;border-bottom:1px solid var(--b1)">'
+        +'<div style="padding:10px 12px;border-right:1px solid var(--b1)">'
+          +'<div style="font-size:7px;font-weight:600;text-transform:uppercase;color:var(--dim);letter-spacing:.8px;margin-bottom:3px">Est Revenue</div>'
+          +'<div style="font-size:15px;font-weight:700;color:var(--silver);letter-spacing:-.3px">'+fv(m.revenue)+'</div>'
+          +'<div style="font-size:6.5px;color:var(--dim3);margin-top:1px">৳</div>'
+        +'</div>'
+        +'<div style="padding:10px 12px;border-right:1px solid var(--b1)">'
+          +'<div style="font-size:7px;font-weight:600;text-transform:uppercase;color:var(--dim);letter-spacing:.8px;margin-bottom:3px">Electricity</div>'
+          +'<div style="font-size:15px;font-weight:700;color:var(--txt);letter-spacing:-.3px">'+fv(m.electricity)+'</div>'
+          +'<div style="font-size:6.5px;color:var(--dim3);margin-top:1px">৳ total</div>'
+        +'</div>'
+        +'<div style="padding:10px 12px">'
+          +'<div style="font-size:7px;font-weight:600;text-transform:uppercase;color:var(--dim);letter-spacing:.8px;margin-bottom:3px">Scrap Exp</div>'
+          +'<div style="font-size:15px;font-weight:700;color:var(--red);letter-spacing:-.3px">'+fv(m.scrap_exp_total)+'</div>'
+          +'<div style="font-size:6.5px;color:var(--dim3);margin-top:1px">৳ purchased</div>'
+        +'</div>'
+      +'</div>'
+      // Row 2: Salary + Price-Scrap Differential
+      +'<div style="display:grid;grid-template-columns:1fr 1fr;border-bottom:none">'
+        +'<div style="padding:10px 12px;border-right:1px solid var(--b1)">'
+          +'<div style="font-size:7px;font-weight:600;text-transform:uppercase;color:var(--dim);letter-spacing:.8px;margin-bottom:3px">Total Salary</div>'
+          +'<div style="font-size:15px;font-weight:700;color:var(--txt);letter-spacing:-.3px">'+(m.salary_total?fv(m.salary_total):'—')+'</div>'
+          +'<div style="font-size:6.5px;color:var(--dim3);margin-top:1px">৳ Manpower + Labour</div>'
+        +'</div>'
+        +'<div style="padding:10px 12px">'
+          +'<div style="font-size:7px;font-weight:600;text-transform:uppercase;color:var(--dim);letter-spacing:.8px;margin-bottom:3px">Price − Scrap</div>'
+          +'<div style="font-size:15px;font-weight:700;letter-spacing:-.3px;color:'+diffCol+'">'+(diff>=0?'▲ ':'▼ ')+fv(Math.abs(diff))+'</div>'
+          +'<div style="font-size:6.5px;color:var(--dim3);margin-top:1px">৳/MT avg price vs scrap</div>'
+        +'</div>'
+      +'</div>'
+    +'</div>';
+  }).join('');
   setP('7d');
 }
 
@@ -816,7 +1016,7 @@ function renderRevenue(w) {
   ['today','7d','10d','14d','30d'].forEach(function(k){var b=document.getElementById('rv-tbtn-'+k);if(b){b.style.background=k===w?'var(--red)':'var(--bg)';b.style.color=k===w?'#fff':'var(--dim)';}});
 }
 
-function openOv(name){ if(name==='margins'){var e=document.getElementById('ov-margins');if(e)e.classList.add('open');renderMargins();return;}
+function openOv(name){ if(name==='inventory'){var e=document.getElementById('ov-inventory');if(e)e.classList.add('open');renderInventory();return;} if(name==='margins'){var e=document.getElementById('ov-margins');if(e)e.classList.add('open');renderMargins();return;}
   var e=document.getElementById('ov-'+name); if(e)e.classList.add('open');
   if(name==='costing'){renderCosting(costP);}
   else if(name==='revenue'){setRvP(rvP);}
@@ -861,25 +1061,63 @@ function renderMgRev(w) {
   n('mg-rv-vol', m.sales_vol.toFixed(1)+' MT');
 }
 function renderMargins() {
-  var pm=D.periods.mtd; var c=D.competitors;
-  // Top fixed MTD metrics
-  var gm=document.getElementById('mg-gm');
-  if(gm){gm.textContent=(pm.gross_margin<0?'-':'')+fv(Math.abs(pm.gross_margin));gm.style.color=pm.gross_margin>=0?'var(--green)':'var(--red)';}
-  n('mg-gms',pm.gross_margin>=0?'৳ · Profit MTD':'৳ · Loss MTD');
-  var mp=document.getElementById('mg-mp');
-  if(mp){mp.textContent=(pm.margin_pt<0?'-':'')+fv(Math.abs(pm.margin_pt));mp.style.color=pm.margin_pt>=0?'var(--green)':'var(--red)';}
-  var spr=pm.avg_price-pm.total_cost_pt; var se=document.getElementById('mg-sp');
-  if(se){se.textContent=(spr<0?'-':'')+fv(Math.abs(spr));se.style.color=spr>=0?'var(--green)':'var(--red)';}
-  n('mg-ap',  fv(pm.avg_price));
-  n('mg-tc',  fv(pm.total_cost_pt));
-  n('mg-sc-pt',fv(pm.scrap_consump_pt));
-  n('mg-oc-pt',fv(pm.other_cost_pt));
-  n('mg-hkg',  fv(c.hkg_today));
-  n('mg-oth',  fv(c.others_avg));
-  n('mg-bsrm', fv(c.bsrm));
-  var vo=c.hkg_vs_others; var el_vo=document.getElementById('mg-vso');
-  if(el_vo){el_vo.textContent=(vo>=0?'▲ ':'▼ ')+fv(Math.abs(vo));el_vo.style.color=vo>=0?'var(--green)':'var(--red)';}
-  // Toggle-driven bottom
+  var bd=D.ytd_breakdown; var sm=D.salesman_margins;
+
+  // ── CHART ──
+  if(bd){
+    var rev=bd.revenue; var rem=bd.remaining;
+    var segs=[
+      {label:'Scrap Consump', val:bd.scrap,       col:'#cc0000'},
+      {label:'Electricity',   val:bd.electricity,  col:'#c85000'},
+      {label:'Salary',        val:bd.salary,       col:'#777'},
+      {label:'Other Costs',   val:bd.other,        col:'#555'},
+      {label:'Net',           val:Math.max(rem,0), col:rem>=0?'#00a854':'#cc0000'},
+    ];
+    var remEl=document.getElementById('mg-rem-val');
+    if(remEl){remEl.textContent=(rem>=0?'+':'-')+' ৳'+fv(Math.abs(rem));remEl.style.color=rem>=0?'var(--green)':'var(--red)';}
+    var area=document.getElementById('mg-chart-area');
+    if(area){
+      var bar='<div style="display:flex;height:24px;border-radius:3px;overflow:hidden;margin-bottom:10px">';
+      segs.forEach(function(s){bar+='<div style="flex:'+s.val/rev*100+';background:'+s.col+';min-width:1px"></div>';});
+      bar+='</div>';
+      var legend='<div style="display:flex;flex-wrap:wrap;gap:5px 10px">';
+      segs.forEach(function(s){
+        var pct=(s.val/rev*100).toFixed(1);
+        legend+='<div style="display:flex;align-items:center;gap:3px">'
+          +'<div style="width:7px;height:7px;border-radius:1px;background:'+s.col+'"></div>'
+          +'<div style="font-size:7.5px;font-weight:600;color:var(--txt2)">'+s.label+'</div>'
+          +'<div style="font-size:7px;color:var(--dim)">'+pct+'%</div>'
+          +'</div>';
+      });
+      legend+='</div>';
+      area.innerHTML=bar+legend;
+    }
+  }
+
+  // ── SALESMAN MARGINS ──
+  if(sm){
+    var smRow=document.getElementById('mg-sm-row');
+    var keys=['Mahfuz','Meraj','Nadim'];
+    var names={'Mahfuz':'Mahfuz Sir','Meraj':'Meraj','Nadim':'Nadim'};
+    if(smRow){
+      smRow.innerHTML=keys.map(function(k,i){
+        var s=sm[k]; if(!s)return'';
+        var pos=s.margin_pt>=0;
+        var col=pos?'var(--green)':'var(--red)';
+        return '<div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:12px 10px;'+(i>0?'border-left:1px solid var(--b1)':'')+'">'
+          +'<div style="font-size:7px;font-weight:600;text-transform:uppercase;color:var(--dim);letter-spacing:.8px;margin-bottom:4px">'+names[k]+'</div>'
+          +'<div style="font-size:26px;font-weight:700;letter-spacing:-1px;color:'+col+';line-height:1">'+(pos?'':'-')+'৳'+fv(Math.abs(s.margin_pt))+'</div>'
+          +'<div style="font-size:6.5px;color:var(--dim3);margin-top:3px">per MT · '+fv(s.vol)+' MT sold</div>'
+          +'<div style="height:1px;background:var(--b1);margin:6px 0"></div>'
+          +'<div style="display:flex;justify-content:space-between">'
+            +'<div><div style="font-size:6px;color:var(--dim3);margin-bottom:1px">Avg Price</div><div style="font-size:10px;font-weight:700;color:var(--txt2)">'+fv(s.avg_price)+'</div></div>'
+            +'<div style="text-align:right"><div style="font-size:6px;color:var(--dim3);margin-bottom:1px">Total Margin</div><div style="font-size:10px;font-weight:700;color:'+col+'">'+fv(s.margin_total)+'</div></div>'
+          +'</div>'
+        +'</div>';
+      }).join('');
+    }
+  }
+
   renderMgCost(mgCostP); renderMgRev(mgRevP);
 }
 
@@ -900,9 +1138,277 @@ function checkPw(){
 document.addEventListener('DOMContentLoaded',function(){
   var i=document.getElementById('pw-input'); if(i)i.focus();
 });
+
+function renderInventory() {
+  var s=D.stocks, p=D.stock_prices, im=D.inventory_meta;
+  if(!s) return;
+  // Stocks
+  n('iv-hms',  s.hms.toFixed(1));
+  n('iv-bun',  s.bundle.toFixed(1));
+  n('iv-bil',  s.billet.toFixed(1));
+  n('iv-rod',  s.rod.toFixed(1));
+  n('iv-simn', s.simn.toFixed(3));
+  n('iv-fesi', s.fesi.toFixed(3));
+  if(!p) return;
+  // Values
+  n('iv-hms-val',  fv(Math.round(s.hms * p.hms)));
+  n('iv-bun-val',  fv(Math.round(s.bundle * p.bundle)));
+  n('iv-bil-val',  fv(Math.round(s.billet * p.billet)));
+  n('iv-rod-val',  fv(Math.round(s.rod * p.rod)));
+  n('iv-simn-val', fv(Math.round(s.simn * p.simn)));
+  n('iv-fesi-val', fv(Math.round(s.fesi * p.fesi)));
+  // Price labels
+  n('iv-hms-px',  '৳'+fv(p.hms)+'/MT');
+  n('iv-bun-px',  '৳'+fv(p.bundle)+'/MT');
+  n('iv-bil-px',  '৳'+fv(p.billet)+'/MT cost');
+  n('iv-rod-px',  '৳'+fv(p.rod)+'/MT sell');
+  n('iv-simn-px', '৳'+fv(p.simn)+'/MT');
+  n('iv-fesi-px', '৳'+fv(p.fesi)+'/MT');
+  // Total
+  var total=s.hms*p.hms+s.bundle*p.bundle+s.billet*p.billet+s.rod*p.rod+s.simn*p.simn+s.fesi*p.fesi;
+  n('iv-total-val', fv(Math.round(total)));
+  // Days of inventory
+  if(im) {
+    n('iv-bun-days', im.bun_days.toFixed(1));
+    n('iv-rod-days', im.rod_days.toFixed(1));
+    n('iv-hms-days', im.hms_days.toFixed(1));
+    n('iv-daily-sales', im.rod_daily_sales.toFixed(1));
+  }
+}
+
 // loadData() called by checkPw()
 
 
 </script>
 </body>
-</html>
+</html
+  <!-- INVENTORY -->
+  <div class="overlay" id="ov-inventory" style="overflow:hidden">
+    <div class="ov-hdr">
+      <div style="font-size:17px;font-weight:700;letter-spacing:.5px;color:var(--txt)">Inventory</div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <button class="theme-btn" onclick="toggleTheme()" style="font-size:8px;padding:3px 7px" id="iv-theme-btn">☀️</button>
+        <button class="ov-back" onclick="closeOv()">← Back</button>
+      </div>
+    </div>
+
+    <!-- ── CLOSING STOCKS ── -->
+    <div style="padding:5px 14px;background:var(--bg);border-bottom:1px solid var(--b1);border-left:3px solid var(--red);flex-shrink:0">
+      <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--txt)">Closing Stocks</div>
+    </div>
+
+    <!-- ROW 1: HMS + Bundle + SiMn + FeSi in one row -->
+    <div style="flex:.7;display:flex;align-items:stretch;background:var(--card);border-bottom:1px solid var(--b1);min-height:0">
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border-right:1px solid var(--b1);padding:6px 4px">
+        <div style="font-size:6.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--dim);margin-bottom:3px">HMS Scrap</div>
+        <div style="font-size:22px;font-weight:700;letter-spacing:-.5px;color:var(--txt);line-height:1" id="iv-hms">—</div>
+        <div style="font-size:7px;color:var(--dim3);margin-top:2px">MT</div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border-right:1px solid var(--b1);padding:6px 4px">
+        <div style="font-size:6.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--dim);margin-bottom:3px">Bundle</div>
+        <div style="font-size:22px;font-weight:700;letter-spacing:-.5px;color:var(--txt);line-height:1" id="iv-bun">—</div>
+        <div style="font-size:7px;color:var(--dim3);margin-top:2px">MT</div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border-right:1px solid var(--b1);padding:6px 4px">
+        <div style="font-size:6.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#1d9e75;margin-bottom:3px">SiMn</div>
+        <div style="font-size:22px;font-weight:700;letter-spacing:-.5px;color:#1d9e75;line-height:1" id="iv-simn">—</div>
+        <div style="font-size:7px;color:var(--dim3);margin-top:2px">MT</div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:6px 4px">
+        <div style="font-size:6.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#ba7517;margin-bottom:3px">FeSi</div>
+        <div style="font-size:22px;font-weight:700;letter-spacing:-.5px;color:#ba7517;line-height:1" id="iv-fesi">—</div>
+        <div style="font-size:7px;color:var(--dim3);margin-top:2px">MT</div>
+      </div>
+    </div>
+
+    <!-- ROW 2: Billet + Rod — BIG and prominent -->
+    <div style="flex:1;display:flex;align-items:stretch;background:var(--s1);border-bottom:2px solid var(--red);min-height:0">
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border-right:2px solid var(--b1);padding:10px 8px">
+        <div style="font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--silver);margin-bottom:6px">Billet</div>
+        <div style="font-size:48px;font-weight:700;letter-spacing:-2px;color:var(--silver);line-height:1" id="iv-bil">—</div>
+        <div style="font-size:9px;color:var(--dim3);margin-top:4px;font-weight:500">MT</div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px 8px">
+        <div style="font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--red);margin-bottom:6px">Rod</div>
+        <div style="font-size:48px;font-weight:700;letter-spacing:-2px;color:var(--red);line-height:1" id="iv-rod">—</div>
+        <div style="font-size:9px;color:var(--dim3);margin-top:4px;font-weight:500">MT</div>
+      </div>
+    </div>
+
+    <!-- ── ESTIMATED VALUE ── -->
+    <div style="padding:5px 14px;background:var(--bg);border-bottom:1px solid var(--b1);border-left:3px solid var(--red);flex-shrink:0">
+      <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--txt)">Estimated Value</div>
+    </div>
+
+    <!-- ROW 3: HMS + Bundle + SiMn + FeSi values -->
+    <div style="flex:.7;display:flex;align-items:stretch;background:var(--card);border-bottom:1px solid var(--b1);min-height:0">
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border-right:1px solid var(--b1);padding:6px 4px">
+        <div style="font-size:6.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--dim);margin-bottom:3px">HMS Scrap</div>
+        <div style="font-size:16px;font-weight:700;letter-spacing:-.3px;color:var(--txt);line-height:1" id="iv-hms-val">—</div>
+        <div style="font-size:6px;color:var(--dim3);margin-top:2px" id="iv-hms-px">—</div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border-right:1px solid var(--b1);padding:6px 4px">
+        <div style="font-size:6.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--dim);margin-bottom:3px">Bundle</div>
+        <div style="font-size:16px;font-weight:700;letter-spacing:-.3px;color:var(--txt);line-height:1" id="iv-bun-val">—</div>
+        <div style="font-size:6px;color:var(--dim3);margin-top:2px" id="iv-bun-px">—</div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border-right:1px solid var(--b1);padding:6px 4px">
+        <div style="font-size:6.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#1d9e75;margin-bottom:3px">SiMn</div>
+        <div style="font-size:16px;font-weight:700;letter-spacing:-.3px;color:#1d9e75;line-height:1" id="iv-simn-val">—</div>
+        <div style="font-size:6px;color:var(--dim3);margin-top:2px" id="iv-simn-px">—</div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:6px 4px">
+        <div style="font-size:6.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#ba7517;margin-bottom:3px">FeSi</div>
+        <div style="font-size:16px;font-weight:700;letter-spacing:-.3px;color:#ba7517;line-height:1" id="iv-fesi-val">—</div>
+        <div style="font-size:6px;color:var(--dim3);margin-top:2px" id="iv-fesi-px">—</div>
+      </div>
+    </div>
+
+    <!-- ROW 4: Billet + Rod values — BIG -->
+    <div style="flex:1;display:flex;align-items:stretch;background:var(--s1);border-bottom:1px solid var(--b1);min-height:0">
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border-right:2px solid var(--b1);padding:10px 8px">
+        <div style="font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--silver);margin-bottom:5px">Billet</div>
+        <div style="font-size:36px;font-weight:700;letter-spacing:-1.5px;color:var(--silver);line-height:1" id="iv-bil-val">—</div>
+        <div style="font-size:7px;color:var(--dim3);margin-top:3px" id="iv-bil-px">—</div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px 8px">
+        <div style="font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--red);margin-bottom:5px">Rod</div>
+        <div style="font-size:36px;font-weight:700;letter-spacing:-1.5px;color:var(--red);line-height:1" id="iv-rod-val">—</div>
+        <div style="font-size:7px;color:var(--dim3);margin-top:3px" id="iv-rod-px">—</div>
+      </div>
+    </div>
+
+    <!-- TOTAL -->
+    <div style="flex:.5;display:flex;align-items:center;justify-content:space-between;padding:0 16px;background:var(--s2);border-bottom:1px solid var(--b1);min-height:0">
+      <div style="font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--dim)">Total Inventory Value</div>
+      <div style="font-size:28px;font-weight:700;letter-spacing:-1px;color:var(--red)" id="iv-total-val">—</div>
+    </div>
+
+  </div>
+  <!-- INVENTORY -->
+  <div class="overlay" id="ov-inventory" style="overflow:hidden">
+    <div class="ov-hdr">
+      <div style="font-size:17px;font-weight:700;letter-spacing:.5px;color:var(--txt)">Inventory</div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <button class="theme-btn" onclick="toggleTheme()" style="font-size:8px;padding:3px 7px" id="iv-theme-btn">☀️</button>
+        <button class="ov-back" onclick="closeOv()">← Back</button>
+      </div>
+    </div>
+
+    <!-- CLOSING STOCKS header -->
+    <div style="padding:5px 14px;background:var(--bg);border-bottom:1px solid var(--b1);border-left:3px solid var(--red);flex-shrink:0">
+      <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--txt)">Closing Stocks</div>
+    </div>
+
+    <!-- TOP ROW: HMS (35%) + Bundle (35%) + SiMn (15%) + FeSi (15%) -->
+    <div style="flex:.7;display:flex;align-items:stretch;border-bottom:1px solid var(--b1);min-height:0">
+      <div style="flex:3.5;display:flex;flex-direction:column;align-items:center;justify-content:center;border-right:1px solid var(--b1);background:var(--card)">
+        <div style="font-size:7px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--dim);margin-bottom:3px">HMS Scrap</div>
+        <div style="font-size:28px;font-weight:700;letter-spacing:-.5px;color:var(--txt);line-height:1" id="iv-hms">—</div>
+        <div style="font-size:7px;color:var(--dim3);margin-top:2px">MT</div>
+      </div>
+      <div style="flex:3.5;display:flex;flex-direction:column;align-items:center;justify-content:center;border-right:1px solid var(--b1);background:var(--card)">
+        <div style="font-size:7px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--dim);margin-bottom:3px">Bundle Scrap</div>
+        <div style="font-size:28px;font-weight:700;letter-spacing:-.5px;color:var(--txt);line-height:1" id="iv-bun">—</div>
+        <div style="font-size:7px;color:var(--dim3);margin-top:2px">MT</div>
+      </div>
+      <div style="flex:1.5;display:flex;flex-direction:column;align-items:center;justify-content:center;border-right:1px solid var(--b1);background:var(--s1)">
+        <div style="font-size:6px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#1d9e75;margin-bottom:2px">SiMn</div>
+        <div style="font-size:18px;font-weight:700;letter-spacing:-.3px;color:#1d9e75;line-height:1" id="iv-simn">—</div>
+        <div style="font-size:6px;color:var(--dim3);margin-top:1px">MT</div>
+      </div>
+      <div style="flex:1.5;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--s1)">
+        <div style="font-size:6px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#ba7517;margin-bottom:2px">FeSi</div>
+        <div style="font-size:18px;font-weight:700;letter-spacing:-.3px;color:#ba7517;line-height:1" id="iv-fesi">—</div>
+        <div style="font-size:6px;color:var(--dim3);margin-top:1px">MT</div>
+      </div>
+    </div>
+
+    <!-- BOTTOM ROW stocks: Billet (50%) + Rod (50%) — BIG -->
+    <div style="flex:1;display:flex;align-items:stretch;border-bottom:2px solid var(--red);min-height:0">
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border-right:2px solid var(--b1);background:var(--s1)">
+        <div style="font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--silver);margin-bottom:5px">Billet</div>
+        <div style="font-size:48px;font-weight:700;letter-spacing:-2px;color:var(--silver);line-height:1" id="iv-bil">—</div>
+        <div style="font-size:9px;color:var(--dim3);margin-top:3px">MT</div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--s1)">
+        <div style="font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--red);margin-bottom:5px">Rod</div>
+        <div style="font-size:48px;font-weight:700;letter-spacing:-2px;color:var(--red);line-height:1" id="iv-rod">—</div>
+        <div style="font-size:9px;color:var(--dim3);margin-top:3px">MT</div>
+      </div>
+    </div>
+
+    <!-- ESTIMATED VALUE header -->
+    <div style="padding:5px 14px;background:var(--bg);border-bottom:1px solid var(--b1);border-left:3px solid var(--red);flex-shrink:0">
+      <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--txt)">Estimated Value</div>
+    </div>
+
+    <!-- TOP ROW values: HMS (35%) + Bundle (35%) + SiMn (15%) + FeSi (15%) -->
+    <div style="flex:.7;display:flex;align-items:stretch;border-bottom:1px solid var(--b1);min-height:0">
+      <div style="flex:3.5;display:flex;flex-direction:column;align-items:center;justify-content:center;border-right:1px solid var(--b1);background:var(--card)">
+        <div style="font-size:7px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--dim);margin-bottom:3px">HMS Scrap</div>
+        <div style="font-size:20px;font-weight:700;letter-spacing:-.3px;color:var(--txt);line-height:1" id="iv-hms-val">—</div>
+        <div style="font-size:6px;color:var(--dim3);margin-top:2px" id="iv-hms-px">—</div>
+      </div>
+      <div style="flex:3.5;display:flex;flex-direction:column;align-items:center;justify-content:center;border-right:1px solid var(--b1);background:var(--card)">
+        <div style="font-size:7px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--dim);margin-bottom:3px">Bundle Scrap</div>
+        <div style="font-size:20px;font-weight:700;letter-spacing:-.3px;color:var(--txt);line-height:1" id="iv-bun-val">—</div>
+        <div style="font-size:6px;color:var(--dim3);margin-top:2px" id="iv-bun-px">—</div>
+      </div>
+      <div style="flex:1.5;display:flex;flex-direction:column;align-items:center;justify-content:center;border-right:1px solid var(--b1);background:var(--s1)">
+        <div style="font-size:6px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#1d9e75;margin-bottom:2px">SiMn</div>
+        <div style="font-size:14px;font-weight:700;letter-spacing:-.2px;color:#1d9e75;line-height:1" id="iv-simn-val">—</div>
+        <div style="font-size:5.5px;color:var(--dim3);margin-top:1px" id="iv-simn-px">—</div>
+      </div>
+      <div style="flex:1.5;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--s1)">
+        <div style="font-size:6px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#ba7517;margin-bottom:2px">FeSi</div>
+        <div style="font-size:14px;font-weight:700;letter-spacing:-.2px;color:#ba7517;line-height:1" id="iv-fesi-val">—</div>
+        <div style="font-size:5.5px;color:var(--dim3);margin-top:1px" id="iv-fesi-px">—</div>
+      </div>
+    </div>
+
+    <!-- BOTTOM ROW values: Billet (50%) + Rod (50%) — BIG -->
+    <div style="flex:1;display:flex;align-items:stretch;border-bottom:1px solid var(--b1);min-height:0">
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border-right:2px solid var(--b1);background:var(--s1)">
+        <div style="font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--silver);margin-bottom:5px">Billet</div>
+        <div style="font-size:36px;font-weight:700;letter-spacing:-1.5px;color:var(--silver);line-height:1" id="iv-bil-val">—</div>
+        <div style="font-size:7px;color:var(--dim3);margin-top:3px" id="iv-bil-px">—</div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--s1)">
+        <div style="font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--red);margin-bottom:5px">Rod</div>
+        <div style="font-size:36px;font-weight:700;letter-spacing:-1.5px;color:var(--red);line-height:1" id="iv-rod-val">—</div>
+        <div style="font-size:7px;color:var(--dim3);margin-top:3px" id="iv-rod-px">—</div>
+      </div>
+    </div>
+
+    <!-- TOTAL + DAYS-OF-INVENTORY ROW -->
+    <div style="flex:.55;display:flex;align-items:center;justify-content:space-between;padding:0 14px;background:var(--s2);border-bottom:1px solid var(--b1);flex-shrink:0">
+      <div style="font-size:7.5px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--dim)">Total Value</div>
+      <div style="font-size:26px;font-weight:700;letter-spacing:-1px;color:var(--red)" id="iv-total-val">—</div>
+    </div>
+
+    <!-- DAYS OF INVENTORY + EXTRAS -->
+    <div style="flex:.6;display:flex;align-items:stretch;background:var(--card);min-height:0">
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border-right:1px solid var(--b1)">
+        <div style="font-size:6px;font-weight:600;text-transform:uppercase;color:var(--dim);letter-spacing:.8px;margin-bottom:2px">Bundle Days</div>
+        <div style="font-size:18px;font-weight:700;color:var(--txt);line-height:1;letter-spacing:-.3px" id="iv-bun-days">—</div>
+        <div style="font-size:6px;color:var(--dim3);margin-top:1px">days left</div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border-right:1px solid var(--b1)">
+        <div style="font-size:6px;font-weight:600;text-transform:uppercase;color:var(--dim);letter-spacing:.8px;margin-bottom:2px">Rod Stock Days</div>
+        <div style="font-size:18px;font-weight:700;color:var(--red);line-height:1;letter-spacing:-.3px" id="iv-rod-days">—</div>
+        <div style="font-size:6px;color:var(--dim3);margin-top:1px">at curr sales rate</div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border-right:1px solid var(--b1)">
+        <div style="font-size:6px;font-weight:600;text-transform:uppercase;color:var(--dim);letter-spacing:.8px;margin-bottom:2px">Daily Sales</div>
+        <div style="font-size:18px;font-weight:700;color:var(--silver);line-height:1;letter-spacing:-.3px" id="iv-daily-sales">—</div>
+        <div style="font-size:6px;color:var(--dim3);margin-top:1px">MT / day</div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center">
+        <div style="font-size:6px;font-weight:600;text-transform:uppercase;color:var(--dim);letter-spacing:.8px;margin-bottom:2px">HMS Days</div>
+        <div style="font-size:18px;font-weight:700;color:var(--txt);line-height:1;letter-spacing:-.3px" id="iv-hms-days">—</div>
+        <div style="font-size:6px;color:var(--dim3);margin-top:1px">days left</div>
+      </div>
+    </div>
+
+  </div>>
