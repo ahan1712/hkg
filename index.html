@@ -245,19 +245,19 @@ tr:last-child td{border-bottom:none}
     <div class="right">
       <div class="nav-hdr">Tabs</div>
       <div class="nav-list">
+        <div class="ni" onclick="openOv('monthly')"><div class="ni-ico">📅</div><div class="ni-name">Monthly</div></div>
         <div class="ni" onclick="openOv('margins')"><div class="ni-ico">📊</div><div class="ni-name">Margins</div></div>
         <div class="ni" onclick="openOv('costing')"><div class="ni-ico">⚙️</div><div class="ni-name">Costing</div></div>
         <div class="ni" onclick="openOv('revenue')"><div class="ni-ico">💰</div><div class="ni-name">Revenue</div></div>
-        <div class="ni" onclick="openOv('inventory')"><div class="ni-ico">📦</div><div class="ni-name">Inventory</div></div>
-        <div class="ni" onclick="openOv('finances')"><div class="ni-ico">🏦</div><div class="ni-name">Finances</div></div>
-        <div class="ni" onclick="openOv('monthly')"><div class="ni-ico">📅</div><div class="ni-name">Monthly</div></div>
         <div class="ni" onclick="openOv('production')"><div class="ni-ico">🏭</div><div class="ni-name">Production</div></div>
-        <div class="ni" onclick="openOv('live')"><div class="ni-ico">🟢</div><div class="ni-name">Live</div></div>
-        <div class="ni" onclick="openOv('delivery')"><div class="ni-ico">🚚</div><div class="ni-name">Delivery</div></div>
-        <div class="ni" onclick="openOv('team')"><div class="ni-ico">👥</div><div class="ni-name">Team</div></div>
+        <div class="ni" onclick="openOv('finances')"><div class="ni-ico">🏦</div><div class="ni-name">Finances</div></div>
         <div class="ni" onclick="openOv('pl')"><div class="ni-ico">📈</div><div class="ni-name">P/L</div></div>
+        <div class="ni" onclick="openOv('inventory')"><div class="ni-ico">📦</div><div class="ni-name">Inventory</div></div>
         <div class="ni" onclick="openOv('livesales')"><div class="ni-ico">⚡</div><div class="ni-name">Live Sales</div></div>
+        <div class="ni" onclick="openOv('delivery')"><div class="ni-ico">🚚</div><div class="ni-name">Delivery</div></div>
         <div class="ni" onclick="openOv('expenses')"><div class="ni-ico">💳</div><div class="ni-name">Expenses</div></div>
+        <div class="ni" onclick="openOv('team')"><div class="ni-ico">👥</div><div class="ni-name">Team</div></div>
+        <div class="ni" onclick="openOv('live')"><div class="ni-ico">🟢</div><div class="ni-name">Live</div></div>
       </div>
     </div>
   </div>
@@ -610,17 +610,20 @@ tr:last-child td{border-bottom:none}
         <button class="ov-back" onclick="closeOv()">← Back</button>
       </div>
     </div>
-
-    <!-- CHART SECTION: 2026 Revenue Breakdown -->
-    <div style="flex-shrink:0;display:flex;flex-direction:column;border-bottom:1px solid var(--b1)">
-      <div style="padding:6px 14px;background:var(--bg);border-bottom:1px solid var(--b1);border-left:3px solid var(--red);display:flex;align-items:center;justify-content:space-between">
-        <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--txt)">2026 Revenue</div>
-        <div style="font-size:18px;font-weight:700;letter-spacing:-.5px;line-height:1" id="mg-rem-val">—</div>
+    <!-- ACTUALS vs ESTIMATES (YTD) -->
+    <div style="flex-shrink:0;display:flex;flex-direction:column;border-bottom:2px solid var(--red)">
+      <div style="padding:6px 14px;background:var(--bg);border-bottom:1px solid var(--b1);border-left:3px solid var(--red)">
+        <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--txt)">Actuals vs Estimates · YTD</div>
       </div>
-      <!-- Single horizontal strip with inline labels -->
-      <div style="padding:12px 14px 14px;background:var(--s2)" id="mg-chart-area">
+      <div style="padding:10px 14px 12px;background:var(--s2)" id="mg-avse-area">
         <!-- Rendered by JS -->
       </div>
+    </div>
+
+    <!-- 2026 REVENUE BREAKDOWN (moved, optional second section, keep or remove) -->
+    <div style="flex-shrink:0;display:flex;flex-direction:column;border-bottom:1px solid var(--b1);display:none">
+      <div id="mg-chart-area"></div>
+      <div id="mg-rem-val"></div>
     </div>
 
     <!-- SALESMAN MARGIN PANE -->
@@ -1497,36 +1500,54 @@ function renderMgRev(w) {
 function renderMargins() {
   var bd=D.ytd_breakdown; var sm=D.salesman_margins;
 
-  // ── CHART ──
-  if(bd){
-    var rev=bd.revenue; var rem=bd.remaining;
-    var segs=[
-      {label:'Scrap Consump', val:bd.scrap,       col:'#cc0000'},
-      {label:'Electricity',   val:bd.electricity,  col:'#c85000'},
-      {label:'Salary',        val:bd.salary,       col:'#777'},
-      {label:'Other Costs',   val:bd.other,        col:'#555'},
-      {label:'Net',           val:Math.max(rem,0), col:rem>=0?'#00a854':'#cc0000'},
-    ];
-    var remEl=document.getElementById('mg-rem-val');
-    if(remEl){remEl.textContent=(rem>=0?'+':'-')+' ৳'+fv(Math.abs(rem));remEl.style.color=rem>=0?'var(--green)':'var(--red)';}
-    var area=document.getElementById('mg-chart-area');
-    if(area){
-      var bar='<div style="display:flex;height:24px;border-radius:3px;overflow:hidden;margin-bottom:10px">';
-      segs.forEach(function(s){bar+='<div style="flex:'+s.val/rev*100+';background:'+s.col+';min-width:1px"></div>';});
-      bar+='</div>';
-      var legend='<div style="display:flex;flex-wrap:wrap;gap:5px 10px">';
-      segs.forEach(function(s){
-        var pct=(s.val/rev*100).toFixed(1);
-        legend+='<div style="display:flex;align-items:center;gap:3px">'
-          +'<div style="width:7px;height:7px;border-radius:1px;background:'+s.col+'"></div>'
-          +'<div style="font-size:7.5px;font-weight:600;color:var(--txt2)">'+s.label+'</div>'
-          +'<div style="font-size:7px;color:var(--dim)">'+pct+'%</div>'
-          +'</div>';
+  // ── ACTUALS vs ESTIMATES (YTD) ──
+  try {
+    var ytdRecv = 0, ytdSent = 0;
+    if (typeof FIN_DATA !== 'undefined' && FIN_DATA.month_totals) {
+      Object.keys(FIN_DATA.month_totals).forEach(function(m){
+        var t = FIN_DATA.month_totals[m];
+        ytdRecv += (t.recv_total || 0);
+        ytdSent += (t.sent_total || 0);
       });
-      legend+='</div>';
-      area.innerHTML=bar+legend;
     }
-  }
+    var estRev = (bd && bd.revenue) ? bd.revenue : 0;
+    var estExp = 0;
+    if (bd) {
+      // Estimated expenditure = scrap consumption cost + total other cost.
+      // bd.other already includes electricity + salary + all other line items from
+      // the ERP's 'Total Other Cost Expenditure' column. Do NOT add them separately.
+      estExp = (bd.scrap||0) + (bd.other||0);
+    }
+    var rows = [
+      {lbl:'Actual Revenue',       val:ytdRecv, col:'var(--green)', sub:'YTD payments received'},
+      {lbl:'Estimated Revenue',    val:estRev,  col:'var(--green)', sub:'Rod + non-rod sales YTD',  faded:true},
+      {lbl:'Actual Expenditure',   val:ytdSent, col:'var(--red2)',  sub:'YTD payments sent'},
+      {lbl:'Estimated Expenditure',val:estExp,  col:'var(--red2)',  sub:'Scrap consumption + other costs to latest prod date', faded:true},
+    ];
+    var maxVal = 0;
+    rows.forEach(function(r){ if(r.val>maxVal) maxVal = r.val; });
+    if (maxVal <= 0) maxVal = 1;
+
+    var area = document.getElementById('mg-avse-area');
+    if (area) {
+      var html = '';
+      rows.forEach(function(r, i){
+        var pct = r.val / maxVal * 100;
+        var opacity = r.faded ? '.55' : '1';
+        html += '<div style="margin-bottom:'+(i<rows.length-1?'10px':'0')+'">'
+          + '<div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:3px">'
+            + '<div style="font-size:8.5px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--txt2);opacity:'+opacity+'">'+r.lbl+'</div>'
+            + '<div style="font-size:15px;font-weight:700;letter-spacing:-.3px;color:'+r.col+';line-height:1;opacity:'+opacity+'">৳'+fv(r.val)+'</div>'
+          + '</div>'
+          + '<div style="height:8px;background:var(--b1);border-radius:2px;overflow:hidden">'
+            + '<div style="width:'+pct+'%;height:100%;background:'+r.col+';opacity:'+opacity+';transition:width .4s ease"></div>'
+          + '</div>'
+          + '<div style="font-size:6.5px;color:var(--dim3);margin-top:2px;letter-spacing:.3px">'+r.sub+'</div>'
+          + '</div>';
+      });
+      area.innerHTML = html;
+    }
+  } catch(e) { console.log('avse error:', e); }
 
   // ── SALESMAN MARGINS ──
   if(sm){
